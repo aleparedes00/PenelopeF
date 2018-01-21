@@ -36,13 +36,14 @@ public class ProjectManager {
     }*/
 
     public static void main(String[] args) {
-        ProjectManager project = new ProjectManager(new ProjectView());
+        ProjectManager homeProject = new ProjectManager(new ProjectView());
         User ale = new User("Ale", "Paredes", " ");
         Project project1 = new Project("project1");
         Task task1 = new Task("Make Workflow", "I'm creating the workflow", "High", ale);
         Document file = new Document("Workflow", ale);
         project1.addToArrayDoc(file);
         project1.addToArrayTask(task1);
+        homeProject.projectView.drawPrintProject(project1);
 //        Boolean isRunning = true;
        /* while (isRunning) {
             isRunning = project.waitForAction();
