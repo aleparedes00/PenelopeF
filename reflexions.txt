@@ -1,0 +1,87 @@
+# Éléments à traiter :
+    - Contacts -> class models.Contact
+    - Groupes -> class models.Group
+    - Documents -> class models.Document
+    - Projet -> class models.Project
+    - Tâches -> class models.Task
+    - Messages -> class Message
+    - Dashboard -> class Dashboard
+
+# Déjà sur ces exemples on peut identifier des dépendances :
+    - models.Group = ensemble de models.User -> créer class models.User
+    - models.Contact = rattaché à un models.User ?
+    - models.Project = ensemble de fichiers, donc de models.Document + ensemble de models.Task
+    - Dashboard = ensemble de Message (?)
+        -> Distingue-t-on les messages système (ex : "models.User X a modifié le fichier Y") des messages "Message" ?
+        -> un Dashboard par Projet ? un Dashboard global ?
+    - Message = possède un auteur models.User, peut-être aussi spécifier un destinataire
+        -> pour les messages système, cela implique de créer un models.User "System" par exemple
+        -> où stocker les messages ? Envisager une class Mailbox
+
+# Specs :
+    - Une fenêtre avec d'un côté les groupes, de l'autre les projets
+    - Possibilité d'add/delete dans chaque liste
+    - Sauvegarde des models.Group dans des fichiers CSV ou JSON
+    - Création des models.Project avec un dossier à la racine
+    - Afficher dans le Dashboard les Message relatifs à chaque Projet
+        (ex : models.User X ajoute un fichier dans le dossier du projet)
+    - Scanner le dossier toutes les 30s pour mettre à jour
+    - "On peut ajouter des messages sur le dashboard, sur... en gros sur tout quoi"
+
+# Hiérarchie envisagée :
+    class models.User
+    class models.Group {private models.User[] userList; ...}
+    class models.Contact {private models.User user; private String email; ...}
+
+    class models.Document
+    class models.Task
+    class models.Project {private models.Document[] files; private models.Task[] todoList; ...}
+
+    class Message {private String msg; private models.User author; ...}
+    class Mailbox {private Message[] mail; private models.Contact[] contactList; ...} (?)
+
+    class Dashboard {private models.Project projectTheBoardIsMonitoring (?); private Message[] allMessages (?); ...}
+
+# Gestion des utilisateurs :
+    - Si on envoie des messages en distinguant les auteurs et qu'on implémente un système de messagerie,
+    il faut pouvoir identifier les utilisateurs avec des comptes, des droits etc.
+    - Exemple de problématique : j'envoie un message à l'models.User X. Comment faire en sorte qu'il apparaisse dans la
+    Mailbox de X mais pas des autres ? Comment, au lancement de l'application, déclarer que je l'utilise en tant que Y ?
+    - Concernant les droits : j'ajoute un models.User au models.Group "Admin". Est-ce que j'ai le droit de faire cette modif ?
+    - Il faudrait un système simple de login et mot de passe, et que chaque models.User ait une liste de droits
+        -> peut être modélisé par de simples attributs booléens pour commencer
+        exemple private boolean canEditGroups = false; private boolean canEditProjects = true;
+        -> mais idéalement on devrait raffiner ça en l'abstrayant, pour qu'on puisse facilement rajouter des droits
+        -> il faudrait aussi gérer différents niveaux de droits. Exemple, je peux modifier le groupe de mon équipe,
+        mais pas celui des autres équipes, alors qu'un admin peut gérer tout. Je peux modifier un projet auquel j'ai été
+        assigné mais pas celui d'une autre équipe.
+
+# Organisation :
+    Principaux "pôles" du projet (voir découpage dans la partie hiérarchie) :
+        - pôle "models.User" : gérer les utilisateurs avec tout ce dont on a besoin : nom, login (peut-être le mail par ex) ...
+        puis gérer les groupes, et les contacts.
+        - pôle "models.Project" : gérer les models.Document (création de fichier, écriture lecture etc.), et les models.Project (création de
+        dossiers...) ainsi que les models.Task.
+        - pôle "Dashboard" : à faire une fois models.Project fini... en soi juste afficher des String, par la suite des Message
+        - pôle "Message" : on peut créer les objets Message assez tôt pour ne pas bloquer le reste, mais tout l'aspect
+        "messagerie"/mail devrait être gérer plus vers la fin. Cela va de pair avec le système d'authentification.
+
+# Design Patterns :
+    - Pour la messagerie : Observer ?
+    - Pour le scan des fichiers projet : Observer ?
+    - Pour le models.Project (et les models.Document ?) : Singleton ?
+        -> Il faut faire en sorte que les fichiers ne soient pas modifiés par deux personnes en même temps !
+
+# Extensions :
+    - Interface graphique ?
+    - Un calendrier avec des évènements/rendez-vous ? interface à la Outlook
+    - On peut s'inspirer du vrai soft Penelope Case Management Software : https://www.youtube.com/watch?v=Fon3OEy9YqE
+    - Réfléchir à l'exemple du comptable qui veut pouvoir importer son projet compta
+    - Importer un projet déjà existant : ouvrir un dossier quelque part sur son PC et l'ajouter à la liste des projets
+    - Gestion des mots de passe : pour commencer, avoir des mots de passe en clair des les attributs de models.User, puis
+    vérifier le mot de passe entré à la connexion avec une méthode isPasswordCorrect qui se contentera de comparer.
+    Par la suite, on pourra voir à encrypter le mot de passe.
+    Une librairie qui semble bien le faire : http://www.jasypt.org/howtoencryptuserpasswords.html
+    - Quelques design patterns à étudier en plus de ceux du cours :
+        http://abrillant.developpez.com/tutoriel/java/design/pattern/introduction/
+        http://www.emse.fr/~picard/cours/2A/DesignPatterns.pdf
