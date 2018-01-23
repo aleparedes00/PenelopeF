@@ -26,21 +26,28 @@ public class ProjectView {
         System.out.println();
 
     }
+    /*Print Project Informaiton*/
     public void drawPrintProject(Project project){
         System.out.println("Congrats, First project:");
         System.out.println("Project Name: " + project.getNameOfProject());
         List<String> stringList = new ArrayList<>();
         for (Task task: project.getArrayTask()) {
             stringList.add(task.getTitle());
-        }//ce for fait le même code que celui commente en bas. Il récupére les titres des tasks depuis project et transforme en array (collectio)
+        }//ce for fait le même code que celui commente en bas. Il récupére les titres des tasks depuis project et transforme en array (collection)
+        List<String> stringDocs = project
+                .getFiles()
+                .stream()
+                .map(document -> document.getNameOfDoc())
+                .collect(toList());
+        
         /*stringList = project
                 .getArrayTask()
                 .stream()
                 .map(task -> task.getTitle())
                 .collect(toList());*/
         System.out.println("The tasks are " + stringList);
-
-        //System.out.println("");
+        System.out.println("Documents available are " + stringDocs);
+        System.out.println("Group: " + project.getGroup().getName());
     }
     public Project drawCreateProject() {
 

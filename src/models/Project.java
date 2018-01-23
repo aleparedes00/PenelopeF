@@ -8,6 +8,7 @@ public class Project {
     private String nameOfProject;
     private ArrayList<Task> projectTask;
     private ArrayList<Document> files;
+    private Group group;
     private UUID id;
 
 
@@ -44,8 +45,16 @@ public class Project {
     public Boolean removeDoc(Document file) {
         return files.removeIf(document -> document.getId() == file.getId());
     }
-    /* Getters */
 
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    /* Getters */
+    public Group getGroup() {
+        return group;
+    }
 
     public UUID getId() {
         return id;

@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import models.Document;
 import models.Project;
@@ -41,6 +42,9 @@ public class ProjectManager {
         Project project1 = new Project("project1");
         Task task1 = new Task("Make Workflow", "I'm creating the workflow", "High", ale);
         Document file = new Document("Workflow", ale);
+        models.Group dev = new models.Group("Dev");
+        dev.getUsers().add(ale);
+        project1.setGroup(dev);
         project1.addToArrayDoc(file);
         project1.addToArrayTask(task1);
         homeProject.projectView.drawPrintProject(project1);
