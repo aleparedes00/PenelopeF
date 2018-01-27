@@ -13,7 +13,7 @@ public class User {
     private String lastName;
 
     private String password;
-
+    private ArrayList<Project> projects;
     private ArrayList<Group> groups; // List of groups the user belongs to
 
     /* Password alphabets */
@@ -36,6 +36,8 @@ public class User {
 
         Group selfGroup = new Group(this.login);
         this.groups.add(selfGroup);
+
+        this.projects = new ArrayList<>();
     }
 
     /* Getters */
@@ -63,6 +65,10 @@ public class User {
         return groups;
     }
 
+    public ArrayList<Project> getProjects() {
+        return projects;
+    }
+
     /* Setters */
     public void setLogin(String login) {
         this.login = login;
@@ -73,6 +79,10 @@ public class User {
     }
 
     /* Other Methods */
+    public void addProject(Project project){
+        this.projects.add(project);
+    }
+
     private String generatePassword() {
         Character[] pwdBuilder = new Character[8];
 

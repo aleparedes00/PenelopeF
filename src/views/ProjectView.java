@@ -3,12 +3,11 @@ package views;
 import models.HomeSelection;
 import models.Project;
 import models.Task;
+import models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Created by alejandraparedes on 1/21/18.
@@ -16,8 +15,8 @@ import static java.util.stream.Collectors.toList;
 public class ProjectView {
     Scanner sc = new Scanner(System.in);
 
-    public void draw(Project project) {
-        // System.out.println() x 100;
+    public String scanString() {
+        return sc.next();
     }
 
     public int scanInt(int minimal, int max) {
@@ -42,8 +41,8 @@ public class ProjectView {
 //        for (HomeSelection option: HomeSelection.values()) {
 //            System.out.println(option);
 //        }
-        System.out.println("1.- Create Project");
-        System.out.println("2.- List Projects");
+        System.out.println("1.-" + HomeSelection.CREATE_PROJECT);
+        System.out.println("2.-" + HomeSelection.LIST_PROJECTS);
         System.out.println("Please select a number option between 1 and 2");
         return HomeSelection.valueOf(scanInt(1, 2));
     }
@@ -56,26 +55,30 @@ public class ProjectView {
         for (Task task : project.getArrayTask()) {
             stringList.add(task.getTitle());
         }//ce for fait le même code que celui commente en bas. Il récupére les titres des tasks depuis project et transforme en array (collection)
-        List<String> stringDocs = project
-                .getFiles()
-                .stream()
-                .map(document -> document.getNameOfDoc())
-                .collect(toList());
-        
+
         /*stringList = project
                 .getArrayTask()
                 .stream()
                 .map(task -> task.getTitle())
                 .collect(toList());*/
         System.out.println("The tasks are " + stringList);
-        System.out.println("Documents available are " + stringDocs);
+        System.out.println("Documents available are ");
+        project.getFiles().forEach(document -> System.out.println(document.getNameOfDoc()));
         System.out.println("Group: " + project.getGroup().getName());
     }
 
-    public Project drawCreateProject() {
-        System.out.println("Welcome to the Project Manager. Project Name: ");
-        String name = sc.next();
-        Project project1 = new Project(name);
-        return project1;
+    public void listProjects(User user) {
+        System.out.println("User: " + user.getLogin());
+        System.out.println("Your projects: ");
+        user.getProjects().forEach(project -> System.out.println(project.getNameOfProject()));
+    }
+
+    public Project createProject() {
+        System.out.println("Welcome to the Project Manager.\nProject Name: ");
+        String name = scanString();
+        Project project = new Project(name);
+        System.out.println("New project created. Name: " + project.getNameOfProject());
+        //System.out.println("Add:" + "\n1.-" + ProjectElements.TASK + "\n2.-" + ProjectElements.DOCUMENT + "\n3.-" + ProjectElements.GROUP);
+        return project;
     }
 }
