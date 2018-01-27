@@ -1,11 +1,6 @@
 package controller;
 
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import models.Document;
-import models.Project;
-import models.Task;
-import models.User;
+import models.*;
 import views.ProjectView;
 
 import java.util.Scanner;
@@ -47,6 +42,16 @@ public class ProjectManager {
         project1.setGroup(dev);
         project1.addToArrayDoc(file);
         project1.addToArrayTask(task1);
+//        homeProject.projectView.showAndSelectHome();
+        switch (homeProject.projectView.showAndSelectHome()){
+            case CREATE_PROJECT:
+                System.out.println("clique en crear projecto");
+                break;
+            case LIST_PROJECTS:
+                System.out.println("Aqui va la lista de los proyectos");
+                break;
+        }
+
         homeProject.projectView.drawPrintProject(project1);
 //        Boolean isRunning = true;
        /* while (isRunning) {

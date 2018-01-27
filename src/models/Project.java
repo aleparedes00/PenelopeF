@@ -10,7 +10,14 @@ public class Project {
     private ArrayList<Document> files;
     private Group group;
     private UUID id;
-
+    /** ALE this is the explanation about the random ID generator.
+     * Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
+     *
+     * The {@code UUID} is generated using a cryptographically strong pseudo
+     * random number generator.
+     *
+     * @return  A randomly generated {@code UUID}
+     */
 
     //My proposal for this is to make just a list with the name of the Document that will display when the user enter on the DOC menu in the projet. We'll talk about it
     //ArrayList<Document> files;
