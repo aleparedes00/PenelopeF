@@ -49,7 +49,7 @@ public class ProjectView {
 
     /*Print Project Informaiton*/
     public void drawPrintProject(Project project) {
-        System.out.println("Congrats, First project:");
+        //System.out.println("Congrats, First project:");
         System.out.println("Project Name: " + project.getNameOfProject());
         List<String> stringList = new ArrayList<>();
         for (Task task : project.getArrayTask()) {
@@ -61,7 +61,8 @@ public class ProjectView {
                 .stream()
                 .map(task -> task.getTitle())
                 .collect(toList());*/
-        System.out.println("The tasks are " + stringList);
+        System.out.println("The tasks are ");
+        project.getArrayTask().forEach(task -> System.out.println(task.getTitle()));
         System.out.println("Documents available are ");
         project.getFiles().forEach(document -> System.out.println(document.getNameOfDoc()));
         System.out.println("Group: " + project.getGroup().getName());
