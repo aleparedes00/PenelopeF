@@ -16,6 +16,7 @@ public class PenelopeF {
                 break;
             case LIST_PROJECTS:
                 projectManager.projectView.listProjects(projectManager.user);
+                //projectManager.projectView.drawPrintProject();
                 break;
         }
 

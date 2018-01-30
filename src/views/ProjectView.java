@@ -1,5 +1,6 @@
 package views;
 
+import com.sun.org.apache.xerces.internal.xs.StringList;
 import models.HomeSelection;
 import models.Project;
 import models.Task;
@@ -8,6 +9,7 @@ import models.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * Created by alejandraparedes on 1/21/18.
@@ -23,7 +25,7 @@ public class ProjectView {
         int userInput = -1;
         do {
             if (userInput != -1) {
-                System.out.println("mardito, entre " + minimal);
+                System.out.println("mardito, entre " + minimal + "y " + max);
             }
             while (!sc.hasNextInt()) {
                 sc.next();
@@ -69,9 +71,34 @@ public class ProjectView {
     }
 
     public void listProjects(User user) {
+        //List<String> projectList = user.getProjects().stream().map(project -> project.getNameOfProject()).collect(Collectors.toList());
+        /*for(int i = 0; i< projectList.size(); i++)
+        {
+            System.out.println(i + ".- " + projectList[i]);
+        }*/
+        ArrayList<String> projectNames = new ArrayList<>();
+        for (Project project : user.getProjects()) {
+            projectNames.add(project.getNameOfProject());
+        }
         System.out.println("User: " + user.getLogin());
         System.out.println("Your projects: ");
-        user.getProjects().forEach(project -> System.out.println(project.getNameOfProject()));
+                for (int j = 0; j < projectNames.size(); j++)
+                {
+                    System.out.println(j + ".-" + projectNames.get(j));
+                }
+        System.out.println("\n What would you like to see?");
+        do {
+            int userChoice = scanInt(0, (projectNames.size() - 1));
+            if (userChoice <= user.getProjects().size())
+            {
+
+                System.out.println("Bien joue");
+                drawPrintProject(user.getProjects().get(userChoice));
+                break;
+            }
+        } while (true);
+        //user.getProjects().forEach(project -> System.out.println(project.getNameOfProject()));
+//        System.out.println("The project number 1 is: " + projectList[0]);
     }
 
     public Project createProject() {
