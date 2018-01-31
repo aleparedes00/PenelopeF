@@ -70,7 +70,7 @@ public class ProjectView {
         System.out.println("Group: " + project.getGroup().getName());
     }
 
-    public void listProjects(User user) {
+    public int listProjects(User user) {
         //List<String> projectList = user.getProjects().stream().map(project -> project.getNameOfProject()).collect(Collectors.toList());
         /*for(int i = 0; i< projectList.size(); i++)
         {
@@ -82,19 +82,20 @@ public class ProjectView {
         }
         System.out.println("User: " + user.getLogin());
         System.out.println("Your projects: ");
-                for (int j = 0; j < projectNames.size(); j++)
+        for (int j = 0; j < projectNames.size(); j++)
                 {
-                    System.out.println(j + ".-" + projectNames.get(j));
+                    System.out.println((j + 1) + ".-" + projectNames.get(j));
                 }
+//        System.out.println(user.getProjects().indexOf(user.getProjects()) + ".-" + projectList);
         System.out.println("\n What would you like to see?");
         do {
-            int userChoice = scanInt(0, (projectNames.size() - 1));
+            int userChoice = scanInt(0, (projectNames.size()));
             if (userChoice <= user.getProjects().size())
             {
-
-                System.out.println("Bien joue");
-                drawPrintProject(user.getProjects().get(userChoice));
-                break;
+                return userChoice;
+         //       System.out.println("Bien joue");
+//                drawPrintProject(user.getProjects().get(userChoice));
+//                break;
             }
         } while (true);
         //user.getProjects().forEach(project -> System.out.println(project.getNameOfProject()));

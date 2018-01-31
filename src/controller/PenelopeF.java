@@ -15,8 +15,8 @@ public class PenelopeF {
                 projectManager.user.addProject(projectManager.projectView.createProject());
                 break;
             case LIST_PROJECTS:
-                projectManager.projectView.listProjects(projectManager.user);
-                //projectManager.projectView.drawPrintProject();
+                int projectIndex = projectManager.projectView.listProjects(projectManager.user);
+                projectManager.projectView.drawPrintProject(projectManager.user.getProjects().get(projectIndex - 1));
                 break;
         }
 
