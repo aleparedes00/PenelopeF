@@ -1,4 +1,4 @@
-package controller;
+package test;
 
 import models.Group;
 import models.User;
@@ -44,7 +44,7 @@ public class TestUsers {
             String lastName = sc.next();
 
             User user = new User(firstName, lastName);
-            System.out.println("Created user " + user.getLogin() + " (" + user.getName() + ")");
+            System.out.println("Created user " + user.getUsername() + " (" + user.getName() + ")");
             System.out.println("Password is " + user.getPassword() + ", remember it!");
 
             return user;
@@ -70,7 +70,7 @@ public class TestUsers {
 
         User getUserFromLogin(String login) {
             for (User user : users) {
-                if (user.getLogin().equals(login))
+                if (user.getUsername().equals(login))
                     return user;
             }
             return null;
@@ -91,7 +91,7 @@ public class TestUsers {
         void addUserToGroup(User user, Group group) {
             group.getUsers().add(user);
             user.getGroups().add(group);
-            System.out.println("Added user " + user.getLogin() + " to group " + group.getName());
+            System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
         }
 
         /* Password Methods */
@@ -156,7 +156,7 @@ public class TestUsers {
 
         void printUsers() {
             for (User user : users) {
-                System.out.println(user.getLogin());
+                System.out.println(user.getUsername());
             }
         }
 
@@ -182,9 +182,9 @@ public class TestUsers {
             User user = getUserFromLogin(login);
             if (user != null && user.isRightPassword(pwd)) {
                 if (currentUser.equals(user))
-                    System.out.println("Already logged in as user " + currentUser.getLogin());
+                    System.out.println("Already logged in as user " + currentUser.getUsername());
                 else
-                    System.out.println("Successfully logged in as user " + user.getLogin());
+                    System.out.println("Successfully logged in as user " + user.getUsername());
                 return user;
             }
             System.out.println("Error, wrong login or password.");
@@ -215,7 +215,7 @@ public class TestUsers {
         User waitForAction(User user) {
             boolean admin = user.isAdmin();
 
-            System.out.print(user.getLogin() + "@test:~$ ");
+            System.out.print(user.getUsername() + "@test:~$ ");
             String input = sc.next();
 
             switch (input) {
@@ -313,13 +313,13 @@ public class TestUsers {
         String lastName = sc.next();
 
         User user1 = new User(firstName, lastName);
-        System.out.println("Created user " + user1.getLogin() + " (" + user1.getName() + ")");
+        System.out.println("Created user " + user1.getUsername() + " (" + user1.getName() + ")");
         System.out.println("Password is " + user1.getPassword() + ", remember it!");
 
         Group etna = new Group("ETNA");
         etna.getUsers().add(user1);
         user1.getGroups().add(etna);
-        System.out.println("Added user " + user1.getLogin() + " to group " + etna.getName());
+        System.out.println("Added user " + user1.getUsername() + " to group " + etna.getName());
         waitForEnter();
 
         /* Create another user and add it to the same group */
@@ -330,18 +330,18 @@ public class TestUsers {
         lastName = sc.next();
 
         User user2 = new User(firstName, lastName);
-        System.out.println("Created user " + user2.getLogin() + " (" + user2.getName() + ")");
+        System.out.println("Created user " + user2.getUsername() + " (" + user2.getName() + ")");
 
         etna.getUsers().add(user2);
         user2.getGroups().add(etna);
-        System.out.println("Added user " + user2.getLogin() + " to group " + etna.getName());
+        System.out.println("Added user " + user2.getUsername() + " to group " + etna.getName());
         waitForEnter();
 
         /* Create a new group and add user1 to it */
         Group mappy = new Group("Mappy");
         mappy.getUsers().add(user1);
         user1.getGroups().add(mappy);
-        System.out.println("Added user " + user1.getLogin() + " to group " + mappy.getName());
+        System.out.println("Added user " + user1.getUsername() + " to group " + mappy.getName());
         waitForEnter();
 
         /* Print users in each group */

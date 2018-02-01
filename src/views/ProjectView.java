@@ -1,42 +1,19 @@
 package views;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import models.HomeSelection;
 import models.Project;
 import models.Task;
 import models.User;
+import static tools.ScannerTools.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+
 
 /**
  * Created by alejandraparedes on 1/21/18.
  */
 public class ProjectView {
-    Scanner sc = new Scanner(System.in);
-
-    public String scanString() {
-        return sc.nextLine();
-    }
-
-    public int scanInt(int minimal, int max) {
-        int userInput = -1;
-        do {
-            if (userInput != -1) {
-                System.out.println("mardito, entre " + minimal + "y " + max);
-            }
-            while (!sc.hasNextInt()) {
-                sc.next();
-                System.out.println("Escribe bien mardito");
-            }
-            userInput = sc.nextInt();
-
-        } while (userInput < minimal || userInput > max);
-        sc.nextLine();
-        return userInput;
-    }
 
     //Equal to printAvailableCommands
     public HomeSelection showAndSelectHome() {
@@ -81,7 +58,7 @@ public class ProjectView {
         for (Project project : user.getProjects()) {
             projectNames.add(project.getNameOfProject());
         }
-        System.out.println("User: " + user.getLogin());
+        System.out.println("User: " + user.getUsername());
         System.out.println("Your projects: ");
         for (int j = 0; j < projectNames.size(); j++)
                 {

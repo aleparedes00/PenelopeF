@@ -1,13 +1,26 @@
 package controller;
 
-import models.TestData;
-import views.ProjectView;
+import models.*;
+import views.*;
 
 /**
  * Created by alejandraparedes on 1/27/18.
  */
-public class PenelopeF {
+public class PenelopeF { // executable main class
     public static void main(String[] args) {
+        // Initialize Application
+        UserSystem os = new UserSystem(); // as of now: new system, eventually: load saved users, groups etc.
+        User activeUser = null;
+
+        // Login Screen
+        LoginModel loginModel = new LoginModel(os);
+        LoginView loginView = new LoginView(loginModel);
+        LoginController loginController = new LoginController(loginModel, loginView);
+        while (activeUser == null) {
+            activeUser = loginController.userLogin();
+        }
+
+        // Project Screen
         ProjectManager projectManager = new ProjectManager(new ProjectView(), TestData.project1_2());
 
         switch (projectManager.projectView.showAndSelectHome()) {

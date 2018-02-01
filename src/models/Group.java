@@ -27,7 +27,7 @@ public class Group {
     public void printUsersInGroup() {
         System.out.println("Users in group " + this.getName());
         for (User user : this.getUsers()) {
-            System.out.println("\t"+user.getLogin());
+            System.out.println("\t"+user.getUsername());
         }
     }
 }

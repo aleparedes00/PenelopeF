@@ -1,7 +1,6 @@
 package models;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 
 /**
  * Created by alejandraparedes on 1/21/18.
@@ -43,6 +42,7 @@ public class Message {
         }
     }
 
+    /* Methods */
     public String getContent() {
         return content;
     }
@@ -64,7 +64,7 @@ public class Message {
     }
 
     public String getAuthorName() {
-        return (author != null) ? author.getLogin() : "System";
+        return (author != null) ? author.getUsername() : "System";
     }
 
     public LocalDateTime getDate() {
