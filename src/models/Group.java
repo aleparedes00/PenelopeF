@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class Group {
 
-    private String name;
+    public static String ADMIN_GROUP = "root";
 
+    private String name;
     private ArrayList<User> users;
 
     /* Constructor */

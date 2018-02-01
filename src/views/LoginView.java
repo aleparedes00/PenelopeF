@@ -5,9 +5,9 @@ import models.*;
 import static tools.ScannerTools.*;
 
 public class LoginView {
-    private LoginModel model;
+    private Login model;
 
-    public LoginView(LoginModel model) {
+    public LoginView(Login model) {
         this.model = model;
     }
 

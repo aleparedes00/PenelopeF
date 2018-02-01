@@ -4,10 +4,10 @@ import models.*;
 import views.*;
 
 public class LoginController {
-    private LoginModel model;
+    private Login model;
     private LoginView view;
 
-    public LoginController(LoginModel model, LoginView view) {
+    public LoginController(Login model, LoginView view) {
         this.model = model;
         this.view = view;
     }

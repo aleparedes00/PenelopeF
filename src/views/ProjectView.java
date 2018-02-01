@@ -1,6 +1,6 @@
 package views;
 
-import models.HomeSelection;
+import models.menus.ProjectHomeSelection;
 import models.Project;
 import models.Task;
 import models.User;
@@ -16,15 +16,15 @@ import java.util.List;
 public class ProjectView {
 
     //Equal to printAvailableCommands
-    public HomeSelection showAndSelectHome() {
+    public ProjectHomeSelection showAndSelectHome() {
         System.out.println("[PROJECT TEST] \nAvailable Commands");
-//        for (HomeSelection option: HomeSelection.values()) {
+//        for (ProjectHomeSelection option: ProjectHomeSelection.values()) {
 //            System.out.println(option);
 //        }
-        System.out.println("1.-" + HomeSelection.CREATE_PROJECT);
-        System.out.println("2.-" + HomeSelection.LIST_PROJECTS);
+        System.out.println("1.-" + ProjectHomeSelection.CREATE_PROJECT);
+        System.out.println("2.-" + ProjectHomeSelection.LIST_PROJECTS);
         System.out.println("Please select a number option between 1 and 2");
-        return HomeSelection.valueOf(scanInt(1, 2));
+        return ProjectHomeSelection.valueOf(scanInt(1, 2));
     }
 
     /*Print Project Informaiton*/

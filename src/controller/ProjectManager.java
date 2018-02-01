@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class ProjectManager {
 
     public final ProjectView projectView;
-    User user;
+    public User user;
     Scanner sc = new Scanner(System.in);
     /*Constructor*/
     public ProjectManager(ProjectView projectView, User user) {

@@ -7,6 +7,7 @@ public class TestData {
 
     public static User project1_2() {
         User user = new User("Alejandra", "Paredes");
+        user.setPassword("test");
         Project project1 = new Project("TestProject");
         Task task1 = new Task("Task1", "Creating content", "High", user);
         Document file1 = new Document("Workflow", user);

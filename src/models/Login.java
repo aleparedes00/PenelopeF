@@ -1,9 +1,9 @@
 package models;
 
-public class LoginModel {
+public class Login {
     private UserSystem system;
 
-    public LoginModel(UserSystem system) {
+    public Login(UserSystem system) {
         this.system = system;
     }
 

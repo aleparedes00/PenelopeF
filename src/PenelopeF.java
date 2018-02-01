@@ -1,5 +1,4 @@
-package controller;
-
+import controller.*;
 import models.*;
 import views.*;
 
@@ -9,16 +8,21 @@ import views.*;
 public class PenelopeF { // executable main class
     public static void main(String[] args) {
         // Initialize Application
-        UserSystem os = new UserSystem(); // as of now: new system, eventually: load saved users, groups etc.
+        SystemData os = new SystemData();
         User activeUser = null;
 
         // Login Screen
-        LoginModel loginModel = new LoginModel(os);
+        Login loginModel = new Login(os.getUserSystem());
         LoginView loginView = new LoginView(loginModel);
         LoginController loginController = new LoginController(loginModel, loginView);
         while (activeUser == null) {
             activeUser = loginController.userLogin();
         }
+
+        // Home Screen
+        // 1 - Users/Groups?
+        // 2 - Projects Screen
+        // 3 - Admin Screen
 
         // Project Screen
         ProjectManager projectManager = new ProjectManager(new ProjectView(), TestData.project1_2());
@@ -32,6 +36,9 @@ public class PenelopeF { // executable main class
                 projectManager.projectView.drawPrintProject(projectManager.user.getProjects().get(projectIndex - 1));
                 break;
         }
+
+        // Admin Screen
+        // ...
 
 
 

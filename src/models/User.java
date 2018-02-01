@@ -1,5 +1,7 @@
 package models;
 
+import static models.Group.ADMIN_GROUP;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -126,7 +128,7 @@ public class User {
 
     public boolean isAdmin() {
         for (Group group : this.getGroups()) {
-            if (group.getName().equals("root"))
+            if (group.getName().equals(ADMIN_GROUP))
                 return true;
         }
         return false;
