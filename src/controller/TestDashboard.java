@@ -16,17 +16,13 @@ public class TestDashboard {
         Scanner sc = new Scanner(System.in);
 
         // Write a message
-        System.out.println("Add a message. Title [Enter] Content [Enter]");
-        String title = sc.nextLine();
-        String msg = sc.nextLine();
-        Message newMessage = new Message(title, msg, LocalDateTime.now(), testUser);
-        dash.addMessage(newMessage);
+        testUser.writeNewMessage(dash);
 
         dash.drawMessageList();
 
         // Generate a reply
         User replyUser = new User("Yes", "ImReplying");
-        dash.addReply("Hello this is a reply", newMessage, replyUser);
+        dash.addReply("Hello this is a reply", dash.getInbox().get(1), replyUser);
 
         dash.drawMessageList();
     }

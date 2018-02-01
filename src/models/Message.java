@@ -11,28 +11,36 @@ public class Message {
     private String content;
     private LocalDateTime date;
     private User author;
-    private Message inReplyTo;
     private MessageThread replies;
 
     /* Constructors */
     /* Message(title, content, date, user, replyUser) -> by user, in reply to replyUser */
     /* Message(title, content, date, user) -> message written by user */
     /* Message(title, content, date) -> message written by system */
-    public Message(String title, String content, LocalDateTime date, User author, Message inReplyTo){
+    public Message(String title, String content, LocalDateTime date, User author){
         setContent(content);
         setTitle(title);
         this.date = date;
         this.author = author;
-        this.inReplyTo = inReplyTo;
         this.replies = new MessageThread(this);
     }
 
-    public Message(String title, String content, LocalDateTime date, User author) {
-        this(title, content, date, author, null);
+    public Message(String title, String content, LocalDateTime date) {
+        this(title, content, date, null);
     }
 
-    public Message(String title, String content, LocalDateTime date) {
-        this(title, content, date, null, null);
+    /* Sub-class for replies */
+    class Reply extends Message {
+        private Message inReplyTo;
+
+        public Reply(String title, String content, LocalDateTime date, User author, Message inReplyTo) {
+            super(title, content, date, author);
+            this.inReplyTo = inReplyTo;
+        }
+
+        public Message getInReplyTo() {
+            return inReplyTo;
+        }
     }
 
     public String getContent() {
@@ -57,10 +65,6 @@ public class Message {
 
     public String getAuthorName() {
         return (author != null) ? author.getLogin() : "System";
-    }
-
-    public Message getInReplyTo() {
-        return inReplyTo;
     }
 
     public LocalDateTime getDate() {

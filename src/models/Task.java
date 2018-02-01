@@ -1,49 +1,24 @@
 package models;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Task {
+public class Task extends Message { // Now extends Message as it has similar fields (a title, a content, an author) and methods
 
-    private String title;
-    private String content;
     //private models.Group group;
     private String priority;
-    private User owner;
     private UUID id;
 
     /*Constructor*/
     public Task(String title, String content, /*models.Group group,*/ String priority, User owner){
-        this.setTitle(title);
-        this.setContent(content);
+        super(title, content, LocalDateTime.now(), owner);
         this.setPriority(priority);
-        this.setOwner(owner);
         this.id = UUID.randomUUID();
     }
 
-    /* Getters */
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    /* Getters and Setters */
+    public User getOwner() { // getOwner = getAuthor, but we can keep this method if the name is more explicit
+        return getAuthor();
     }
 
     public String getPriority() {

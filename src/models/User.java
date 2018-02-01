@@ -1,5 +1,6 @@
 package models;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Math.min;
@@ -133,5 +134,16 @@ public class User {
 
     public boolean isRightPassword(String pwd) {
         return this.getPassword().equals(pwd);
+    }
+
+    /* Message Methods */
+    public void writeNewMessage(Dashboard dash) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Add a message. Title [Enter] Content [Enter]");
+        String title = sc.nextLine();
+        String msg = sc.nextLine();
+        Message newMessage = new Message(title, msg, LocalDateTime.now(), this);
+        dash.addMessage(newMessage);
     }
 }

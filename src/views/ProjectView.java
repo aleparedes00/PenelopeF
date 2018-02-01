@@ -18,7 +18,7 @@ public class ProjectView {
     Scanner sc = new Scanner(System.in);
 
     public String scanString() {
-        return sc.next();
+        return sc.nextLine();
     }
 
     public int scanInt(int minimal, int max) {
@@ -34,6 +34,7 @@ public class ProjectView {
             userInput = sc.nextInt();
 
         } while (userInput < minimal || userInput > max);
+        sc.nextLine();
         return userInput;
     }
 
