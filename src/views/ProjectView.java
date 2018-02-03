@@ -1,7 +1,8 @@
 package views;
 
 import models.Project;
-import models.ProjectElements;
+import models.menus.ModifyProjectMenu;
+import models.menus.ProjectElements;
 import models.User;
 import models.menus.ProjectHomeSelection;
 
@@ -47,16 +48,12 @@ public class ProjectView {
         System.out.println("5.-" + ProjectElements.MODIFY);
         System.out.println("redirect to Modify");
         System.out.println("6.-" + ProjectElements.DEACTIVATE);
-        System.out.println("What would you like to do? Please choose a valid number (1-6)");
-        return ProjectElements.valueOf(scanInt(1, 6));
+        System.out.println("7.-" + ProjectElements.BACK);
+        System.out.println("What would you like to do? Please choose a valid number (1-7)");
+        return ProjectElements.valueOf(scanInt(1, 7));
     }
 
     public int listProjects(User user) {
-        //List<String> projectList = user.getProjects().stream().map(project -> project.getNameOfProject()).collect(Collectors.toList());
-        /*for(int i = 0; i< projectList.size(); i++)
-        {
-            System.out.println(i + ".- " + projectList[i]);
-        }*/
         ArrayList<String> projectNames = new ArrayList<>();
         for (Project project : user.getProjects()) {
             projectNames.add(project.getNameOfProject());
@@ -66,7 +63,6 @@ public class ProjectView {
         for (int j = 0; j < projectNames.size(); j++) {
             System.out.println((j + 1) + ".-" + projectNames.get(j));
         }
-//        System.out.println(user.getProjects().indexOf(user.getProjects()) + ".-" + projectList);
         System.out.println("\n What would you like to see?");
         do {
             int userChoice = scanInt(0, (projectNames.size()));
@@ -85,7 +81,17 @@ public class ProjectView {
         return project;
     }
 
-    public void modifyProject(Project project) {
+    public ModifyProjectMenu modifyProjectMenu(Project project) {
+        System.out.println("What would you like to modify?");
+        System.out.println("1.-" + ModifyProjectMenu.PROJECT_NAME + ":");
+        System.out.println("2.-"+ ModifyProjectMenu.GROUP + ":");
+        System.out.println("3.-" + ModifyProjectMenu.BACK + ".");
+        System.out.println("What would you like to do?");
+        return ModifyProjectMenu.valueOf(scanInt(1, 3));
+    }
 
+    public String printStringAndReadChoice(String sentenceToPrint) {
+        System.out.println(sentenceToPrint);
+        return scanString();
     }
 }

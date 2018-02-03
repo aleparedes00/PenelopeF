@@ -1,48 +1,34 @@
 package controller;
 
+import models.Project;
 import models.User;
 import views.ProjectView;
 
 import java.util.Scanner;
 
+import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
 
 /**
  * Created by alejandraparedes on 1/21/18.
  */
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ProjectManager {
 
     public final ProjectView projectView;
     public User user;
-    Scanner sc = new Scanner(System.in);
 
     /*Constructor*/
     public ProjectManager(ProjectView projectView, User user) {
         this.projectView = projectView;
         this.user = user;
 
-        /*
-        switch (input) {
-            case 1:
-                projectView.createProject();
         }
-        // while + scanner
-
-        // update la view
-    }*/
-
-
-        //    homeProject.projectView.drawPrintProject(project1);
-//        Boolean isRunning = true;
-       /* while (isRunning) {
-            isRunning = project.waitForAction();
-        }*/
-    }
 
     public void showProject(int projectIndex) {
         showMenu(ctx -> {
-            switch (this.projectView.drawPrintProject(this.user.getProjects().get(projectIndex - 1))) {
+            switch (this.projectView.drawPrintProject(this.user.getProjects().get(projectIndex))) {
                 case TASK:
                     System.out.println("More information about Task");
                     break;
@@ -56,11 +42,31 @@ public class ProjectManager {
                     System.out.println("[Dashboard] : Calling freaking Dashboard");
                     break;
                 case MODIFY:
-                    System.out.println("Sending to MODIFY View Function");
+                    controlModifyProject(this.user.getProjects().get(projectIndex));
                     break;
                 case DEACTIVATE:
                     System.out.println("Deactivating the project");
                     break;
+                case BACK:
+                    ctx.leaveCurrentMenu = TRUE;
+                    break;
+            }
+        });
+    }
+
+    private void controlModifyProject(Project project) {
+        showMenu(ctx -> {
+            switch (this.projectView.modifyProjectMenu(project)) {
+                case PROJECT_NAME:
+                    project.setNameOfProject(this.projectView.printStringAndReadChoice("Please, enter the new name of the project:"));
+                    ctx.leaveCurrentMenu = TRUE;
+                    break;
+                case GROUP:
+                    System.out.println("Changing group");
+                    ctx.leaveCurrentMenu = TRUE;
+                    break;
+                case BACK:
+                    ctx.leaveCurrentMenu = TRUE;
             }
         });
     }

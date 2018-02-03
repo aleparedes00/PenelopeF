@@ -2,7 +2,7 @@ import controller.LoginController;
 import controller.ProjectManager;
 import models.Login;
 import models.SystemData;
-import models.TestData;
+import test.TestData;
 import models.User;
 import views.LoginView;
 import views.ProjectView;
@@ -42,7 +42,7 @@ public class PenelopeF { // executable main class
                     break;
                 case LIST_PROJECTS:
                     int projectIndex = projectManager.projectView.listProjects(projectManager.user);
-                    projectManager.projectView.drawPrintProject(projectManager.user.getProjects().get(projectIndex - 1));
+                    projectManager.showProject(projectIndex - 1);
                     break;
                 case LOGOUT:
                     ctx.leaveCurrentMenu = TRUE;
