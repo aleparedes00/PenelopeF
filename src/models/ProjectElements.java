@@ -6,7 +6,10 @@ package models;
 public enum ProjectElements {
     TASK("Task"),
     DOCUMENT("Document"),
-    GROUP("Group");
+    GROUP("Group"),
+    DASHBOARD("Dashboard"),
+    MODIFY("Modify"),
+    DEACTIVATE("Deactivate");
 
     String value;
 
@@ -22,6 +25,12 @@ public enum ProjectElements {
                 return DOCUMENT;
             case 3:
                 return GROUP;
+            case 4:
+                return DASHBOARD;
+            case 5:
+                return MODIFY;
+            case 6:
+                return DEACTIVATE;
         }
         throw new IllegalStateException("Selection doesn't exists");
     }

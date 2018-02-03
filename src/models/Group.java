@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class Group {
 
-    private String name;
+    public static String ADMIN_GROUP = "root";
 
+    private String name;
     private ArrayList<User> users;
 
     /* Constructor */
@@ -27,7 +28,7 @@ public class Group {
     public void printUsersInGroup() {
         System.out.println("Users in group " + this.getName());
         for (User user : this.getUsers()) {
-            System.out.println("\t"+user.getLogin());
+            System.out.println("\t"+user.getUsername());
         }
     }
 }

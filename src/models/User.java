@@ -1,5 +1,8 @@
 package models;
 
+import static models.Group.ADMIN_GROUP;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Math.min;
@@ -7,7 +10,7 @@ import static java.lang.Math.random;
 
 public class User {
 
-    private String login;
+    private String username;
 
     private String firstName;
     private String lastName;
@@ -29,20 +32,20 @@ public class User {
         this.groups = new ArrayList<>();
 
 
-        this.login = (additional.length >= 1) ? additional[0] :
+        this.username = (additional.length >= 1) ? additional[0] :
                 lastName.toLowerCase().substring(0, min(6, lastName.length())) + "_" + firstName.toLowerCase().charAt(0);
 
         this.password = (additional.length >= 2) ? additional[1] : generatePassword();
 
-        Group selfGroup = new Group(this.login);
+        Group selfGroup = new Group(this.username);
         this.groups.add(selfGroup);
 
         this.projects = new ArrayList<>();
     }
 
     /* Getters */
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
     public String getFirstName() {
@@ -70,8 +73,8 @@ public class User {
     }
 
     /* Setters */
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
@@ -117,7 +120,7 @@ public class User {
     }
 
     public void printGroupsOfUser() {
-        System.out.println("Groups of user " + this.getLogin());
+        System.out.println("Groups of user " + this.getUsername());
         for (Group group : this.getGroups()) {
             System.out.println("\t"+group.getName());
         }
@@ -125,7 +128,7 @@ public class User {
 
     public boolean isAdmin() {
         for (Group group : this.getGroups()) {
-            if (group.getName().equals("root"))
+            if (group.getName().equals(ADMIN_GROUP))
                 return true;
         }
         return false;
@@ -133,5 +136,16 @@ public class User {
 
     public boolean isRightPassword(String pwd) {
         return this.getPassword().equals(pwd);
+    }
+
+    /* Message Methods */
+    public void writeNewMessage(Dashboard dash) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Add a message. Title [Enter] Content [Enter]");
+        String title = sc.nextLine();
+        String msg = sc.nextLine();
+        Message newMessage = new Message(title, msg, LocalDateTime.now(), this);
+        dash.addMessage(newMessage);
     }
 }
