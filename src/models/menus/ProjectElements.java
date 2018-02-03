@@ -1,4 +1,4 @@
-package models;
+package models.menus;
 
 /**
  * Created by alejandraparedes on 1/27/18.
@@ -9,7 +9,8 @@ public enum ProjectElements {
     GROUP("Group"),
     DASHBOARD("Dashboard"),
     MODIFY("Modify"),
-    DEACTIVATE("Deactivate");
+    DEACTIVATE("Deactivate"),
+    BACK("Back");
 
     String value;
 
@@ -31,6 +32,8 @@ public enum ProjectElements {
                 return MODIFY;
             case 6:
                 return DEACTIVATE;
+            case 7:
+                return BACK;
         }
         throw new IllegalStateException("Selection doesn't exists");
     }

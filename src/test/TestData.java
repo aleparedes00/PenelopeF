@@ -1,4 +1,6 @@
-package models;
+package test;
+
+import models.*;
 
 /**
  * Created by alejandraparedes on 1/27/18.
