@@ -81,7 +81,34 @@
     - Gestion des mots de passe : pour commencer, avoir des mots de passe en clair des les attributs de models.User, puis
     vérifier le mot de passe entré à la connexion avec une méthode isPasswordCorrect qui se contentera de comparer.
     Par la suite, on pourra voir à encrypter le mot de passe.
-    Une librairie qui semble bien le faire : http://www.jasypt.org/howtoencryptuserpasswords.html
+    Une librairie qui semble bien le faire :
     - Quelques design patterns à étudier en plus de ceux du cours :
         http://abrillant.developpez.com/tutoriel/java/design/pattern/introduction/
         http://www.emse.fr/~picard/cours/2A/DesignPatterns.pdf
+
+=======================
+# Modèle MVC
+    - Essayer autant que possible de nommer les classes de façon uniforme : Object, ObjectView, ObjectController
+    - ProjectView devrait avoir un nom plus explicite (ex: ProjectListView, ou ProjectManagerView). Réserver "ProjectView" à la vue d'un projet.
+
+# Menus
+    - À la façon de "HomeSelection" (renommé en ProjectHomeSelection), il faudrait avoir un enum "Selection" pour chaque
+    menu "Home" de l'application : pour le Home des projets, le Home du panneau d'administration... À placer dans le dossier models.menus
+    - La fonction "valueOf" n'a pas l'air optimale (il faudra la réécrire à chaque fois qu'on voudra ajouter un élément à l'enum
+    ou changer l'ordre par exemple) ; il faudra remplacer ça par quelque chose de plus simple et abstrait.
+
+
+# Sérialisation
+    - Google a créé une libraire appelée Gson, pour sérialiser des données en JSON.*
+    https://futurestud.io/tutorials/gson-getting-started-with-java-json-serialization-deserialization
+    - À étudier.
+
+# Dépendences
+    - Pour l'instant, on n'utilise que notre propre code. Mais on sera amené à utiliser des librairies extérieures.
+    - Ex: Gson pour la sérialisation, Jasypt pour l'encryption des mots de passe
+    - Pour les utiliser, soit on download les jar et on les inclut au projet,
+    soit on utilise un outil de gestion de dépendences comme Maven (pourra être utile si beaucoup de dépendences)
+    - À étudier.
+
+# Versioning
+    - En fin de session, penser à toujours commit aux deux endroits : svn, puis git.
