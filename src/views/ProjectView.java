@@ -4,7 +4,6 @@ import models.Project;
 import models.ProjectElements;
 import models.User;
 import models.menus.ProjectHomeSelection;
-import tools.ScannerTools;
 
 import java.util.ArrayList;
 
@@ -64,16 +63,14 @@ public class ProjectView {
         }
         System.out.println("User: " + user.getUsername());
         System.out.println("Your projects: ");
-        for (int j = 0; j < projectNames.size(); j++)
-                {
-                    System.out.println((j + 1) + ".-" + projectNames.get(j));
-                }
+        for (int j = 0; j < projectNames.size(); j++) {
+            System.out.println((j + 1) + ".-" + projectNames.get(j));
+        }
 //        System.out.println(user.getProjects().indexOf(user.getProjects()) + ".-" + projectList);
         System.out.println("\n What would you like to see?");
         do {
             int userChoice = scanInt(0, (projectNames.size()));
-            if (userChoice <= user.getProjects().size())
-            {
+            if (userChoice <= user.getProjects().size()) {
                 return userChoice;
             }
         } while (true);

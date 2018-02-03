@@ -7,9 +7,6 @@ import models.User;
 import views.LoginView;
 import views.ProjectView;
 
-import java.util.function.Consumer;
-
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
 
@@ -45,7 +42,7 @@ public class PenelopeF { // executable main class
                     break;
                 case LIST_PROJECTS:
                     int projectIndex = projectManager.projectView.listProjects(projectManager.user);
-                    projectManager.showProject(projectIndex);
+                    projectManager.projectView.drawPrintProject(projectManager.user.getProjects().get(projectIndex - 1));
                     break;
                 case LOGOUT:
                     ctx.leaveCurrentMenu = TRUE;
