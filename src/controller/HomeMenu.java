@@ -6,7 +6,7 @@ import repository.ProjectRepository;
 import views.HomeMenuView;
 import views.PrintTools;
 import views.ProjectManagerView;
-import views.menus.ProjectHomeSelection;
+
 import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
 
@@ -39,7 +39,7 @@ public class HomeMenu {
                     break;
                 case LIST_PROJECTS:
                     if (!(user.getProjects().isEmpty())) {
-                        int projectIndex = homeMenuView.listProjects(user);
+                        int projectIndex = homeMenuView.showAndSelectProject(user);
                         if (projectIndex != -1) {
                             ProjectManagerView projectManagerView = new ProjectManagerView();
                             ProjectManager projectManager = new ProjectManager(projectManagerView, user, user.getProjects().get(projectIndex));

@@ -69,6 +69,8 @@ public class Project {
         return id;
     }
 
+    public void setId(String idStr) { id = UUID.fromString(idStr); }
+
     public String getNameOfProject() {
         return nameOfProject;
     }

@@ -29,28 +29,20 @@ public class HomeMenuView {
         return project;
     }
 
-    public int listProjects(User user) {
+    public int showAndSelectProject(User user) {
         ArrayList<String> projectNames = new ArrayList<>();
         for (Project project : user.getProjects()) {
             projectNames.add(project.getNameOfProject());
         }
         System.out.println("User: " + user.getUsername());
         System.out.println("Your projects: ");
-        int j;
-        for (j = 0; j < projectNames.size(); j++) {
+        for (int j = 0; j < projectNames.size(); j++) {
             System.out.println((j + 1) + ".-" + projectNames.get(j));
         }
-        System.out.println(j + 1 + ".- Back");
+        System.out.println(projectNames.size() + 1 + ".- Back");
         System.out.println("\n Which project would you like to see?");
-        do {
-            int userChoice = scanInt(0, (projectNames.size() + 1));
-            if (userChoice <= user.getProjects().size()) {
-                return userChoice - 1;
-            }
-            else
-            {
-                return -1;
-            }
-        } while (true);
+        int userChoice = scanInt(1, (projectNames.size() + 1));
+        if (userChoice == projectNames.size() + 1) return -1;
+        return userChoice - 1;
     }
 }

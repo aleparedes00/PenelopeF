@@ -1,11 +1,12 @@
 package repository;
 
+import com.oracle.javafx.jmx.json.JSONReader;
+import jdk.nashorn.internal.parser.JSONParser;
 import models.Project;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class ProjectRepository {
     public static void initiateProgram() {
@@ -19,7 +20,9 @@ public class ProjectRepository {
         String name = "Project/" + project.getNameOfProject() + ".json";
         File file = new File(name);
         try (FileWriter writer = new FileWriter(file)) {
-            writer.write(project.getNameOfProject());
+            Properties projectProperties = new Properties();
+            projectProperties.setProperty("id", project.getId().toString());
+            projectProperties.store(writer, "Creation of project");
             writer.flush();
             writer.close();
         } catch (IOException e) {
@@ -33,12 +36,26 @@ public class ProjectRepository {
         ArrayList<Project> projects = new ArrayList<>();
         String nameOfProject = new String();
         for (int i = 0; i < projectsFiles.length; i++) {
-            nameOfProject = projectsFiles[i].getName();
-            Project project = new Project(nameOfProject);
-            projects.add(project);
             // read each project file, load the project and add it to projects
+            Project project = readProject(projectsFiles[i]);
+            projects.add(project);
         }
         return projects;
+    }
+
+    public Project readProject(File file) {
+        try (FileReader fileReader = new FileReader(file)) {
+            Properties properties = new Properties();
+            properties.load(fileReader);
+            Project project = new Project(file.getName());
+            project.setId((String) properties.get("id"));
+            // read all tasks file and fill in the Project
+            // read all documents file and fill in the Project
+            // read group
+            return project;
+        } catch (IOException e) {
+            throw new RuntimeException("GOD DAMMIT! Everything went wrong here... ", e);
+        }
     }
 
     public static void main(String[] args) {
@@ -47,7 +64,7 @@ public class ProjectRepository {
         ArrayList<Project> projects = repository.readAndLoadProjectArray();
 
         for (int i = 0; i < projects.size(); i++) {
-            System.out.println(projects.get(i).getNameOfProject());
+            System.out.println(projects.get(i).getNameOfProject().replace(".json", ""));
         }
     }
 }
