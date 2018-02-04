@@ -2,9 +2,8 @@ package controller;
 
 import models.Project;
 import models.User;
-import views.ProjectView;
-
-import java.util.Scanner;
+import views.PrintTools;
+import views.ProjectManagerView;
 
 import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
@@ -16,19 +15,20 @@ import static tools.MenuTools.showMenu;
 @SuppressWarnings("SpellCheckingInspection")
 public class ProjectManager {
 
-    public final ProjectView projectView;
+    public final ProjectManagerView projectManagerView;
     public User user;
+    public Project project;
 
     /*Constructor*/
-    public ProjectManager(ProjectView projectView, User user) {
-        this.projectView = projectView;
+    public ProjectManager(ProjectManagerView projectManagerView, User user, Project project) {
+        this.projectManagerView = projectManagerView;
+        this.project = project;
         this.user = user;
+    }
 
-        }
-
-    public void showProject(int projectIndex) {
+    public void showProject() {
         showMenu(ctx -> {
-            switch (this.projectView.drawPrintProject(this.user.getProjects().get(projectIndex))) {
+            switch (this.projectManagerView.drawPrintProject(project)) {
                 case TASK:
                     System.out.println("More information about Task");
                     break;
@@ -42,10 +42,10 @@ public class ProjectManager {
                     System.out.println("[Dashboard] : Calling freaking Dashboard");
                     break;
                 case MODIFY:
-                    controlModifyProject(this.user.getProjects().get(projectIndex));
+                    controlModifyProject(project);
                     break;
                 case DEACTIVATE:
-                    controlDeactiveProject(this.user.getProjects().get(projectIndex));
+                    controlDeactiveProject(project);
                     ctx.leaveCurrentMenu = TRUE;
                     break;
                 case BACK:
@@ -57,9 +57,9 @@ public class ProjectManager {
 
     private void controlModifyProject(Project project) {
         showMenu(ctx -> {
-            switch (this.projectView.modifyProjectMenu(project)) {
+            switch (this.projectManagerView.modifyProjectMenu(project)) {
                 case PROJECT_NAME:
-                    project.setNameOfProject(this.projectView.printStringAndReadChoice("Please, enter the new name of the project:"));
+                    project.setNameOfProject(PrintTools.printStringAndReadChoice("Please, enter the new name of the project:"));
                     ctx.leaveCurrentMenu = TRUE;
                     break;
                 case GROUP:
@@ -75,7 +75,7 @@ public class ProjectManager {
     private void controlDeactiveProject(Project project) {
         this.user.addDeactiveProject(project);
         this.user.removeProject(project);
-        this.projectView.printString("Your project has been successfully deactive");
+        PrintTools.printString("Your project has been successfully deactive");
     }
 
 }

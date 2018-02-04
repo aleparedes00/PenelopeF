@@ -16,7 +16,7 @@ public class Document {
     public Document(String name, User owner, Project project){
         this.setNameOfDoc(name);
         this.owner = owner;
-        this.project = project;
+        this.project = project; //TODO I'm not sure if this is redundant because we have an ArrayList<Documents>
         this.id = UUID.randomUUID();
     }
 
@@ -33,7 +33,7 @@ public class Document {
 
     /* Getters */
     public File getFile() {
-        //this.file.getName() TODO on recupère le fichier
+        //this.file.getName() TODO On peut recuperer le nom du fichier directamente du path. What do you think?
         return file;
     }
 

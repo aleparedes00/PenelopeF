@@ -102,6 +102,10 @@
 # Sérialisation
     - Google a créé une libraire appelée Gson, pour sérialiser des données en JSON.*
     https://futurestud.io/tutorials/gson-getting-started-with-java-json-serialization-deserialization
+
+******ALE: https://stackoverflow.com/questions/2378402/jackson-vs-gson
+J’ai parlé avec Tom et puis j’ai lu un peu sur internet et Jackson, une autre lib pour la sérialisation est apparement mieux. Le lien en haut donne plus de détailles sur ce que l’un fait contre l’autre.
+
     - À étudier.
 
 # Dépendences

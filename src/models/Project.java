@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
+//TODO ProjectPriority
 public class Project {
 
     private String nameOfProject;

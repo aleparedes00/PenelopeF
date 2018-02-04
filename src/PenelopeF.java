@@ -1,14 +1,11 @@
+import controller.HomeMenu;
 import controller.LoginController;
 import controller.ProjectManager;
 import models.Login;
 import models.SystemData;
-import test.TestData;
 import models.User;
 import views.LoginView;
-import views.ProjectView;
-
-import static java.lang.Boolean.TRUE;
-import static tools.MenuTools.showMenu;
+import views.ProjectManagerView;
 
 /**
  * Created by alejandraparedes on 1/27/18.
@@ -16,6 +13,7 @@ import static tools.MenuTools.showMenu;
 public class PenelopeF { // executable main class
     public static void main(String[] args) {
         // Initialize Application
+        //TODO make a method run() to create the login
         SystemData os = new SystemData();
         User activeUser = null;
 
@@ -31,29 +29,12 @@ public class PenelopeF { // executable main class
         // 1 - Users/Groups?
         // 2 - Projects Screen
         // 3 - Admin Screen
-
+        HomeMenu homeMenu = new HomeMenu(activeUser);
+        homeMenu.firstnMenuControl();
         // Project Screen
-        ProjectManager projectManager = new ProjectManager(new ProjectView(), TestData.project1_2());
 
-        showMenu((ctx) -> {
-            switch (projectManager.projectView.showAndSelectHome()) {
-                case CREATE_PROJECT:
-                    projectManager.user.addProject(projectManager.projectView.createProject());
-                    break;
-                case LIST_PROJECTS:
-                    if (!(projectManager.user.getProjects().isEmpty()))
-                    {
-                        int projectIndex = projectManager.projectView.listProjects(projectManager.user);
-                        projectManager.showProject(projectIndex - 1);
-                    }
-                    else
-                    {projectManager.projectView.printString("No projects to show");}
-                    break;
-                case LOGOUT:
-                    ctx.leaveCurrentMenu = TRUE;
-                    break;
-            }
-        });
+        /*//TODO change this function to HomeMenu. Il faut etablir qu'est-ce que projectManager va vraiment prendre en parametre IF there is no project on User, the menu should be only create project. GROUP will connect to the Project Manager by projetc group attribute.*/
+
 
         // Admin Screen
         //ALE: Tu veux mettre quoi dans cet écran ?

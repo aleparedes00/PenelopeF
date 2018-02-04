@@ -1,4 +1,4 @@
-package models.menus;
+package views.menus;
 
 /**
  * Created by alejandraparedes on 1/27/18.
@@ -23,7 +23,7 @@ public enum ProjectHomeSelection {
             case 3:
                 return LOGOUT;
         }
-        throw new IllegalStateException("Selection doesn't exists.");
+        throw new IllegalStateException("Selection doesn't exist.");
     }
 // ALE Si voy a usar toString is voy s tomar este valor fuera de println
     @Override
