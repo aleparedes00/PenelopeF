@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static tools.ScannerTools.scanInt;
 import static tools.ScannerTools.scanString;
-
+//TODO: change name of class from PROJECTView to ProjectManagerView
 
 /**
  * Created by alejandraparedes on 1/21/18.
@@ -22,23 +22,15 @@ public class ProjectView {
         System.out.println("[PROJECT TEST] \nAvailable Commands");
         System.out.println("1.-" + ProjectHomeSelection.CREATE_PROJECT);
         System.out.println("2.-" + ProjectHomeSelection.LIST_PROJECTS);
+        System.out.println("3.-" + ProjectHomeSelection.LOGOUT);
         System.out.println("Please select a number option between 1 and 2");
-        return ProjectHomeSelection.valueOf(scanInt(1, 2));
+        return ProjectHomeSelection.valueOf(scanInt(1, 3));
     }
 
     /*Print Project Information*/
     public ProjectElements drawPrintProject(Project project) {
         System.out.println("Project Name: " + project.getNameOfProject());
-        /*List<String> stringList = new ArrayList<>();
-        for (Task task : project.getArrayTask()) {
-            stringList.add(task.getTitle());
-        }*///ce for fait le même code que celui commente en bas. Il récupére les titres des tasks depuis project et transforme en array (collection)
 
-        /*stringList = project
-                .getArrayTask()
-                .stream()
-                .map(task -> task.getTitle())
-                .collect(toList());*/
         System.out.println("1.-" + ProjectElements.TASK + ":");
         project.getArrayTask().forEach(task -> System.out.println(task.getTitle()));
         System.out.println("2.-" + ProjectElements.DOCUMENT + ":");
@@ -70,6 +62,7 @@ public class ProjectView {
                 return userChoice;
             }
         } while (true);
+
     }
 
     public Project createProject() {
@@ -84,7 +77,7 @@ public class ProjectView {
     public ModifyProjectMenu modifyProjectMenu(Project project) {
         System.out.println("What would you like to modify?");
         System.out.println("1.-" + ModifyProjectMenu.PROJECT_NAME + ":");
-        System.out.println("2.-"+ ModifyProjectMenu.GROUP + ":");
+        System.out.println("2.-" + ModifyProjectMenu.GROUP + ":");
         System.out.println("3.-" + ModifyProjectMenu.BACK + ".");
         System.out.println("What would you like to do?");
         return ModifyProjectMenu.valueOf(scanInt(1, 3));
@@ -93,5 +86,9 @@ public class ProjectView {
     public String printStringAndReadChoice(String sentenceToPrint) {
         System.out.println(sentenceToPrint);
         return scanString();
+    }
+
+    public void printString(String sentenceToPrint) {
+        System.out.println(sentenceToPrint);
     }
 }

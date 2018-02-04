@@ -45,7 +45,8 @@
 # Gestion des utilisateurs :
     - Si on envoie des messages en distinguant les auteurs et qu'on implémente un système de messagerie,
     il faut pouvoir identifier les utilisateurs avec des comptes, des droits etc.
-    - Exemple de problématique : j'envoie un message à l'models.User X. Comment faire en sorte qu'il apparaisse dans la
+********[ALE: Faire deux type d’utilisateur a l’interieur du message, group]
+    - Exemple de problématique : j'envoie un message à l'models.User X. Comment faire en sorte qu'il apparaisse dans la ****OBSERVEUR*****
     Mailbox de X mais pas des autres ? Comment, au lancement de l'application, déclarer que je l'utilise en tant que Y ?
     - Concernant les droits : j'ajoute un models.User au models.Group "Admin". Est-ce que j'ai le droit de faire cette modif ?
     - Il faudrait un système simple de login et mot de passe, et que chaque models.User ait une liste de droits

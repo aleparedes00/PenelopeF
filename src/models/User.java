@@ -1,5 +1,7 @@
 package models;
 
+import jdk.nashorn.internal.ir.PropertyKey;
+
 import static models.Group.ADMIN_GROUP;
 
 import java.time.LocalDateTime;
@@ -17,6 +19,7 @@ public class User {
 
     private String password;
     private ArrayList<Project> projects;
+    private ArrayList<Project> deactiveProjects;
     private ArrayList<Group> groups; // List of groups the user belongs to
 
     /* Password alphabets */
@@ -41,6 +44,7 @@ public class User {
         this.groups.add(selfGroup);
 
         this.projects = new ArrayList<>();
+        this.deactiveProjects = new ArrayList<>();
     }
 
     /* Getters */
@@ -85,6 +89,10 @@ public class User {
     public void addProject(Project project){
         this.projects.add(project);
     }
+    public void removeProject(Project project) {projects.removeIf(project1 -> project1.getId() == project.getId());}
+
+    public void addDeactiveProject(Project project) {this.deactiveProjects.add(project);}
+
 
     private String generatePassword() {
         Character[] pwdBuilder = new Character[8];

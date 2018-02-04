@@ -7,11 +7,16 @@ import java.util.UUID;
 
 public class Document {
     private String nameOfDoc;
+    private File file;
     private User owner;
+    private Project project; // The project this document belongs to
+    //private models.DocumentType type; // The type of document
     private UUID id;
 
-    public Document(String name, User owner){
+    public Document(String name, User owner, Project project){
         this.setNameOfDoc(name);
+        this.owner = owner;
+        this.project = project;
         this.id = UUID.randomUUID();
     }
 
@@ -23,25 +28,28 @@ public class Document {
         this.nameOfDoc = nameOfDoc;
     }
 
+
+
+
+    /* Getters */
+    public File getFile() {
+        //this.file.getName() TODO on recupère le fichier
+        return file;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
     public UUID getId() {
         return id;
-    }
-    /*
-
-    private File file;
-    private Project project; // The project this document belongs to
-    private models.DocumentType type; // The type of document
-
-    *//* Getters *//*
-    public File getFile() {
-        return file;
     }
 
     public Project getProject() {
         return project;
     }
 
-    public models.DocumentType getType() {
+   /* public models.DocumentType getType() {
         return type;
     }*/
 }

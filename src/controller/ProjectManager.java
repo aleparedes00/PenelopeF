@@ -45,7 +45,8 @@ public class ProjectManager {
                     controlModifyProject(this.user.getProjects().get(projectIndex));
                     break;
                 case DEACTIVATE:
-                    System.out.println("Deactivating the project");
+                    controlDeactiveProject(this.user.getProjects().get(projectIndex));
+                    ctx.leaveCurrentMenu = TRUE;
                     break;
                 case BACK:
                     ctx.leaveCurrentMenu = TRUE;
@@ -69,6 +70,12 @@ public class ProjectManager {
                     ctx.leaveCurrentMenu = TRUE;
             }
         });
+    }
+
+    private void controlDeactiveProject(Project project) {
+        this.user.addDeactiveProject(project);
+        this.user.removeProject(project);
+        this.projectView.printString("Your project has been successfully deactive");
     }
 
 }

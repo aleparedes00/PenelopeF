@@ -41,8 +41,13 @@ public class PenelopeF { // executable main class
                     projectManager.user.addProject(projectManager.projectView.createProject());
                     break;
                 case LIST_PROJECTS:
-                    int projectIndex = projectManager.projectView.listProjects(projectManager.user);
-                    projectManager.showProject(projectIndex - 1);
+                    if (!(projectManager.user.getProjects().isEmpty()))
+                    {
+                        int projectIndex = projectManager.projectView.listProjects(projectManager.user);
+                        projectManager.showProject(projectIndex - 1);
+                    }
+                    else
+                    {projectManager.projectView.printString("No projects to show");}
                     break;
                 case LOGOUT:
                     ctx.leaveCurrentMenu = TRUE;
