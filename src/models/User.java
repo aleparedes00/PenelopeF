@@ -85,6 +85,10 @@ public class User {
         this.password = password;
     }
 
+    public void setProjects(ArrayList<Project> projects) {
+        this.projects = projects;
+    }
+
     /* Other Methods */
     public void addProject(Project project){
         this.projects.add(project);

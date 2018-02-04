@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.function.Predicate;
+
 //TODO ProjectPriority
 public class Project {
 
@@ -83,3 +85,4 @@ public class Project {
         return new ArrayList<>(projectTask);
     }
 }
+

@@ -1,6 +1,8 @@
 package controller;
 
+import models.Project;
 import models.User;
+import repository.ProjectRepository;
 import views.HomeMenuView;
 import views.PrintTools;
 import views.ProjectManagerView;
@@ -12,11 +14,13 @@ import static tools.MenuTools.showMenu;
 public class HomeMenu {
 
     public final User user;
+    public final ProjectRepository repository;
     HomeMenuView homeMenuView = new HomeMenuView();
 
     /*Constructor*/
-    public HomeMenu(User user) {
+    public HomeMenu(User user, ProjectRepository repository) {
         this.user = user;
+        this.repository = repository;
     }
 
     /*Getters*/
@@ -25,19 +29,25 @@ public class HomeMenu {
     }
 
     //AFTER LOGIN or even the login could be here
-    public void firstnMenuControl() {
+    public void firstMenuControl() {
         showMenu((ctx) -> {
             switch (homeMenuView.showAndSelectHome()) {
                 case CREATE_PROJECT:
-                    user.addProject(homeMenuView.createProject());
+                    Project project = homeMenuView.createProject();
+                    user.addProject(project);
+                    repository.createNew(project);
                     break;
                 case LIST_PROJECTS:
                     if (!(user.getProjects().isEmpty())) {
                         int projectIndex = homeMenuView.listProjects(user);
-                        System.out.println("My index is " + projectIndex);
-                        ProjectManagerView projectManagerView = new ProjectManagerView();
-                        ProjectManager projectManager = new ProjectManager(projectManagerView, user, user.getProjects().get(projectIndex));
-                        projectManager.showProject();
+                        if (projectIndex != -1) {
+                            ProjectManagerView projectManagerView = new ProjectManagerView();
+                            ProjectManager projectManager = new ProjectManager(projectManagerView, user, user.getProjects().get(projectIndex));
+                            projectManager.showProject();
+                        }
+                        else {
+                            ctx.leaveCurrentMenu = TRUE; //TODO how to reprint this menu if I realise that the project I want isn't there or actually I need to create one
+                        }
                     } else {
                         PrintTools.printString("No projects to show");
                     }
