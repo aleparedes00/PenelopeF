@@ -46,7 +46,7 @@ public class HomeMenu {
                             projectManager.showProject();
                         }
                         else {
-                            ctx.leaveCurrentMenu = TRUE; //TODO how to reprint this menu if I realise that the project I want isn't there or actually I need to create one
+                            ctx.leaveCurrentMenu = TRUE; //TODO how to reprint this menu if I realise that the project I want isn't there or actually I need to create one OR just put a Create Project button
                         }
                     } else {
                         PrintTools.printString("No projects to show");

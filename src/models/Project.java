@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -12,6 +13,7 @@ public class Project {
     private ArrayList<Document> files;
     private Group group;
     private UUID id;
+    private Date date;
     /** ALE this is the explanation about the random ID generator.
      * Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
      *
@@ -37,6 +39,7 @@ public class Project {
         projectTask = new ArrayList<>();
         files = new ArrayList<>();
         this.id = UUID.randomUUID();
+        date = new Date();
     }
 
     public Boolean addToArrayTask(Task task) {
@@ -81,6 +84,14 @@ public class Project {
 
     public ArrayList<Document> getFiles() {
         return new ArrayList<>(files);
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public ArrayList<Task> getArrayTask() {
