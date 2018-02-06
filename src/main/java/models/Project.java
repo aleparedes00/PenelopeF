@@ -3,13 +3,12 @@ package models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 //TODO ProjectPriority
 public class Project {
 
     private String nameOfProject;
-    private ArrayList<Task> projectTask;
+    private ArrayList<Task> projectTasks;
     private ArrayList<Document> files;
     private Group group;
     private UUID id;
@@ -36,18 +35,18 @@ public class Project {
     //ArrayList<Task> toDoList;
     public Project(String nameOfProject) {
         this.setNameOfProject(nameOfProject);
-        projectTask = new ArrayList<>();
+        projectTasks = new ArrayList<>();
         files = new ArrayList<>();
         this.id = UUID.randomUUID();
         date = new Date();
     }
 
     public Boolean addToArrayTask(Task task) {
-        return projectTask.add(task);
+        return projectTasks.add(task);
     }
 
     public Boolean removeTask(Task task) {
-        return projectTask.removeIf(taskInList -> taskInList.getId() == task.getId());
+        return projectTasks.removeIf(taskInList -> taskInList.getId() == task.getId());
     }
 
     public Boolean addToArrayDoc(Document file) {
@@ -94,8 +93,7 @@ public class Project {
         return date;
     }
 
-    public ArrayList<Task> getArrayTask() {
-        return new ArrayList<>(projectTask);
+    public ArrayList<Task> getProjectTasks() {
+        return new ArrayList<>(projectTasks);
     }
 }
-

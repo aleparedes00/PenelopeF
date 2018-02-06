@@ -21,7 +21,7 @@ public class HomeMenuView {
     }
 
     public Project createProject() {
-        System.out.println("Welcome to the Project Manager.\nProject Name: ");
+        System.out.print("Welcome to the Project creation wizard.\nProject Name: ");
         String name = scanString();
         Project project = new Project(name);
         System.out.println("New project created. Name: " + project.getNameOfProject());
