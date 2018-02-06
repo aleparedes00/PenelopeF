@@ -3,7 +3,7 @@ package tools;
 import java.util.Scanner;
 
 public class ScannerTools {
-    static Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
 
     public static String scanString() {
         return sc.nextLine();

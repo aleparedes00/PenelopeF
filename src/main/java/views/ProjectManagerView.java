@@ -3,14 +3,8 @@ package views;
 import models.Project;
 import views.menus.ModifyProjectMenu;
 import views.menus.ProjectElements;
-import models.User;
-import views.menus.ProjectHomeSelection;
-
-import java.util.ArrayList;
 
 import static tools.ScannerTools.scanInt;
-import static tools.ScannerTools.scanString;
-import static views.PrintTools.printStringAndReadIntegre;
 
 /**
  * Created by alejandraparedes on 1/21/18.

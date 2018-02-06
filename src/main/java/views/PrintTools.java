@@ -10,7 +10,7 @@ public class PrintTools {
         return scanString();
     }
 
-    public static Integer printStringAndReadIntegre(String sentenceToPrint, int minimal, int max) {
+    public static Integer printStringAndReadInteger(String sentenceToPrint, int minimal, int max) {
         System.out.println(sentenceToPrint);
         return scanInt(minimal, max);
     }

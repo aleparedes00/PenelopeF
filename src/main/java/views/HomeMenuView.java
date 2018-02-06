@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static tools.ScannerTools.scanInt;
 import static tools.ScannerTools.scanString;
-import static views.PrintTools.printStringAndReadIntegre;
+import static views.PrintTools.printStringAndReadInteger;
 
 public class HomeMenuView {
     //Equal to printAvailableCommands
@@ -17,7 +17,7 @@ public class HomeMenuView {
         System.out.println("1.-" + ProjectHomeSelection.CREATE_PROJECT);
         System.out.println("2.-" + ProjectHomeSelection.LIST_PROJECTS);
         System.out.println("3.-" + ProjectHomeSelection.LOGOUT);
-        return ProjectHomeSelection.valueOf(printStringAndReadIntegre("Please select a number option between 1 and 3", 1, 3));
+        return ProjectHomeSelection.valueOf(printStringAndReadInteger("Please select a number option between 1 and 3", 1, 3));
     }
 
     public Project createProject() {

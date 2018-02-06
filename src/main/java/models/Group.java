@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Group {
 
-    public static String ADMIN_GROUP = "root";
+    static String ADMIN_GROUP = "root";
 
     private String name;
     private ArrayList<User> users;

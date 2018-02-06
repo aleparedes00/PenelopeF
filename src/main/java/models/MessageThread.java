@@ -6,7 +6,7 @@ public class MessageThread implements MessageList {
     private LinkedList<Message> thread;
 
     public MessageThread(Message originalMessage) {
-        this.thread = new LinkedList();
+        this.thread = new LinkedList<>();
         thread.add(originalMessage);
     }
 

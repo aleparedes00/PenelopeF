@@ -57,7 +57,7 @@ public class UserSystem {
         } else System.out.println("User not found.");
     }
 
-    public void addUserToGroup(User user, Group group) {
+    private void addUserToGroup(User user, Group group) {
         group.getUsers().add(user);
         user.getGroups().add(group);
         System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
@@ -72,7 +72,7 @@ public class UserSystem {
         } else System.out.println("User not found.");
     }
 
-    public void changepassword(User user, boolean fromAdmin) {
+    private void changepassword(User user, boolean fromAdmin) {
         String oldPwd = "";
         if (!fromAdmin) {
             System.out.print("Old password? ");
@@ -99,7 +99,7 @@ public class UserSystem {
         changepassword(user, false);
     }
 
-    public boolean hasRightFormat(String pwd) {
+    private boolean hasRightFormat(String pwd) {
         boolean hasCap = false;
         boolean hasNum = false;
         boolean hasSpecial = false;

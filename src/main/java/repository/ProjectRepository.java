@@ -1,7 +1,7 @@
 package repository;
 
-import com.oracle.javafx.jmx.json.JSONReader;
-import jdk.nashorn.internal.parser.JSONParser;
+//import com.oracle.javafx.jmx.json.JSONReader;
+//import jdk.nashorn.internal.parser.JSONParser;
 import models.Project;
 
 import java.io.*;
@@ -37,7 +37,7 @@ public class ProjectRepository {
         File propertiesFile = new File( path + "/" + project.getId() + ".properties");
         try (FileWriter writer = new FileWriter(propertiesFile)) {
             Properties projectProperties = new Properties();
-            projectProperties.setProperty("nameOfProject", project.getNameOfProject().toString());
+            projectProperties.setProperty("nameOfProject", project.getNameOfProject());
             projectProperties.setProperty("id", project.getId().toString());
             projectProperties.setProperty("dateCreation", project.getDate().toString());
             projectProperties.store(writer, "Creation of project");
@@ -52,11 +52,13 @@ public class ProjectRepository {
         File folder = new File("Project/");
         File[] projectsFiles = folder.listFiles();
         ArrayList<Project> projects = new ArrayList<>();
-        String nameOfProject = new String();
-        for (int i = 0; i < projectsFiles.length; i++) {
-            // read each project file, load the project and add it to projects
-            Project project = readProject(projectsFiles[i]);
-            projects.add(project);
+        //String nameOfProject = new String();
+        if (projectsFiles != null) {
+            for (File projectsFile : projectsFiles) {
+                // read each project file, load the project and add it to projects
+                Project project = readProject(projectsFile);
+                projects.add(project);
+            }
         }
         return projects;
     }
@@ -79,7 +81,7 @@ public class ProjectRepository {
 
     public static void main(String[] args) {
         ProjectRepository repository = new ProjectRepository();
-        repository.initiateProgram();
+        initiateProgram();
         Project project = new Project("somethingNew");
         //repository.createFolder(project);
         repository.createNew(project);

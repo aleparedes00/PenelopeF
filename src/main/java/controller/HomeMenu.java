@@ -13,9 +13,9 @@ import static tools.MenuTools.showMenu;
 
 public class HomeMenu {
 
-    public final User user;
-    public final ProjectRepository repository;
-    HomeMenuView homeMenuView = new HomeMenuView();
+    private final User user;
+    private final ProjectRepository repository;
+    private HomeMenuView homeMenuView = new HomeMenuView();
 
     /*Constructor*/
     public HomeMenu(User user, ProjectRepository repository) {

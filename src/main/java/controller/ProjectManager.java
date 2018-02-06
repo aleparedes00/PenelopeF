@@ -15,9 +15,9 @@ import static tools.MenuTools.showMenu;
 @SuppressWarnings("SpellCheckingInspection")
 public class ProjectManager {
 
-    public final ProjectManagerView projectManagerView;
-    public User user;
-    public Project project;
+    private final ProjectManagerView projectManagerView;
+    private User user;
+    private Project project;
 
     /*Constructor*/
     public ProjectManager(ProjectManagerView projectManagerView, User user, Project project) {

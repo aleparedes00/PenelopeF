@@ -31,7 +31,7 @@ public class PenelopeF { // executable main class
 
         // Initialize repository
         ProjectRepository projectRepository = new ProjectRepository();
-        projectRepository.initiateProgram();
+        ProjectRepository.initiateProgram();
         activeUser.setProjects(projectRepository.readAndLoadProjectArray());
         HomeMenu homeMenu = new HomeMenu(activeUser, projectRepository);
         homeMenu.firstMenuControl();
