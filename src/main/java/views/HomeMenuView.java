@@ -1,5 +1,7 @@
 package views;
 
+import models.Group;
+import models.Priority;
 import models.Project;
 import models.User;
 import views.menus.ProjectHomeSelection;
@@ -23,7 +25,7 @@ public class HomeMenuView {
     public Project createProject() {
         System.out.println("Welcome to the Project Manager.\nProject Name: ");
         String name = scanString();
-        Project project = new Project(name);
+        Project project = new Project(name, new Group("default"), Priority.NORMAL); // TODO: Group selection, from current user's list of groups + Priority selection
         System.out.println("New project created. Name: " + project.getNameOfProject());
         //TODO System.out.println("Add:" + "\n1.-" + ProjectElements.TASK + "\n2.-" + ProjectElements.DOCUMENT + "\n3.-" + ProjectElements.GROUP);
         return project;

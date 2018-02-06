@@ -106,14 +106,14 @@
 ******ALE: https://stackoverflow.com/questions/2378402/jackson-vs-gson
 J’ai parlé avec Tom et puis j’ai lu un peu sur internet et Jackson, une autre lib pour la sérialisation est apparement mieux. Le lien en haut donne plus de détailles sur ce que l’un fait contre l’autre.
 
-    - À étudier.
+    - [02-06] Nous utiliserons a priori Jackson. Tutoriel : http://www.baeldung.com/jackson
 
 # Dépendences
     - Pour l'instant, on n'utilise que notre propre code. Mais on sera amené à utiliser des librairies extérieures.
     - Ex: Gson pour la sérialisation, Jasypt pour l'encryption des mots de passe
     - Pour les utiliser, soit on download les jar et on les inclut au projet,
     soit on utilise un outil de gestion de dépendences comme Maven (pourra être utile si beaucoup de dépendences)
-    - À étudier.
+    - [02-06] Maven est maintenant incorporé au projet.
 
 # Versioning
     - En fin de session, penser à toujours commit aux deux endroits : svn, puis git.

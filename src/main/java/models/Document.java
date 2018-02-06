@@ -9,14 +9,14 @@ public class Document {
     private String nameOfDoc;
     private File file;
     private User owner;
-    private Project project; // The project this document belongs to
+    //private Project project; // The project this document belongs to [Update 2018-02-06: might not be needed anymore, see to-do below]
     //private models.DocumentType type; // The type of document
     private UUID id;
 
     public Document(String name, User owner, Project project){
         this.setNameOfDoc(name);
         this.owner = owner;
-        this.project = project; //TODO I'm not sure if this is redundant because we have an ArrayList<Documents>
+        //this.project = project; //TODO I'm not sure if this is redundant because we have an ArrayList<Documents> -> Alex: Yeah, we might not need this after all. Like, we won't need to access a Project from a Document. I say we comment that field for now and eventually remove it. Leaving the TODO here so we don't forget
         this.id = UUID.randomUUID();
     }
 
@@ -33,8 +33,11 @@ public class Document {
 
     /* Getters */
     public File getFile() {
-        //this.file.getName() TODO On peut recuperer le nom du fichier directamente du path. What do you think?
         return file;
+    }
+
+    public String getName() {
+        return file.getName();
     }
 
     public User getOwner() {
@@ -45,9 +48,9 @@ public class Document {
         return id;
     }
 
-    public Project getProject() {
-        return project;
-    }
+//    public Project getProject() {
+//        return project;
+//    }
 
    /* public models.DocumentType getType() {
         return type;

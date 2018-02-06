@@ -1,19 +1,18 @@
 package models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
-import java.util.function.Predicate;
 
-//TODO ProjectPriority
 public class Project {
 
     private String nameOfProject;
-    private ArrayList<Task> projectTask;
+    private ArrayList<Task> projectTasks;
     private ArrayList<Document> files;
     private Group group;
     private UUID id;
-    private Date date;
+    private LocalDateTime date;
+    private Priority priority;
     /** ALE this is the explanation about the random ID generator.
      * Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
      *
@@ -34,20 +33,22 @@ public class Project {
     **  recursive way of exploring the Project with that. But there are other possible implementations.
     */
     //ArrayList<Task> toDoList;
-    public Project(String nameOfProject) {
-        this.setNameOfProject(nameOfProject);
-        projectTask = new ArrayList<>();
-        files = new ArrayList<>();
+    public Project(String nameOfProject, Group group, Priority priority) {
+        this.nameOfProject = nameOfProject;
+        this.projectTasks = new ArrayList<>();
+        this.files = new ArrayList<>();
+        this.group = group;
         this.id = UUID.randomUUID();
-        date = new Date();
+        this.date = LocalDateTime.now();
+        this.priority = priority;
     }
 
     public Boolean addToArrayTask(Task task) {
-        return projectTask.add(task);
+        return projectTasks.add(task);
     }
 
     public Boolean removeTask(Task task) {
-        return projectTask.removeIf(taskInList -> taskInList.getId() == task.getId());
+        return projectTasks.removeIf(taskInList -> taskInList.getId() == task.getId());
     }
 
     public Boolean addToArrayDoc(Document file) {
@@ -86,16 +87,20 @@ public class Project {
         return new ArrayList<>(files);
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public ArrayList<Task> getArrayTask() {
-        return new ArrayList<>(projectTask);
+    public ArrayList<Task> getProjectTasks() {
+        return new ArrayList<>(projectTasks);
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 }
 

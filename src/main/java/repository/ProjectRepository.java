@@ -2,14 +2,13 @@ package repository;
 
 //import com.oracle.javafx.jmx.json.JSONReader;
 //import jdk.nashorn.internal.parser.JSONParser;
+import models.Group;
 import models.Project;
+import models.Priority;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Properties;
-
-import static java.lang.Boolean.FALSE;
 
 public class ProjectRepository {
     public static void initiateProgram() {
@@ -68,7 +67,7 @@ public class ProjectRepository {
             Properties properties = new Properties();
             properties.load(fileReader);
             String nameOfProject = properties.get("name of project").toString();
-            Project project = new Project(nameOfProject);
+            Project project = new Project(nameOfProject, new Group("default"), Priority.NORMAL); //TODO: implement reading group ownership and priority from properties file
             project.setId((String) properties.get("id"));
             // read all tasks file and fill in the Project
             // read all documents file and fill in the Project
@@ -82,7 +81,7 @@ public class ProjectRepository {
     public static void main(String[] args) {
         ProjectRepository repository = new ProjectRepository();
         initiateProgram();
-        Project project = new Project("somethingNew");
+        Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);
         repository.createNew(project);
         //System.out.println("New project created " + project.getNameOfProject());
