@@ -1,6 +1,5 @@
 package controller;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Group;
 import models.Priority;
@@ -13,11 +12,11 @@ import java.io.IOException;
 public class Serializer {
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public void serialize(Object object, String filePath) throws IOException {
+    public <T> void serialize(T object, String filePath) throws IOException {
         objectMapper.writeValue(new File(filePath), object);
     }
 
-    public Object deserialize(String filePath, Class type) throws IOException {
+    public <T> T deserialize(String filePath, Class<T> type) throws IOException {
         return objectMapper.readValue(new File(filePath), type);
     }
 
@@ -31,12 +30,12 @@ public class Serializer {
         jsonSerializer.serialize(testUser, "target/users.json");
 
 //        Deserialization: currently not working (constructor issue, investigating later)
-//        User deserializedTestUser = (User) jsonSerializer.deserialize("target/users.json", User.class);
-//        System.out.println("First Name: " + deserializedTestUser.getFirstName());
-//        System.out.println("Last Name: " + deserializedTestUser.getLastName());
-//        System.out.println("Username: " + deserializedTestUser.getUsername());
-//        System.out.println("Password: " + deserializedTestUser.getPassword());
-//        System.out.println("Groups: " + deserializedTestUser.getGroups());
-//        System.out.println("Projects: " + deserializedTestUser.getProjects());
+        User deserializedTestUser = (User) jsonSerializer.deserialize("target/users.json", User.class);
+        System.out.println("First Name: " + deserializedTestUser.getFirstName());
+        System.out.println("Last Name: " + deserializedTestUser.getLastName());
+        System.out.println("Username: " + deserializedTestUser.getUsername());
+        System.out.println("Password: " + deserializedTestUser.getPassword());
+        System.out.println("Groups: " + deserializedTestUser.getGroups());
+        System.out.println("Projects: " + deserializedTestUser.getProjects());
     }
 }

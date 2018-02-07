@@ -12,6 +12,9 @@ public class Message {
     private User author;
     private MessageThread replies;
 
+    /* Constructor by default */
+    public Message() { }
+
     /* Constructors */
     /* Message(title, content, date, user, replyUser) -> by user, in reply to replyUser */
     /* Message(title, content, date, user) -> message written by user */

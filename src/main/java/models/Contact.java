@@ -1,13 +1,14 @@
 package models;
 
-import models.User;
-
 public class Contact {
 
     private User user;
 
     private String email;
     private String phone;
+
+    /*Constructor by default*/
+    public Contact() { }
 
     /* Getters */
     public User getUser() {

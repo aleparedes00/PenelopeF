@@ -1,14 +1,11 @@
 package models;
 
-import jdk.nashorn.internal.ir.PropertyKey;
-
-import static models.Group.ADMIN_GROUP;
-
 import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Math.min;
 import static java.lang.Math.random;
+import static models.Group.ADMIN_GROUP;
 
 public class User {
 
@@ -27,6 +24,11 @@ public class User {
     public static final String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static final String NUM = "0123456789";
     public static final String SPECIAL = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+
+    /* Constructor by default */
+    public User() {
+
+    }
 
     /* Constructor */
     public User(String firstName, String lastName, String... additional) {

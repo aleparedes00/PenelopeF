@@ -9,6 +9,11 @@ public class Group {
     private String name;
     private ArrayList<User> users;
 
+    /* Constructor by default */
+    public Group() {
+
+    }
+
     /* Constructor */
     public Group(String name) {
         this.name = name;

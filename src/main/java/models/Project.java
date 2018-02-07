@@ -33,6 +33,11 @@ public class Project {
     **  recursive way of exploring the Project with that. But there are other possible implementations.
     */
     //ArrayList<Task> toDoList;
+
+    /* Constructor by default */
+    public Project() { }
+    /*Constructor*/
+
     public Project(String nameOfProject, Group group, Priority priority) {
         this.nameOfProject = nameOfProject;
         this.projectTasks = new ArrayList<>();

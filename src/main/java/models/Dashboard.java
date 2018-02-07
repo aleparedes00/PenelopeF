@@ -1,8 +1,9 @@
 package models;
 
+import models.Message.Reply;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import models.Message.Reply;
 
 /**
  * Created by alejandraparedes on 1/21/18.
@@ -10,6 +11,7 @@ import models.Message.Reply;
 public class Dashboard implements MessageList {
     private ArrayList<Message> inbox;
 
+    /*Constructor*/
     public Dashboard(){
         inbox = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();

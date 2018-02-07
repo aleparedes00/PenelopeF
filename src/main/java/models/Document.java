@@ -1,7 +1,5 @@
 package models;
 
-import models.Project;
-
 import java.io.File;
 import java.util.UUID;
 
@@ -12,6 +10,9 @@ public class Document {
     //private Project project; // The project this document belongs to [Update 2018-02-06: might not be needed anymore, see to-do below]
     //private models.DocumentType type; // The type of document
     private UUID id;
+
+    /*Constructor by default*/
+    public Document() {}
 
     public Document(String name, User owner, Project project){
         this.setNameOfDoc(name);
