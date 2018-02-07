@@ -1,9 +1,8 @@
 package models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
-
+//TODO La date posse un problème au moment de la deserialization car "Cannot construct instance of `java.time.LocalDateTime` (no Creators, like default construct, exist): cannot deserialize from Object value (no delegate- or property-based Creator)"
 public class Project {
 
     private String nameOfProject;
@@ -11,7 +10,7 @@ public class Project {
     private ArrayList<Document> files;
     private Group group;
     private UUID id;
-    private LocalDateTime date;
+    //private LocalDateTime date;
     private Priority priority;
     /** ALE this is the explanation about the random ID generator.
      * Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
@@ -44,7 +43,7 @@ public class Project {
         this.files = new ArrayList<>();
         this.group = group;
         this.id = UUID.randomUUID();
-        this.date = LocalDateTime.now();
+        //this.date = LocalDateTime.now();
         this.priority = priority;
     }
 
@@ -92,13 +91,13 @@ public class Project {
         return new ArrayList<>(files);
     }
 
-    public void setDate(LocalDateTime date) {
+    /*public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
     public LocalDateTime getDate() {
         return date;
-    }
+    }*/
 
     public ArrayList<Task> getProjectTasks() {
         return new ArrayList<>(projectTasks);

@@ -2,10 +2,13 @@ package repository;
 
 //import com.oracle.javafx.jmx.json.JSONReader;
 //import jdk.nashorn.internal.parser.JSONParser;
+
 import controller.Serializer;
 import models.Group;
 import models.Project;
 import models.Priority;
+import models.User;
+import test.TestData;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -32,18 +35,19 @@ public class ProjectRepository {
         String name = "Project/" + project.getId().toString();
         File file = new File(name);
         file.mkdirs();
-        
+
         return file.getPath();
     }
+
     public void createNew(Project project) {
-     //   String path = createFolder(project);
-        File file = new File("Project/" + project.getId().toString() + ".properties");
-       // String pathFile = file.getPath();
-      /*  try {
-            serializer.serialize(project, path + "/" + project.getNameOfProject() + ".json");
+        String pathFile = "Project/" + project.getId().toString() + ".json";
+       try {
+            serializer.serialize(project, pathFile);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+        /*String path = createFolder(project);
+        File file = new File("Project/" + project.getId().toString() + ".properties");
         try (FileWriter writer = new FileWriter(file)) {
             Properties projectProperties = new Properties();
             projectProperties.setProperty("nameOfProject", project.getNameOfProject());
@@ -54,18 +58,18 @@ public class ProjectRepository {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public ArrayList<Project> readAndLoadProjectArray() {
         File folder = new File("Project/");
         File[] projectsFiles = folder.listFiles(new FileFilter() {
-                                                    @Override
-                                                    public boolean accept(File file) {
-                                                        return !file.isHidden();
-                                                    }
-                                                });
-                ArrayList < Project > projects = new ArrayList<>();
+            @Override
+            public boolean accept(File file) {
+                return !file.isHidden();
+            }
+        });
+        ArrayList<Project> projects = new ArrayList<>();
         //String nameOfProject = new String();
         if (projectsFiles != null) {
             for (File projectsFile : projectsFiles) {
@@ -95,10 +99,14 @@ public class ProjectRepository {
 
     public static void main(String[] args) {
         ProjectRepository repository = new ProjectRepository();
+        TestData test = new TestData();
+        User user = test.project1_2();
         initiateProgram();
-        Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
+        //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);
-        repository.createNew(project);
+        for (int i = 0; i > user.getProjects().size(); i++) {
+        repository.createNew(user.getProjects().get(i));
+        }
         //System.out.println("New project created " + project.getNameOfProject());
         /*ArrayList<Project> projects = repository.readAndLoadProjectArray();
 
