@@ -63,12 +63,7 @@ public class ProjectRepository {
 
     public ArrayList<Project> readAndLoadProjectArray() {
         File folder = new File("Project/");
-        File[] projectsFiles = folder.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                return !file.isHidden();
-            }
-        });
+        File[] projectsFiles = folder.listFiles(file -> !file.isHidden());
         ArrayList<Project> projects = new ArrayList<>();
         //String nameOfProject = new String();
         if (projectsFiles != null) {

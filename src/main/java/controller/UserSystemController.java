@@ -15,6 +15,7 @@ public class UserSystemController {
     }
 
     /* Managing Users and Groups */
+    //TODO Create UserView to put the print there
     public User createUser() {
         System.out.print("First name? ");
         String firstName = scanString();
