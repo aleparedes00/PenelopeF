@@ -4,22 +4,29 @@ package repository;
 //import jdk.nashorn.internal.parser.JSONParser;
 
 import controller.Serializer;
-import models.Group;
 import models.Project;
-import models.Priority;
 import models.User;
 import test.TestData;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class ProjectRepository {
 
     private final Serializer serializer = new Serializer();
+    private final Path path;
 
-    public static void initiateProgram() {
-        File file = new File("Project/"); //This line is probably to make the user.
+    /*Constructor*/
+
+    public ProjectRepository(String folderName) {
+        this.path = initiateProgram(folderName);
+    }
+
+    public Path initiateProgram(String folderName) {
+        File file = new File(folderName); //This line is probably to make the user.
         if (!file.exists()) {
             file.mkdir();
         }
@@ -29,18 +36,22 @@ public class ProjectRepository {
         }catch (IOException e) {
             e.printStackTrace();
         }*/
+        String p = file.getPath();
+        Path path = Paths.get(p);
+        return Paths.get(file.getPath());
     }
 
     public String createFolder(Project project) {
-        String name = "Project/" + project.getId().toString();
+        String name = path + "/" + project.getNameOfProject();
         File file = new File(name);
         file.mkdirs();
 
         return file.getPath();
     }
-
     public void createNew(Project project) {
-        String pathFile = "Project/" + project.getId().toString() + ".json";
+        String pathToSave = createFolder(project);
+        System.out.println("folder: " + pathToSave);
+        String pathFile = pathToSave + "/" + project.getId().toString() + ".json";
        try {
             serializer.serialize(project, pathFile);
         } catch (IOException e) {
@@ -76,8 +87,16 @@ public class ProjectRepository {
         return projects;
     }
 
+
+
     public Project readProject(File file) {
-        try (FileReader fileReader = new FileReader(file)) {
+        try {
+            return serializer.deserialize(file.getPath(), Project.class);
+        } catch (IOException e) {
+            System.out.println("Fuck! " + e);
+        }
+
+       /* try (FileReader fileReader = new FileReader(file)) {
             Properties properties = new Properties();
             properties.load(fileReader);
             String nameOfProject = properties.get("nameOfProject").toString();
@@ -89,19 +108,31 @@ public class ProjectRepository {
             return project;
         } catch (IOException e) {
             throw new RuntimeException("GOD DAMMIT! Everything went wrong here... ", e);
-        }
+        }*/
+       return null;
+    }
+
+    public Path getPath() {
+        return path;
     }
 
     public static void main(String[] args) {
-        ProjectRepository repository = new ProjectRepository();
+        ProjectRepository repository = new ProjectRepository("Projects/");
         TestData test = new TestData();
         User user = test.project1_2();
-        initiateProgram();
         //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);
-        for (int i = 0; i > user.getProjects().size(); i++) {
+ //       repository.createNew(user.getProjects().get(0));
+        Project p = repository.readProject(new File(repository.getPath() + "/TestProject/39089c23-18f5-4e9a-b2ad-22ab46ba980a.json"));
+        System.out.println("project name : " + p.getNameOfProject());
+        /*
+        for (Project project : user.getProjects()) {
+            repository.createNew(project);
+        }*/
+        /*
+        for (int i = 0; i < user.getProjects().size(); i++) {
         repository.createNew(user.getProjects().get(i));
-        }
+        }*/
         //System.out.println("New project created " + project.getNameOfProject());
         /*ArrayList<Project> projects = repository.readAndLoadProjectArray();
 

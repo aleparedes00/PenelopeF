@@ -1,26 +1,29 @@
 package controller;
 
+import models.FSListener;
 import models.Project;
 import models.User;
 import repository.ProjectRepository;
 import views.HomeMenuView;
 import views.PrintTools;
-import views.ProjectManagerView;
+import views.ProjectView;
 
 import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
 
 
-public class HomeMenu {
-
+public class HomeMenuController implements FSListener {
+//como declarar esto como un listener también
     private final User user;
     private final ProjectRepository repository;
     private HomeMenuView homeMenuView = new HomeMenuView();
+    //private FSListenable listenable;
 
     /*Constructor*/
-    public HomeMenu(User user, ProjectRepository repository) {
+    public HomeMenuController(User user, ProjectRepository repository) {
         this.user = user;
         this.repository = repository;
+        //listenable = new FSListenable(repository.getPath(), );
     }
 
     /*Getters*/
@@ -36,14 +39,16 @@ public class HomeMenu {
                     Project project = homeMenuView.createProject();
                     user.addProject(project);
                     repository.createNew(project);
+
                     break;
                 case LIST_PROJECTS:
                     if (!(user.getProjects().isEmpty())) {
                         int projectIndex = homeMenuView.showAndSelectProject(user);
                         if (projectIndex != -1) {
-                            ProjectManagerView projectManagerView = new ProjectManagerView();
-                            ProjectManager projectManager = new ProjectManager(projectManagerView, user, user.getProjects().get(projectIndex));
-                            projectManager.showProject();
+                            ProjectView projectView = new ProjectView();
+                            ProjectController projectController = new ProjectController(projectView, user, user.getProjects().get(projectIndex));
+                            projectController.showProject();
+                            //run();
                         }
                         else {
                             ctx.leaveCurrentMenu = TRUE; //TODO how to reprint this menu if I realise that the project I want isn't there or actually I need to create one OR just put a Create Project button
@@ -57,5 +62,20 @@ public class HomeMenu {
                     break;
             }
         });
+    }
+
+    @Override
+    public void onCreate(String pathToNewFile) {
+        System.out.println("Creating");
+    }
+
+    @Override
+    public void onDelete(String pathToDeleteFile) {
+        System.out.println("deleting");
+    }
+
+    @Override
+    public void onUpdate(String pathToUpdateFile) {
+        System.out.println("updating");
     }
 }

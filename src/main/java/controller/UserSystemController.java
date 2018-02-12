@@ -1,6 +1,8 @@
 package controller;
 
-import models.*;
+import models.Group;
+import models.User;
+import models.UserSystem;
 import views.UserSystemView;
 
 import static tools.ScannerTools.scanString;
@@ -8,14 +10,16 @@ import static tools.ScannerTools.scanString;
 public class UserSystemController {
     private UserSystem model;
     private UserSystemView view;
+    private User user;
 
     public UserSystemController(UserSystem model, UserSystemView view) {
         this.model = model;
         this.view = view;
     }
 
+
     /* Managing Users and Groups */
-    //TODO Create UserView to put the print there
+    //TODO Est-ce que on devrait Create UserView to put the print there?
     public User createUser() {
         System.out.print("First name? ");
         String firstName = scanString();
@@ -25,7 +29,7 @@ public class UserSystemController {
         User user = new User(firstName, lastName);
         System.out.println("Created user " + user.getUsername() + " (" + user.getName() + ")");
         System.out.println("Password is " + user.getPassword() + ", remember it!");
-
+    this.setUser(user);
         return user;
     }
 
@@ -37,5 +41,9 @@ public class UserSystemController {
         System.out.println("Created group " + group.getName());
 
         return group;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

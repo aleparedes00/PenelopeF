@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -15,8 +17,13 @@ public class User {
     private String lastName;
 
     private String password;
+
+    @JsonIgnore
     private ArrayList<Project> projects;
+
+
     private ArrayList<Project> deactiveProjects;
+
     private ArrayList<Group> groups; // List of groups the user belongs to
 
     /* Password alphabets */

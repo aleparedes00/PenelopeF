@@ -1,9 +1,13 @@
 package controller;
 
+import models.FSListenable;
+import models.FSListener;
 import models.Project;
 import models.User;
 import views.PrintTools;
-import views.ProjectManagerView;
+import views.ProjectView;
+
+import java.io.File;
 
 import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
@@ -11,24 +15,28 @@ import static tools.MenuTools.showMenu;
 /**
  * Created by alejandraparedes on 1/21/18.
  */
-
+//This controller is listener and listenable.
+//It's listener because it wants to update its view/data throgh the FS (using repository) everytime someone changes something inside.
+// It's listenable because the model(data) that will be updated are managed will be watched (to be able to update other views and etc)
 @SuppressWarnings("SpellCheckingInspection")
-public class ProjectManager {
+public class ProjectController implements FSListener {
 
-    private final ProjectManagerView projectManagerView;
+    private final ProjectView projectView;
     private User user;
     private Project project;
+    private FSListenable listenable;
 
     /*Constructor*/
-    public ProjectManager(ProjectManagerView projectManagerView, User user, Project project) {
-        this.projectManagerView = projectManagerView;
+    public ProjectController(ProjectView projectView, User user, Project project) {
+        this.projectView = projectView;
         this.project = project;
         this.user = user;
+        this.listenable = new FSListenable(new File("./project").toPath(), this);
     }
 
     public void showProject() {
         showMenu(ctx -> {
-            switch (this.projectManagerView.drawPrintProject(project)) {
+            switch (this.projectView.drawPrintProject(project)) {
                 case TASK:
                     System.out.println("More information about Task");
                     break;
@@ -43,6 +51,7 @@ public class ProjectManager {
                     break;
                 case MODIFY:
                     controlModifyProject(project);
+                    listenable.run();
                     break;
                 case DEACTIVATE:
                     controlDeactiveProject(project);
@@ -57,7 +66,7 @@ public class ProjectManager {
 
     private void controlModifyProject(Project project) {
         showMenu(ctx -> {
-            switch (this.projectManagerView.modifyProjectMenu(project)) {
+            switch (this.projectView.modifyProjectMenu(project)) {
                 case PROJECT_NAME:
                     project.setNameOfProject(PrintTools.printStringAndReadChoice("Please, enter the new name of the project:"));
                     ctx.leaveCurrentMenu = TRUE;
@@ -78,4 +87,18 @@ public class ProjectManager {
         PrintTools.printString("Your project has been successfully deactive");
     }
 
+    @Override
+    public void onCreate(String pathToNewFile) {
+        System.out.println("I'm creting this" + pathToNewFile);
+    }
+
+    @Override
+    public void onDelete(String pathToDeleteFile) {
+        System.out.println("I'm deleating this" + pathToDeleteFile);
+    }
+
+    @Override
+    public void onUpdate(String pathToUpdateFile) {
+        System.out.println("I'm updating this" + pathToUpdateFile);
+    }
 }

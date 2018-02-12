@@ -1,4 +1,4 @@
-import controller.HomeMenu;
+import controller.HomeMenuController;
 import controller.LoginController;
 import models.Login;
 import models.SystemData;
@@ -30,14 +30,13 @@ public class PenelopeF { // executable main class
         // 3 - Admin Screen
 
         // Initialize repository
-        ProjectRepository projectRepository = new ProjectRepository();
-        ProjectRepository.initiateProgram();
+        ProjectRepository projectRepository = new ProjectRepository("./Projects");
         activeUser.setProjects(projectRepository.readAndLoadProjectArray());
-        HomeMenu homeMenu = new HomeMenu(activeUser, projectRepository);
-        homeMenu.firstMenuControl();
+        HomeMenuController homeMenuController = new HomeMenuController(activeUser, projectRepository);
+        homeMenuController.firstMenuControl();
         // Project Screen
 
-        /*//TODO change this function to HomeMenu. Il faut etablir qu'est-ce que projectManager va vraiment prendre en parametre IF there is no project on User, the menu should be only create project. GROUP will connect to the Project Manager by projetc group attribute.*/
+        /*//TODO change this function to HomeMenuController. Il faut etablir qu'est-ce que projectManager va vraiment prendre en parametre IF there is no project on User, the menu should be only create project. GROUP will connect to the Project Manager by projetc group attribute.*/
 
 
         // Admin Screen

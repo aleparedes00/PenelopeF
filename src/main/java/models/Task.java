@@ -11,7 +11,7 @@ public class Task extends Message { // Now extends Message as it has similar fie
 
     /* Constructor by default */
     public Task() { }
-
+//TODO Remplacer le LocalDateTime par un LocalDateTime.now.toString au moment de l'appel du constructeur
     /*Constructor*/
     public Task(String title, String content, /*models.Group group,*/ Priority priority, User owner){
         super(title, content, LocalDateTime.now(), owner);

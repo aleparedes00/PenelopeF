@@ -1,11 +1,10 @@
 package models;
 
-import java.io.File;
 import java.util.UUID;
 
 public class Document {
     private String nameOfDoc;
-    private File file;
+    //private File file;
     private User owner;
     //private Project project; // The project this document belongs to [Update 2018-02-06: might not be needed anymore, see to-do below]
     //private models.DocumentType type; // The type of document
@@ -33,12 +32,12 @@ public class Document {
 
 
     /* Getters */
-    public File getFile() {
+    /*public File getFile() {
         return file;
-    }
+    }*/
 
     public String getName() {
-        return file.getName();
+        return nameOfDoc;
     }
 
     public User getOwner() {

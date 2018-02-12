@@ -12,7 +12,7 @@ import static views.menus.ProjectElements.*;
 /**
  * Created by alejandraparedes on 1/21/18.
  */
-public class ProjectManagerView {
+public class ProjectView {
 
     /* Get available commands depending on project */
     ArrayList<ProjectElements> getAvailableCommands(Project project) {
