@@ -1,16 +1,12 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.UUID;
 //TODO La date posse un problème au moment de la deserialization car "Cannot construct instance of `java.time.LocalDateTime` (no Creators, like default construct, exist): cannot deserialize from Object value (no delegate- or property-based Creator)"
 public class Project {
 
-    @JsonIgnore
+
     private String nameOfProject;
-
-
     private ArrayList<Task> projectTasks;
     private ArrayList<Document> files;
     private Group group;

@@ -2,7 +2,6 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Math.min;
@@ -166,7 +165,7 @@ public class User {
         System.out.println("Add a message. Title [Enter] Content [Enter]");
         String title = sc.nextLine();
         String msg = sc.nextLine();
-        Message newMessage = new Message(title, msg, LocalDateTime.now(), this);
+        Message newMessage = new Message(title, msg, /*LocalDateTime.now(),*/ this);
         dash.addMessage(newMessage);
     }
 }

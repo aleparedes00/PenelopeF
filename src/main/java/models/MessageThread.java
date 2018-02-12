@@ -17,7 +17,7 @@ public class MessageThread implements MessageList {
     public void drawMessage(int i) {
         Message msg = thread.get(i);
 
-        System.out.println(msg.getTitle() + " | by " + msg.getAuthorName() + " on " + msg.getDate());
+        System.out.println(msg.getTitle() + " | by " + msg.getAuthorName() + " on " /*+ msg.getDate()*/);
         System.out.println("--------------------");
         System.out.println(msg.getContent());
     }

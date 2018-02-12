@@ -15,7 +15,7 @@ public class Dashboard implements MessageList {
     public Dashboard(){
         inbox = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
-        inbox.add(new Message("Hello world!", "This project was started on " + now.toString(), now));
+        inbox.add(new Message("Hello world!", "This project was started on " + now.toString()/*, now*/));
     }
 
     public ArrayList<Message> getInbox() {
@@ -27,7 +27,7 @@ public class Dashboard implements MessageList {
 
         System.out.print(msg.getTitle() + " | by " + msg.getAuthorName());
         if (msg instanceof Reply) System.out.print(" in reply to " + ((Reply) msg).getInReplyTo().getAuthorName());
-        System.out.println(" on " + msg.getDate());
+        System.out.println(" on " /*+ msg.getDate()*/);
         System.out.println("--------------------");
         System.out.println(msg.getContent());
     }
@@ -45,7 +45,7 @@ public class Dashboard implements MessageList {
     }
 
     public void addReply(String content, Message originalMessage, User author) {
-        Message reply = new Message("RE: " + originalMessage.getTitle(), content, LocalDateTime.now(), author);
+        Message reply = new Message("RE: " + originalMessage.getTitle(), content,/* LocalDateTime.now(),*/ author);
         inbox.add(reply);
         originalMessage.addReply(reply);
     }
