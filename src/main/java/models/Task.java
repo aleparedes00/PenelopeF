@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public class Task extends Message { // Now extends Message as it has similar fields (a title, a content, an author) and methods
 
-    //private models.Group group;
     private String date;
     private Priority priority;
     private UUID id;

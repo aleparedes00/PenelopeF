@@ -18,8 +18,10 @@ public class Project {
     private ArrayList<UUID> filesIds;
 
     //private Dashboard dashboard;
-
+    @JsonIgnore
     private Group group;
+    private UUID groupID;
+
     private String date;
     private Priority priority;
     private UUID id;
@@ -56,6 +58,7 @@ public class Project {
         this.files = new ArrayList<>();
         this.filesIds = new ArrayList<>();
         this.group = group;
+        this.groupID = group.getId();
         this.id = UUID.randomUUID();
         this.date = date;
         this.priority = priority;
