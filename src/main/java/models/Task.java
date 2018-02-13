@@ -5,15 +5,16 @@ import java.util.UUID;
 public class Task extends Message { // Now extends Message as it has similar fields (a title, a content, an author) and methods
 
     //private models.Group group;
+    private String date;
     private Priority priority;
     private UUID id;
 
     /* Constructor by default */
     public Task() { }
-//TODO Remplacer le LocalDateTime par un LocalDateTime.now.toString au moment de l'appel du constructeur
+
     /*Constructor*/
-    public Task(String title, String content, /*models.Group group,*/ Priority priority, User owner){
-        super(title, content, /*LocalDateTime.now(),*/ owner);
+    public Task(String title, String content, String date, /*models.Group group,*/ Priority priority, User owner){
+        super(title, content, date, owner);
         this.priority = priority;
         this.id = UUID.randomUUID();
     }

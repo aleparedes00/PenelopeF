@@ -1,19 +1,29 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.UUID;
-//TODO La date posse un problème au moment de la deserialization car "Cannot construct instance of `java.time.LocalDateTime` (no Creators, like default construct, exist): cannot deserialize from Object value (no delegate- or property-based Creator)"
+
 public class Project {
 
+    private String name;
 
-    private String nameOfProject;
-    private ArrayList<Task> projectTasks;
+    @JsonIgnore
+    private ArrayList<Task> tasks;
+    private ArrayList<UUID> tasksIds;
+
+    @JsonIgnore
     private ArrayList<Document> files;
+    private ArrayList<UUID> filesIds;
+
+    //private Dashboard dashboard;
+
     private Group group;
+    private String date;
+    private Priority priority;
     private UUID id;
 
-    //private LocalDateTime date;
-    private Priority priority;
     /** ALE this is the explanation about the random ID generator.
      * Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
      *
@@ -39,74 +49,90 @@ public class Project {
     public Project() { }
     /*Constructor*/
 
-    public Project(String nameOfProject, Group group, Priority priority) {
-        this.nameOfProject = nameOfProject;
-        this.projectTasks = new ArrayList<>();
+    public Project(String nameOfProject, Group group, String date, Priority priority) {
+        this.name = nameOfProject;
+        this.tasks = new ArrayList<>();
+        this.tasksIds = new ArrayList<>();
         this.files = new ArrayList<>();
+        this.filesIds = new ArrayList<>();
         this.group = group;
         this.id = UUID.randomUUID();
-        //this.date = LocalDateTime.now();
+        this.date = date;
         this.priority = priority;
     }
 
-    public Boolean addToArrayTask(Task task) {
-        return projectTasks.add(task);
+    public void addTask(Task task) {
+        tasks.add(task);
+        tasksIds.add(task.getId());
     }
 
-    public Boolean removeTask(Task task) {
-        return projectTasks.removeIf(taskInList -> taskInList.getId() == task.getId());
+    public void removeTask(Task task) {
+        tasks.removeIf(t -> t.getId() == task.getId());
+        tasksIds.removeIf(tId -> tId == task.getId());
     }
 
-    public Boolean addToArrayDoc(Document file) {
-        return files.add(file);
+    public void addDocument(Document file) {
+        files.add(file);
+        filesIds.add(file.getId());
     }
 
-    public Boolean removeDoc(Document file) {
-        return files.removeIf(document -> document.getId() == file.getId());
+    public void removeDoc(Document file) {
+        files.removeIf(f -> f.getId() == file.getId());
+        filesIds.removeIf(fId -> fId == file.getId());
     }
-
 
     public void setGroup(Group group) {
         this.group = group;
     }
 
     /* Getters */
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return new ArrayList<>(tasks);
+    }
+    public ArrayList<UUID> getTasksIds() {
+        return tasksIds;
+    }
+
+    public ArrayList<Document> getFiles() {
+        return new ArrayList<>(files);
+    }
+    public ArrayList<UUID> getFilesIds() {
+        return filesIds;
+    }
+
     public Group getGroup() {
         return group;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public UUID getId() {
         return id;
     }
 
+    /* Setters */
     public void setId(String idStr) { id = UUID.fromString(idStr); }
 
-    public String getNameOfProject() {
-        return nameOfProject;
-    }
-
-    public void setNameOfProject(String nameOfProject) {
-        this.nameOfProject = nameOfProject;
-    }
-
-    public ArrayList<Document> getFiles() {
-        return new ArrayList<>(files);
+    public void setName(String name) {
+        this.name = name;
     }
 
     /*public void setDate(LocalDateTime date) {
         this.date = date;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
     }*/
 
-    public ArrayList<Task> getProjectTasks() {
-        return new ArrayList<>(projectTasks);
-    }
 
-    public Priority getPriority() {
-        return priority;
-    }
+
+
 }
 

@@ -1,5 +1,9 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.UUID;
+
 /**
  * Created by alejandraparedes on 1/21/18.
  */
@@ -9,9 +13,14 @@ package models;
 public class Message {
     private String title;
     private String content;
-    //private LocalDateTime date;
+    private String date;
+
+    @JsonIgnore
     private User author;
+    private UUID authorId;
+
     private MessageThread replies;
+    private UUID id;
 
     /* Constructor by default */
     public Message() { }
@@ -20,24 +29,26 @@ public class Message {
     /* Message(title, content, date, user, replyUser) -> by user, in reply to replyUser */
     /* Message(title, content, date, user) -> message written by user */
     /* Message(title, content, date) -> message written by system */
-    public Message(String title, String content, /*LocalDateTime date,*/ User author){
+    public Message(String title, String content, String date, User author){
         setContent(content);
         setTitle(title);
-        //this.date = date;
+        this.date = date;
         this.author = author;
+        this.authorId = author.getId();
         this.replies = new MessageThread(this);
+        this.id = UUID.randomUUID();
     }
 
-    public Message(String title, String content/*, LocalDateTime date*/) {
-        this(title, content, /*date,*/ null);
+    public Message(String title, String content, String date) {
+        this(title, content, date, null);
     }
 
     /* Sub-class for replies */
     class Reply extends Message {
         private Message inReplyTo;
 
-        public Reply(String title, String content, /*LocalDateTime date,*/ User author, Message inReplyTo) {
-            super(title, content, /*date,*/ author);
+        public Reply(String title, String content, String date, User author, Message inReplyTo) {
+            super(title, content, date, author);
             this.inReplyTo = inReplyTo;
         }
 
@@ -46,35 +57,45 @@ public class Message {
         }
     }
 
-    /* Methods */
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
+    /* Getters */
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getContent() {
+        return content;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public User getAuthor() {
         return author;
     }
 
+    public MessageThread getReplies() {
+        return replies;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
     public String getAuthorName() {
         return (author != null) ? author.getUsername() : "System";
     }
 
- /*   public LocalDateTime getDate() {
-        return date;
-    }*/
+    /* Setters */
+    public void setContent(String content) {
+        this.content = content;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /* Other Methods */
     public void addReply(Message reply) {
         replies.addReply(reply);
     }

@@ -42,7 +42,7 @@ public class ProjectRepository {
     }
 
     public String createFolder(Project project) {
-        String name = path + "/" + project.getNameOfProject();
+        String name = path + "/" + project.getName();
         File file = new File(name);
         file.mkdirs();
 
@@ -61,7 +61,7 @@ public class ProjectRepository {
         File file = new File("Project/" + project.getId().toString() + ".properties");
         try (FileWriter writer = new FileWriter(file)) {
             Properties projectProperties = new Properties();
-            projectProperties.setProperty("nameOfProject", project.getNameOfProject());
+            projectProperties.setProperty("nameOfProject", project.getName());
             projectProperties.setProperty("id", project.getId().toString());
             projectProperties.setProperty("dateCreation", project.getDate().toString());
             projectProperties.store(writer, "Creation of project");
@@ -124,7 +124,7 @@ public class ProjectRepository {
         //repository.createFolder(project);
         //repository.createNew(user.getProjects().get(0));
         Project p = repository.readProject(new File(repository.getPath() + "/TestProject/fc37b35e-8ddd-4cc5-b563-00f162e35d0a.json"));
-        System.out.println("project name : " + p.getNameOfProject());
+        System.out.println("project name : " + p.getName());
         /*
         for (Project project : user.getProjects()) {
             repository.createNew(project);
@@ -133,11 +133,11 @@ public class ProjectRepository {
         for (int i = 0; i < user.getProjects().size(); i++) {
         repository.createNew(user.getProjects().get(i));
         }*/
-        //System.out.println("New project created " + project.getNameOfProject());
+        //System.out.println("New project created " + project.getName());
         /*ArrayList<Project> projects = repository.readAndLoadProjectArray();
 
         for (int i = 0; i < projects.size(); i++) {
-            System.out.println(projects.get(i).getNameOfProject().replace(".json", ""));
+            System.out.println(projects.get(i).getName().replace(".json", ""));
         }*/
     }
 }

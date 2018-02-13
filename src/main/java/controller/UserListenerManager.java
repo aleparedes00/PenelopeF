@@ -23,7 +23,7 @@ public class UserListenerManager {
         System.out.println("New task has been added\nName:" + task.getTitle() + "\nfrom " + task.getAuthorName() + "priority " + task.getPriority());
     }
     public void updateDoc(Document document){
-        System.out.println("New doc has been added\nName:" +document.getNameOfDoc() + "\nfrom" + document.getOwner().getUsername());
+        System.out.println("New doc has been added\nName:" +document.getName() + "\nfrom" + document.getOwner().getUsername());
     }
 }
 

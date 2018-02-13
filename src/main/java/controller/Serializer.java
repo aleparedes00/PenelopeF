@@ -9,6 +9,8 @@ import models.User;
 import java.io.File;
 import java.io.IOException;
 
+import static tools.DateTools.now;
+
 public class Serializer {
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -21,13 +23,18 @@ public class Serializer {
     }
 
     public static void main(String[] args) throws IOException {
-        Project testProject = new Project("Test Project", new Group("Dev"), Priority.HIGH);
+        Project testProject = new Project("Test Project", new Group("Dev"), now(), Priority.HIGH);
         Serializer jsonSerializer = new Serializer();
         jsonSerializer.serialize(testProject, "Project/project1.json");
 
         User testUser = new User("Test", "User");
         testUser.addProject(testProject);
-        jsonSerializer.serialize(testUser, "target/users.json");
+        jsonSerializer.serialize(testUser, "target/user1.json");
+
+        Project deserializedProject = jsonSerializer.deserialize("Project/project1.json", Project.class);
+        System.out.println("Project Name: " + deserializedProject.getName());
+        System.out.println("Project Date: " + deserializedProject.getDate());
+
 
 //        Deserialization: currently not working (constructor issue, investigating later)
         //User deserializedTestUser = (User) jsonSerializer.deserialize("target/users.json", User.class);

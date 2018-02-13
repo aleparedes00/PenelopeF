@@ -18,7 +18,7 @@ public class ProjectView {
     ArrayList<ProjectElements> getAvailableCommands(Project project) {
         ArrayList<ProjectElements> availableCommands = new ArrayList<>();
 
-        if (!project.getProjectTasks().isEmpty()) availableCommands.add(TASK);
+        if (!project.getTasks().isEmpty()) availableCommands.add(TASK);
         if (!project.getFiles().isEmpty()) availableCommands.add(DOCUMENT);
         availableCommands.add(GROUP);
         availableCommands.add(DASHBOARD);
@@ -32,7 +32,7 @@ public class ProjectView {
 
     /*Print Project Information*/
     public ProjectElements drawPrintProject(Project project) {
-        System.out.println("Project Name: " + project.getNameOfProject());
+        System.out.println("Project Name: " + project.getName());
         ArrayList<ProjectElements> availableCommands = getAvailableCommands(project);
 
         for (int i = 0; i < availableCommands.size(); i++) {
@@ -42,7 +42,7 @@ public class ProjectView {
         return availableCommands.get(scanInt(1, availableCommands.size()) - 1);
 
 //        System.out.println("1.-" + TASK + ":");
-//        project.getProjectTasks().forEach(task -> System.out.println(task.getTitle()));
+//        project.getTasks().forEach(task -> System.out.println(task.getTitle()));
 //        System.out.println("2.-" + ProjectElements.DOCUMENT + ":");
 //        project.getFiles().forEach(document -> System.out.println(document.getNameOfDoc()));
 //        System.out.println("3.-" + ProjectElements.GROUP + ":" + project.getGroup().getName());

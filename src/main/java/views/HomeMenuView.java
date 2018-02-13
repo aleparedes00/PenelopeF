@@ -8,6 +8,7 @@ import views.menus.ProjectHomeSelection;
 
 import java.util.ArrayList;
 
+import static tools.DateTools.now;
 import static tools.ScannerTools.scanInt;
 import static tools.ScannerTools.scanString;
 import static views.PrintTools.printStringAndReadInteger;
@@ -25,8 +26,8 @@ public class HomeMenuView {
     public Project createProject() {
         System.out.println("Welcome to the Project Manager.\nProject Name: ");
         String name = scanString();
-        Project project = new Project(name, new Group("default"), Priority.NORMAL); // TODO: Group selection, from current user's list of groups + Priority selection
-        System.out.println("New project created. Name: " + project.getNameOfProject());
+        Project project = new Project(name, new Group("default"), now(), Priority.NORMAL); // TODO: Group selection, from current user's list of groups + Priority selection
+        System.out.println("New project created. Name: " + project.getName());
         //TODO System.out.println("Add:" + "\n1.-" + ProjectElements.TASK + "\n2.-" + ProjectElements.DOCUMENT + "\n3.-" + ProjectElements.GROUP);
         return project;
     }
@@ -34,7 +35,7 @@ public class HomeMenuView {
     public int showAndSelectProject(User user) {
         ArrayList<String> projectNames = new ArrayList<>();
         for (Project project : user.getProjects()) {
-            projectNames.add(project.getNameOfProject());
+            projectNames.add(project.getName());
         }
         System.out.println("User: " + user.getUsername());
         System.out.println("Your projects: ");

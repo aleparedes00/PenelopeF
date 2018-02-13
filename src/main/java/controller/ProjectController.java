@@ -68,7 +68,7 @@ public class ProjectController implements FSListener {
         showMenu(ctx -> {
             switch (this.projectView.modifyProjectMenu(project)) {
                 case PROJECT_NAME:
-                    project.setNameOfProject(PrintTools.printStringAndReadChoice("Please, enter the new name of the project:"));
+                    project.setName(PrintTools.printStringAndReadChoice("Please, enter the new name of the project:"));
                     ctx.leaveCurrentMenu = TRUE;
                     break;
                 case GROUP:
@@ -82,7 +82,7 @@ public class ProjectController implements FSListener {
     }
 
     private void controlDeactiveProject(Project project) {
-        this.user.addDeactiveProject(project);
+        //this.user.addDeactiveProject(project);
         this.user.removeProject(project);
         PrintTools.printString("Your project has been successfully deactive");
     }

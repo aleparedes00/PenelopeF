@@ -1,29 +1,37 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.Message.Reply;
+import static tools.DateTools.now;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by alejandraparedes on 1/21/18.
  */
 public class Dashboard implements MessageList {
-    private ArrayList<Message> inbox;
+    @JsonIgnore
+    private ArrayList<Message> messages;
+    private ArrayList<UUID> messagesIds;
 
     /*Constructor*/
-    public Dashboard(){
-        inbox = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
-        inbox.add(new Message("Hello world!", "This project was started on " + now.toString()/*, now*/));
+    public Dashboard() {
+        messages = new ArrayList<>();
+        String now = now();
+        messages.add(new Message("Hello world!", "This project was started on " + now, now));
     }
 
-    public ArrayList<Message> getInbox() {
-        return inbox;
+    /* Getters */
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+    public ArrayList<UUID> getMessagesIds() {
+        return messagesIds;
     }
 
     public void drawMessage(int i) {
-        Message msg = inbox.get(i);
+        Message msg = messages.get(i);
 
         System.out.print(msg.getTitle() + " | by " + msg.getAuthorName());
         if (msg instanceof Reply) System.out.print(" in reply to " + ((Reply) msg).getInReplyTo().getAuthorName());
@@ -33,20 +41,22 @@ public class Dashboard implements MessageList {
     }
 
     public void drawMessageList() {
-        for (int i = 1; i <= inbox.size(); i++) {
+        for (int i = 1; i <= messages.size(); i++) {
             System.out.println("[" + i + "]-----------------------------------------------");
-            drawMessage(inbox.size() - i);
+            drawMessage(messages.size() - i);
         }
         System.out.println("--------------------------------------------------");
     }
 
     public void addMessage(Message msg) {
-        inbox.add(msg);
+        messages.add(msg);
+        messagesIds.add(msg.getId());
     }
 
     public void addReply(String content, Message originalMessage, User author) {
-        Message reply = new Message("RE: " + originalMessage.getTitle(), content,/* LocalDateTime.now(),*/ author);
-        inbox.add(reply);
+        Message reply = new Message("RE: " + originalMessage.getTitle(), content, now(), author);
+        messages.add(reply);
+        messagesIds.add(reply.getId());
         originalMessage.addReply(reply);
     }
 }

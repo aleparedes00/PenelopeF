@@ -2,6 +2,7 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Math.min;
@@ -19,11 +20,15 @@ public class User {
 
     @JsonIgnore
     private ArrayList<Project> projects;
+    private ArrayList<UUID> projectsIds;
 
+    //private ArrayList<Project> deactiveProjects;
 
-    private ArrayList<Project> deactiveProjects;
+    @JsonIgnore
+    private ArrayList<Group> groups;
+    private ArrayList<UUID> groupsIds;
 
-    private ArrayList<Group> groups; // List of groups the user belongs to
+    private UUID id;
 
     /* Password alphabets */
     public static final String ALPHA = "abcdefghijklmnopqrstuvwxyz";
@@ -41,7 +46,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.groups = new ArrayList<>();
-
+        this.groupsIds = new ArrayList<>();
 
         this.username = (additional.length >= 1) ? additional[0] :
                 lastName.toLowerCase().substring(0, min(6, lastName.length())) + "_" + firstName.toLowerCase().charAt(0);
@@ -50,9 +55,13 @@ public class User {
 
         Group selfGroup = new Group(this.username);
         this.groups.add(selfGroup);
+        this.groupsIds.add(selfGroup.getId());
 
         this.projects = new ArrayList<>();
-        this.deactiveProjects = new ArrayList<>();
+        this.projectsIds = new ArrayList<>();
+        //this.deactiveProjects = new ArrayList<>();
+
+        this.id = UUID.randomUUID();
     }
 
     /* Getters */
@@ -68,6 +77,7 @@ public class User {
         return lastName;
     }
 
+    @JsonIgnore
     public String getName() {
         return firstName + " " + lastName;
     }
@@ -76,12 +86,22 @@ public class User {
         return password;
     }
 
+    public ArrayList<Project> getProjects() {
+        return projects;
+    }
+    public ArrayList<UUID> getProjectsIds() {
+        return projectsIds;
+    }
+
     public ArrayList<Group> getGroups() {
         return groups;
     }
+    public ArrayList<UUID> getGroupsIds() {
+        return groupsIds;
+    }
 
-    public ArrayList<Project> getProjects() {
-        return projects;
+    public UUID getId() {
+        return id;
     }
 
     /* Setters */
@@ -100,10 +120,14 @@ public class User {
     /* Other Methods */
     public void addProject(Project project){
         this.projects.add(project);
+        this.projectsIds.add(project.getId());
     }
-    public void removeProject(Project project) {projects.removeIf(project1 -> project1.getId() == project.getId());}
+    public void removeProject(Project project) {
+        projects.removeIf(p -> p.getId() == project.getId());
+        projectsIds.removeIf(pId -> pId == project.getId());
+    }
 
-    public void addDeactiveProject(Project project) {this.deactiveProjects.add(project);}
+    //public void addDeactiveProject(Project project) {this.deactiveProjects.add(project);}
 
 
     private String generatePassword() {
@@ -165,7 +189,7 @@ public class User {
         System.out.println("Add a message. Title [Enter] Content [Enter]");
         String title = sc.nextLine();
         String msg = sc.nextLine();
-        Message newMessage = new Message(title, msg, /*LocalDateTime.now(),*/ this);
+        Message newMessage = new Message(title, msg, LocalDateTime.now().toString(), this);
         dash.addMessage(newMessage);
     }
 }

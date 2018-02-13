@@ -2,7 +2,6 @@ package test;
 
 import models.*;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class TestDashboard {
@@ -22,7 +21,7 @@ public class TestDashboard {
 
         // Generate a reply
         User replyUser = new User("Yes", "ImReplying");
-        dash.addReply("Hello this is a reply", dash.getInbox().get(1), replyUser);
+        dash.addReply("Hello this is a reply", dash.getMessages().get(1), replyUser);
 
         dash.drawMessageList();
     }
