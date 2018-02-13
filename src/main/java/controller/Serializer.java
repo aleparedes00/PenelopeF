@@ -5,6 +5,7 @@ import models.Group;
 import models.Priority;
 import models.Project;
 import models.User;
+import test.TestData;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class Serializer {
         System.out.println("Project Name: " + deserializedProject.getName());
         System.out.println("Project Date: " + deserializedProject.getDate());
 
+        User testUser2 = TestData.project1_2();
+        jsonSerializer.serialize(testUser2, "target/user2.json");
 
 //        Deserialization: currently not working (constructor issue, investigating later)
         //User deserializedTestUser = (User) jsonSerializer.deserialize("target/users.json", User.class);

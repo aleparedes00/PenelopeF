@@ -1,21 +1,16 @@
 package models;
 
-import java.util.UUID;
+public class Task extends Message {
 
-public class Task extends Message { // Now extends Message as it has similar fields (a title, a content, an author) and methods
-
-    private String date;
     private Priority priority;
-    private UUID id;
 
     /* Constructor by default */
     public Task() { }
 
     /*Constructor*/
-    public Task(String title, String content, String date, /*models.Group group,*/ Priority priority, User owner){
+    public Task(String title, String content, String date, Priority priority, User owner){
         super(title, content, date, owner);
         this.priority = priority;
-        this.id = UUID.randomUUID();
     }
 
     /* Getters and Setters */
@@ -31,7 +26,4 @@ public class Task extends Message { // Now extends Message as it has similar fie
         this.priority = priority;
     }
 
-    public UUID getId() {
-        return id;
-    }
 }
