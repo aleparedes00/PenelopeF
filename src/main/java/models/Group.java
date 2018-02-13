@@ -11,7 +11,6 @@ public class Group {
 
     /* Constructor by default */
     public Group() {
-
     }
 
     /* Constructor */

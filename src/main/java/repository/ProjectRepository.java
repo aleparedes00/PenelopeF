@@ -123,7 +123,7 @@ public class ProjectRepository {
         //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);
         //repository.createNew(user.getProjects().get(0));
-        Project p = repository.readProject(new File(repository.getPath() + "/TestProject/62fab89b-2aa0-493f-a27e-3ef5bd1f8094.json"));
+        Project p = repository.readProject(new File(repository.getPath() + "/TestProject/fc37b35e-8ddd-4cc5-b563-00f162e35d0a.json"));
         System.out.println("project name : " + p.getNameOfProject());
         /*
         for (Project project : user.getProjects()) {
