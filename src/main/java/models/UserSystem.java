@@ -9,9 +9,9 @@ public class UserSystem {
     private ArrayList<User> users;
     private ArrayList<Group> groups;
 
-    public UserSystem() {
-        users = new ArrayList<>();
-        groups = new ArrayList<>();
+    public UserSystem(ArrayList<User> users, ArrayList<Group> groups) {
+        this.users = users;
+        this.groups = groups;
 
         User root = new User("", "", "root", "root");
         Group admin = root.getGroups().get(0);
