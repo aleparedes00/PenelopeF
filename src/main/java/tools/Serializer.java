@@ -1,4 +1,4 @@
-package controller;
+package tools;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Group;

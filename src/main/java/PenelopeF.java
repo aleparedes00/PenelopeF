@@ -30,7 +30,7 @@ public class PenelopeF { // executable main class
         // 3 - Admin Screen
 
         // Initialize repository
-        ProjectRepository projectRepository = new ProjectRepository("./Projects");
+        ProjectRepository projectRepository = new ProjectRepository("./Projects", os);
         activeUser.setProjects(projectRepository.readAndLoadProjectArray());
         HomeMenuController homeMenuController = new HomeMenuController(activeUser, projectRepository);
         homeMenuController.firstMenuControl();

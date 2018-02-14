@@ -3,10 +3,11 @@ package repository;
 //import com.oracle.javafx.jmx.json.JSONReader;
 //import jdk.nashorn.internal.parser.JSONParser;
 
-import controller.Serializer;
 import models.Project;
+import models.SystemData;
 import models.User;
 import test.TestData;
+import tools.Serializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,19 +15,25 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/*A chaque fois que repository deserialise un ficher, il utilise SystemData pour remplir celui là
+ *
+ * */
 public class ProjectRepository {
 
     private final Serializer serializer = new Serializer();
+    private final SystemData systemData;
     private final Path path;
 
     /*Constructor*/
 
-    public ProjectRepository(String folderName) {
+    public ProjectRepository(String folderName, SystemData systemData) {
+
         this.path = initiateProgram(folderName);
+        this.systemData = systemData;
     }
 
     public Path initiateProgram(String folderName) {
-        File file = new File(folderName); //This line is probably to make the user.
+        File file = new File(folderName + "/"); //This line is probably to make the user.
         if (!file.exists()) {
             file.mkdir();
         }
@@ -48,14 +55,26 @@ public class ProjectRepository {
 
         return file.getPath();
     }
+
+    public void createNewUser(User user) {
+        String pathToFile = path.toString() + user.getId().toString() + ".json";
+        try {
+            serializer.serialize(user, pathToFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void createNew(Project project) {
-        String pathToSave = createFolder(project);
-        System.out.println("folder: " + pathToSave);
-        String pathFile = pathToSave + "/" + project.getId().toString() + ".json";
-       try {
+        String pathFile = path + "/" + project.getId().toString() + ".json";
+
+        try {
             serializer.serialize(project, pathFile);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if (!(systemData.getProjectFromMap(project.getId()))) {
+            systemData.loadProjectsInMap(project);
         }
         /*String path = createFolder(project);
         File file = new File("Project/" + project.getId().toString() + ".properties");
@@ -80,18 +99,29 @@ public class ProjectRepository {
         if (projectsFiles != null) {
             for (File projectsFile : projectsFiles) {
                 // read each project file, load the project and add it to projects
-                Project project = readProject(projectsFile);
+                Project project = readProject(projectsFile.toString());
                 projects.add(project);
             }
         }
         return projects;
     }
+    public void readAndLoadProjects() {
+        File folder = new File(path.toString() + "/");
+        File[] projectsFiles = folder.listFiles(file -> !file.isHidden());
+        if (projectsFiles != null) {
+            for (int i = 0; i < projectsFiles.length; i++) {
+                Project p = readProject(projectsFiles[i].toString());
+                if (!systemData.getProjectFromMap(p.getId())) {
+                    systemData.loadProjectsInMap(p);
+                }
+            }
+        }
+    }
 
 
-
-    public Project readProject(File file) {
+    public Project readProject(String pathToFile) {
         try {
-            return serializer.deserialize(file.getPath(), Project.class);
+            return serializer.deserialize(pathToFile, Project.class);
         } catch (IOException e) {
             System.out.println("Fuck! " + e);
         }
@@ -109,7 +139,7 @@ public class ProjectRepository {
         } catch (IOException e) {
             throw new RuntimeException("GOD DAMMIT! Everything went wrong here... ", e);
         }*/
-       return null;
+        return null;
     }
 
     public Path getPath() {
@@ -117,14 +147,23 @@ public class ProjectRepository {
     }
 
     public static void main(String[] args) {
-        ProjectRepository repository = new ProjectRepository("Projects/");
+        SystemData systemData = new SystemData();
+        ProjectRepository repository = new ProjectRepository("Project", systemData);
+
         TestData test = new TestData();
         User user = test.project1_2();
+
+        //Save project
+        //repository.createNew(user.getProjects().get(0));
+
+        //Read project
+        repository.readAndLoadProjects();
+        //System.out.println("Id of project: " + .getId().toString());
         //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);
         //repository.createNew(user.getProjects().get(0));
-        Project p = repository.readProject(new File(repository.getPath() + "/TestProject/fc37b35e-8ddd-4cc5-b563-00f162e35d0a.json"));
-        System.out.println("project name : " + p.getName());
+        //Project p = repository.readProject(new File(repository.getPath() + "/TestProject/fc37b35e-8ddd-4cc5-b563-00f162e35d0a.json"));
+        //System.out.println("project name : " + p.getName());
         /*
         for (Project project : user.getProjects()) {
             repository.createNew(project);
