@@ -3,6 +3,7 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Project {
@@ -10,11 +11,11 @@ public class Project {
     private String name;
 
     @JsonIgnore
-    private ArrayList<Task> tasks;
+    private HashMap<UUID,Task> tasks;
     private ArrayList<UUID> tasksIds;
 
     @JsonIgnore
-    private ArrayList<Document> files;
+    private HashMap<UUID,Document> files;
     private ArrayList<UUID> filesIds;
 
     //private Dashboard dashboard;
@@ -53,9 +54,9 @@ public class Project {
 
     public Project(String nameOfProject, Group group, String date, Priority priority) {
         this.name = nameOfProject;
-        this.tasks = new ArrayList<>();
+        this.tasks = new HashMap<>();
         this.tasksIds = new ArrayList<>();
-        this.files = new ArrayList<>();
+        this.files = new HashMap<>();
         this.filesIds = new ArrayList<>();
         this.group = group;
         this.groupID = group.getId();
@@ -65,22 +66,22 @@ public class Project {
     }
 
     public void addTask(Task task) {
-        tasks.add(task);
+        tasks.put(task.getId(), task);
         tasksIds.add(task.getId());
     }
 
     public void removeTask(Task task) {
-        tasks.removeIf(t -> t.getId() == task.getId());
+        tasks.remove(task.getId());
         tasksIds.removeIf(tId -> tId == task.getId());
     }
 
     public void addDocument(Document file) {
-        files.add(file);
+        files.put(file.getId(), file);
         filesIds.add(file.getId());
     }
 
     public void removeDoc(Document file) {
-        files.removeIf(f -> f.getId() == file.getId());
+        files.remove(file.getId());
         filesIds.removeIf(fId -> fId == file.getId());
     }
 
@@ -93,15 +94,15 @@ public class Project {
         return name;
     }
 
-    public ArrayList<Task> getTasks() {
-        return new ArrayList<>(tasks);
+    public HashMap<UUID,Task> getTasks() {
+        return tasks;
     }
     public ArrayList<UUID> getTasksIds() {
         return tasksIds;
     }
 
-    public ArrayList<Document> getFiles() {
-        return new ArrayList<>(files);
+    public HashMap<UUID,Document> getFiles() {
+        return files;
     }
     public ArrayList<UUID> getFilesIds() {
         return filesIds;

@@ -1,5 +1,6 @@
 package tools;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Group;
 import models.Priority;
@@ -21,6 +22,10 @@ public class Serializer {
 
     public <T> T deserialize(String filePath, Class<T> type) throws IOException {
         return objectMapper.readValue(new File(filePath), type);
+    }
+
+    public <T> T deserialize(String filePath, TypeReference<T> typeRef) throws IOException {
+        return objectMapper.readValue(new File(filePath), typeRef);
     }
 
     public static void main(String[] args) throws IOException {

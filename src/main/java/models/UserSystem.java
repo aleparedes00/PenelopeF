@@ -2,45 +2,50 @@ package models;
 
 import static tools.ScannerTools.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class UserSystem {
-    private ArrayList<User> users;
-    private ArrayList<Group> groups;
+    private HashMap<UUID, User> users;
+    private HashMap<UUID, Group> groups;
 
-    public UserSystem(ArrayList<User> users, ArrayList<Group> groups) {
+    public UserSystem(HashMap<UUID, User> users, HashMap<UUID, Group> groups) {
         this.users = users;
         this.groups = groups;
 
-        User root = new User("", "", "root", "root");
-        Group admin = root.getGroups().get(0);
+        if (users.isEmpty()) {
+            User root = new User("", "", "root", "root");
 
-        users.add(root);
-        groups.add(admin);
+            Map.Entry<UUID,Group> adminGroupEntry = (Map.Entry<UUID, Group>) root.getGroups().entrySet().toArray()[0];
+            Group admin = adminGroupEntry.getValue();
+
+            users.put(root.getId(), root);
+            groups.put(admin.getId(), admin);
+        }
     }
 
     /* Getters */
-    public ArrayList<User> getUsers() {
+    public HashMap<UUID,User> getUsers() {
         return users;
     }
 
-    public ArrayList<Group> getGroups() {
+    public HashMap<UUID, Group> getGroups() {
         return groups;
     }
 
     public Group getGroupFromName(String name) {
-        for (Group group : groups) {
-            if (group.getName().equals(name))
-                return group;
+        for (Map.Entry<UUID,Group> group : groups.entrySet()) {
+            if (group.getValue().getName().equals(name))
+                return group.getValue();
         }
         return null;
     }
 
     public User getUserFromUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username))
-                return user;
+        for (Map.Entry<UUID,User> user : users.entrySet()) {
+            if (user.getValue().getUsername().equals(username))
+                return user.getValue();
         }
         return null;
     }
@@ -58,8 +63,8 @@ public class UserSystem {
     }
 
     private void addUserToGroup(User user, Group group) {
-        group.getUsers().add(user);
-        user.getGroups().add(group);
+        group.getUsers().put(user.getId(), user);
+        user.getGroups().put(group.getId(), group);
         System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
     }
 

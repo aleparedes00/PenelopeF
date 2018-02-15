@@ -13,7 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 /*A chaque fois que repository deserialise un ficher, il utilise SystemData pour remplir celui là
  *
@@ -73,8 +74,8 @@ public class ProjectRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (!(systemData.getProjectFromMap(project.getId()))) {
-            systemData.loadProjectsInMap(project);
+        if (!(systemData.existsProject(project.getId()))) {
+            systemData.loadProjectInMap(project);
         }
         /*String path = createFolder(project);
         File file = new File("Project/" + project.getId().toString() + ".properties");
@@ -91,33 +92,32 @@ public class ProjectRepository {
         }*/
     }
 
-    public ArrayList<Project> readAndLoadProjectArray() {
+    public HashMap<UUID,Project> readAndLoadProjectArray() {
         File folder = new File("Project/");
         File[] projectsFiles = folder.listFiles(file -> !file.isHidden());
-        ArrayList<Project> projects = new ArrayList<>();
+        HashMap<UUID, Project> projects = new HashMap<>();
         //String nameOfProject = new String();
         if (projectsFiles != null) {
             for (File projectsFile : projectsFiles) {
                 // read each project file, load the project and add it to projects
                 Project project = readProject(projectsFile.toString());
-                projects.add(project);
+                projects.put(project.getId(), project);
             }
         }
         return projects;
     }
-    public void readAndLoadProjects() {
+    public void loadProjects() {
         File folder = new File(path.toString() + "/");
         File[] projectsFiles = folder.listFiles(file -> !file.isHidden());
         if (projectsFiles != null) {
             for (int i = 0; i < projectsFiles.length; i++) {
                 Project p = readProject(projectsFiles[i].toString());
-                if (!systemData.getProjectFromMap(p.getId())) {
-                    systemData.loadProjectsInMap(p);
+                if (!systemData.existsProject(p.getId())) {
+                    systemData.loadProjectInMap(p);
                 }
             }
         }
     }
-
 
     public Project readProject(String pathToFile) {
         try {
@@ -157,7 +157,7 @@ public class ProjectRepository {
         //repository.createNew(user.getProjects().get(0));
 
         //Read project
-        repository.readAndLoadProjects();
+        repository.loadProjects();
         //System.out.println("Id of project: " + .getId().toString());
         //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);

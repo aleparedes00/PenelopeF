@@ -5,6 +5,7 @@ import models.Message.Reply;
 import static tools.DateTools.now;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -12,18 +13,19 @@ import java.util.UUID;
  */
 public class Dashboard implements MessageList {
     @JsonIgnore
-    private ArrayList<Message> messages;
+    private HashMap<UUID,Message> messages;
     private ArrayList<UUID> messagesIds;
 
     /*Constructor*/
     public Dashboard() {
-        messages = new ArrayList<>();
+        messages = new HashMap<>();
         String now = now();
-        messages.add(new Message("Hello world!", "This project was started on " + now, now));
+        Message creationMessage = new Message("Hello world!", "This project was started on " + now, now);
+        messages.put(creationMessage.getId(), creationMessage);
     }
 
     /* Getters */
-    public ArrayList<Message> getMessages() {
+    public HashMap<UUID,Message> getMessages() {
         return messages;
     }
     public ArrayList<UUID> getMessagesIds() {
@@ -49,13 +51,13 @@ public class Dashboard implements MessageList {
     }
 
     public void addMessage(Message msg) {
-        messages.add(msg);
+        messages.put(msg.getId(), msg);
         messagesIds.add(msg.getId());
     }
 
     public void addReply(String content, Message originalMessage, User author) {
         Message reply = new Message("RE: " + originalMessage.getTitle(), content, now(), author);
-        messages.add(reply);
+        messages.put(reply.getId(), reply);
         messagesIds.add(reply.getId());
         originalMessage.addReply(reply);
     }

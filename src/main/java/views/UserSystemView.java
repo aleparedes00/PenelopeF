@@ -2,6 +2,9 @@ package views;
 
 import models.*;
 
+import java.util.Map;
+import java.util.UUID;
+
 public class UserSystemView {
     private UserSystem model;
 
@@ -10,26 +13,26 @@ public class UserSystemView {
     }
 
     void printUsersByGroup() {
-        for (Group group : model.getGroups()) {
-            group.printUsersInGroup();
+        for (Map.Entry<UUID, Group> group : model.getGroups().entrySet()) {
+            group.getValue().printUsersInGroup();
         }
     }
 
     void printUsers() {
-        for (User user : model.getUsers()) {
-            System.out.println(user.getUsername());
+        for (Map.Entry<UUID, User> user : model.getUsers().entrySet()) {
+            System.out.println(user.getValue().getUsername());
         }
     }
 
     void printGroupsByUser() {
-        for (User user : model.getUsers()) {
-            user.printGroupsOfUser();
+        for (Map.Entry<UUID, User> user : model.getUsers().entrySet()) {
+            user.getValue().printGroupsOfUser();
         }
     }
 
     void printGroups() {
-        for (Group group : model.getGroups()) {
-            System.out.println(group.getName());
+        for (Map.Entry<UUID, Group> group : model.getGroups().entrySet()) {
+            System.out.println(group.getValue().getName());
         }
     }
 }

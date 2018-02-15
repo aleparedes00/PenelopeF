@@ -7,6 +7,8 @@ import models.User;
 import views.menus.ProjectHomeSelection;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.UUID;
 
 import static tools.DateTools.now;
 import static tools.ScannerTools.scanInt;
@@ -34,8 +36,8 @@ public class HomeMenuView {
 
     public int showAndSelectProject(User user) {
         ArrayList<String> projectNames = new ArrayList<>();
-        for (Project project : user.getProjects()) {
-            projectNames.add(project.getName());
+        for (Map.Entry<UUID,Project> project : user.getProjects().entrySet()) {
+            projectNames.add(project.getValue().getName());
         }
         System.out.println("User: " + user.getUsername());
         System.out.println("Your projects: ");

@@ -19,13 +19,13 @@ public class User {
     private String password;
 
     @JsonIgnore
-    private ArrayList<Project> projects;
+    private HashMap<UUID, Project> projects;
     private ArrayList<UUID> projectsIds;
 
     //private ArrayList<Project> deactiveProjects;
 
     @JsonIgnore
-    private ArrayList<Group> groups;
+    private HashMap<UUID, Group> groups;
     private ArrayList<UUID> groupsIds;
 
     private UUID id;
@@ -43,9 +43,11 @@ public class User {
 
     /* Constructor */
     public User(String firstName, String lastName, String... additional) {
+        this.id = UUID.randomUUID();
+
         this.firstName = firstName;
         this.lastName = lastName;
-        this.groups = new ArrayList<>();
+        this.groups = new HashMap<>();
         this.groupsIds = new ArrayList<>();
 
         this.username = (additional.length >= 1) ? additional[0] :
@@ -54,14 +56,14 @@ public class User {
         this.password = (additional.length >= 2) ? additional[1] : generatePassword();
 
         Group selfGroup = new Group(this.username);
-        this.groups.add(selfGroup);
+        this.groups.put(selfGroup.getId(), selfGroup);
         this.groupsIds.add(selfGroup.getId());
+        selfGroup.getUsersIds().add(this.id);
+        selfGroup.getUsers().put(this.id, this);
 
-        this.projects = new ArrayList<>();
+        this.projects = new HashMap<>();
         this.projectsIds = new ArrayList<>();
         //this.deactiveProjects = new ArrayList<>();
-
-        this.id = UUID.randomUUID();
     }
 
     /* Getters */
@@ -86,14 +88,14 @@ public class User {
         return password;
     }
 
-    public ArrayList<Project> getProjects() {
+    public HashMap<UUID, Project> getProjects() {
         return projects;
     }
     public ArrayList<UUID> getProjectsIds() {
         return projectsIds;
     }
 
-    public ArrayList<Group> getGroups() {
+    public HashMap<UUID, Group> getGroups() {
         return groups;
     }
     public ArrayList<UUID> getGroupsIds() {
@@ -113,17 +115,17 @@ public class User {
         this.password = password;
     }
 
-    public void setProjects(ArrayList<Project> projects) {
+    public void setProjects(HashMap<UUID, Project> projects) {
         this.projects = projects;
     }
 
     /* Other Methods */
     public void addProject(Project project){
-        this.projects.add(project);
+        this.projects.put(project.getId(), project);
         this.projectsIds.add(project.getId());
     }
     public void removeProject(Project project) {
-        projects.removeIf(p -> p.getId() == project.getId());
+        projects.remove(project.getId());
         projectsIds.removeIf(pId -> pId == project.getId());
     }
 
@@ -165,14 +167,15 @@ public class User {
 
     public void printGroupsOfUser() {
         System.out.println("Groups of user " + this.getUsername());
-        for (Group group : this.getGroups()) {
-            System.out.println("\t"+group.getName());
+        for (Map.Entry<UUID, Group> group : this.getGroups().entrySet()) {
+            System.out.println("\t"+group.getValue().getName());
         }
     }
 
+    @JsonIgnore
     public boolean isAdmin() {
-        for (Group group : this.getGroups()) {
-            if (group.getName().equals(ADMIN_GROUP))
+        for (Map.Entry<UUID, Group> group : this.getGroups().entrySet()) {
+            if (group.getValue().getName().equals(ADMIN_GROUP))
                 return true;
         }
         return false;
