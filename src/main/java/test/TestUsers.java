@@ -89,8 +89,8 @@ public class TestUsers {
         }
 
         void addUserToGroup(User user, Group group) {
-            group.getUsers().put(user.getId(), user);
-            user.getGroups().put(group.getId(), group);
+            group.getUsers().add(user);
+            user.addGroup(group);
             System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
         }
 
@@ -317,8 +317,8 @@ public class TestUsers {
         System.out.println("Password is " + user1.getPassword() + ", remember it!");
 
         Group etna = new Group("ETNA");
-        etna.getUsers().put(user1.getId(), user1);
-        user1.getGroups().put(etna.getId(), etna);
+        etna.getUsers().add(user1);
+        user1.addGroup(etna);
         System.out.println("Added user " + user1.getUsername() + " to group " + etna.getName());
         waitForEnter();
 
@@ -332,15 +332,15 @@ public class TestUsers {
         User user2 = new User(firstName, lastName);
         System.out.println("Created user " + user2.getUsername() + " (" + user2.getName() + ")");
 
-        etna.getUsers().put(user2.getId(), user2);
-        user2.getGroups().put(etna.getId(), etna);
+        etna.getUsers().add(user2);
+        user2.addGroup(etna);
         System.out.println("Added user " + user2.getUsername() + " to group " + etna.getName());
         waitForEnter();
 
         /* Create a new group and add user1 to it */
         Group mappy = new Group("Mappy");
-        mappy.getUsers().put(user1.getId(), user1);
-        user1.getGroups().put(mappy.getId(), mappy);
+        mappy.getUsers().add(user1);
+        user1.addGroup(mappy);
         System.out.println("Added user " + user1.getUsername() + " to group " + mappy.getName());
         waitForEnter();
 

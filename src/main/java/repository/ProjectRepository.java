@@ -67,8 +67,8 @@ public class ProjectRepository {
     }
 
     public void createNew(Project project) {
-        String pathFile = path + "/" + project.getId().toString() + ".json";
-
+        String pathFile = path.toString() + "/" + project.getId().toString() + ".json";
+        System.out.println("this is path file: " + pathFile);
         try {
             serializer.serialize(project, pathFile);
         } catch (IOException e) {
@@ -92,7 +92,7 @@ public class ProjectRepository {
         }*/
     }
 
-    public HashMap<UUID,Project> readAndLoadProjectArray() {
+    /*public HashMap<UUID,Project> readAndLoadProjectArray() {
         File folder = new File("Project/");
         File[] projectsFiles = folder.listFiles(file -> !file.isHidden());
         HashMap<UUID, Project> projects = new HashMap<>();
@@ -105,7 +105,8 @@ public class ProjectRepository {
             }
         }
         return projects;
-    }
+    }*/
+
     public void loadProjects() {
         File folder = new File(path.toString() + "/");
         File[] projectsFiles = folder.listFiles(file -> !file.isHidden());
@@ -152,12 +153,15 @@ public class ProjectRepository {
 
         TestData test = new TestData();
         User user = test.project1_2();
+        System.out.println("Project amount is " + user.getProjects().size());
 
         //Save project
-        //repository.createNew(user.getProjects().get(0));
+        for (int i = 0; i < user.getProjects().size(); i++) {
+            repository.createNew(user.getProjects().get(i));
+        }
 
         //Read project
-        repository.loadProjects();
+        //repository.loadProjects();
         //System.out.println("Id of project: " + .getId().toString());
         //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);

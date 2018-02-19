@@ -36,8 +36,9 @@ public class HomeMenuView {
 
     public int showAndSelectProject(User user) {
         ArrayList<String> projectNames = new ArrayList<>();
-        for (Map.Entry<UUID,Project> project : user.getProjects().entrySet()) {
-            projectNames.add(project.getValue().getName());
+        for (Project project : user.getProjects()) {
+            projectNames.add(project.getName());
+
         }
         System.out.println("User: " + user.getUsername());
         System.out.println("Your projects: ");

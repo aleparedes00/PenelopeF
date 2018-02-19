@@ -17,11 +17,11 @@ public class UserSystem {
         if (users.isEmpty()) {
             User root = new User("", "", "root", "root");
 
-            Map.Entry<UUID,Group> adminGroupEntry = (Map.Entry<UUID, Group>) root.getGroups().entrySet().toArray()[0];
-            Group admin = adminGroupEntry.getValue();
+            Group admin = root.getGroups().get(0);
 
-            users.put(root.getId(), root);
-            groups.put(admin.getId(), admin);
+
+            this.users.put(root.getId(), root);
+            this.groups.put(admin.getId(), admin);
         }
     }
 
@@ -63,8 +63,8 @@ public class UserSystem {
     }
 
     private void addUserToGroup(User user, Group group) {
-        group.getUsers().put(user.getId(), user);
-        user.getGroups().put(group.getId(), group);
+        group.getUsers().add(user);
+        user.addGroup(group);
         System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
     }
 

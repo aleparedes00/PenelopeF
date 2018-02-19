@@ -6,6 +6,7 @@ import tools.Serializer;
 import views.LoginView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
@@ -38,8 +39,8 @@ public class PenelopeF { // executable main class
         // 3 - Admin Screen
 
         // Initialize repository
-        ProjectRepository projectRepository = new ProjectRepository("./Projects", os);
-        activeUser.setProjects(projectRepository.readAndLoadProjectArray());
+        ProjectRepository projectRepository = new ProjectRepository("./Project", os);
+        //activeUser.setProjects(projectRepository.readAndLoadProjectArray());
         HomeMenuController homeMenuController = new HomeMenuController(activeUser, projectRepository);
         homeMenuController.firstMenuControl();
         // Project Screen
@@ -68,8 +69,7 @@ public class PenelopeF { // executable main class
         System.out.println("Created user " + user.getUsername() + " (" + user.getName() + ")");
         System.out.println("Password is " + user.getPassword() + ", remember it!");
 
-        Map.Entry<UUID,Group> selfGroupEntry = (Map.Entry<UUID, Group>) user.getGroups().entrySet().toArray()[0];
-        Group userSelfGroup = selfGroupEntry.getValue();
+        Group userSelfGroup = user.getGroups().get(0);
 
         user.getGroupsIds().add(dev.getId());
         dev.getUsersIds().add(user.getId());

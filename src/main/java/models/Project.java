@@ -11,11 +11,11 @@ public class Project {
     private String name;
 
     @JsonIgnore
-    private HashMap<UUID,Task> tasks;
+    private ArrayList<Task> tasks;
     private ArrayList<UUID> tasksIds;
 
     @JsonIgnore
-    private HashMap<UUID,Document> files;
+    private ArrayList<Document> files;
     private ArrayList<UUID> filesIds;
 
     //private Dashboard dashboard;
@@ -54,9 +54,9 @@ public class Project {
 
     public Project(String nameOfProject, Group group, String date, Priority priority) {
         this.name = nameOfProject;
-        this.tasks = new HashMap<>();
+        this.tasks = new ArrayList<>();
         this.tasksIds = new ArrayList<>();
-        this.files = new HashMap<>();
+        this.files = new ArrayList<>();
         this.filesIds = new ArrayList<>();
         this.group = group;
         this.groupID = group.getId();
@@ -66,7 +66,7 @@ public class Project {
     }
 
     public void addTask(Task task) {
-        tasks.put(task.getId(), task);
+        tasks.add(task);
         tasksIds.add(task.getId());
     }
 
@@ -76,7 +76,7 @@ public class Project {
     }
 
     public void addDocument(Document file) {
-        files.put(file.getId(), file);
+        files.add(file);
         filesIds.add(file.getId());
     }
 
@@ -94,14 +94,14 @@ public class Project {
         return name;
     }
 
-    public HashMap<UUID,Task> getTasks() {
+    public ArrayList<Task> getTasks() {
         return tasks;
     }
     public ArrayList<UUID> getTasksIds() {
         return tasksIds;
     }
 
-    public HashMap<UUID,Document> getFiles() {
+    public ArrayList<Document> getFiles() {
         return files;
     }
     public ArrayList<UUID> getFilesIds() {
@@ -131,12 +131,6 @@ public class Project {
     public void setName(String name) {
         this.name = name;
     }
-
-    /*public void setDate(LocalDateTime date) {
-        this.date = date;
-    }*/
-
-
 
 
 }

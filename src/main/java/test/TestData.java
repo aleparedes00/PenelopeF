@@ -13,7 +13,7 @@ public class TestData {
         User user = new User("Alejandra", "Paredes");
         user.setPassword("test");
         Group dev = new Group("Dev");
-        dev.getUsers().put(user.getId(), user);
+        user.addGroup(dev);
         Project project1 = new Project("TestProject", dev, now(), Priority.NORMAL);
         user.addProject(project1);
         Task task1 = new Task("Task1", "Creating content", now(), Priority.HIGH, user);
