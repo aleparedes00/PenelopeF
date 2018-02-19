@@ -14,7 +14,7 @@ public class Group {
     private String name;
 
     @JsonIgnore
-    private HashMap<UUID,User> users;
+    private ArrayList<User> users;
     private ArrayList<UUID> usersIds;
 
     private UUID id;
@@ -26,9 +26,15 @@ public class Group {
     /* Constructor */
     public Group(String name) {
         this.name = name;
-        this.users = new HashMap<>();
+        this.users = new ArrayList<>();
         this.usersIds = new ArrayList<>();
         this.id = UUID.randomUUID();
+    }
+
+    public Group(User user) {
+        this.name = user.getUsername();
+        this.users.add(user);
+        this.usersIds.add(user.getId());
     }
 
     /* Getters */
@@ -36,9 +42,10 @@ public class Group {
         return name;
     }
 
-    public HashMap<UUID,User> getUsers() {
+    public ArrayList<User> getUsers() {
         return users;
     }
+
     public ArrayList<UUID> getUsersIds() {
         return usersIds;
     }
@@ -50,8 +57,9 @@ public class Group {
     /*Other Methods*///AP I think this method should be in View
     public void printUsersInGroup() {
         System.out.println("Users in group " + this.getName());
-        for (Map.Entry<UUID, User> user : this.getUsers().entrySet()) {
-            System.out.println("\t"+user.getValue().getUsername());
+        for(User users : users)
+        {
+            System.out.println("\t" + users.getUsername());
         }
     }
 }
