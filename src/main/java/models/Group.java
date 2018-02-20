@@ -32,8 +32,13 @@ public class Group {
     }
 
     public Group(User user) {
+
         this.name = user.getUsername();
+
+        this.users = new ArrayList<>();
         this.users.add(user);
+
+        this.usersIds = new ArrayList<>();
         this.usersIds.add(user.getId());
     }
 

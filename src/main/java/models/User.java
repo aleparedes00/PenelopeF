@@ -19,7 +19,7 @@ public class User {
     private String password;
 
     @JsonIgnore
-    private ArrayList<Project> projects;
+    private List<Project> projects;
     private ArrayList<UUID> projectsIds;
 
 
@@ -86,11 +86,14 @@ public class User {
     public ArrayList<Project> getProjects() {
         return projects;
     }
+
     public ArrayList<UUID> getProjectsIds() {
         return projectsIds;
     }
 
-    public ArrayList<Group> getGroups() { return groups; }
+    public ArrayList<Group> getGroups() {
+        return groups;
+    }
 
     public ArrayList<UUID> getGroupsIds() {
         return groupsIds;
@@ -109,15 +112,18 @@ public class User {
         this.password = password;
     }
 
-    public void setProjects(ArrayList<Project> projects) {
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
 
     /* Other Methods */
-    public void addProject(Project project){
+    public void addProject(Project project) {
         this.projects.add(project);
-        this.projectsIds.add(project.getId());
+        if (!projectsIds.contains(project.getId())) {
+            this.projectsIds.add(project.getId());
+        }
     }
+
     public void removeProject(Project project) {
         projects.remove(project.getId());
         projectsIds.removeIf(pId -> pId == project.getId());
@@ -172,11 +178,12 @@ public class User {
 
     @JsonIgnore
     public Boolean isAdmin() {
-        for (Group group: groups) {
-            if (group.getName().equals(ADMIN_GROUP))
-            {return true;}
+        for (Group group : groups) {
+            if (group.getName().equals(ADMIN_GROUP)) {
+                return true;
+            }
         }
-            return false;
+        return false;
     }
 
     public boolean isRightPassword(String pwd) {

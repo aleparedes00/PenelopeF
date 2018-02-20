@@ -3,6 +3,7 @@ package repository;
 //import com.oracle.javafx.jmx.json.JSONReader;
 //import jdk.nashorn.internal.parser.JSONParser;
 
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import models.Project;
 import models.SystemData;
 import models.User;
@@ -13,8 +14,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /*A chaque fois que repository deserialise un ficher, il utilise SystemData pour remplir celui là
  *
@@ -143,9 +147,17 @@ public class ProjectRepository {
         return null;
     }
 
+  public void loadProjectToUser(User user){
+        HashMap<UUID, Project> projects = systemData.getProjects();
+        user.setProjects(projects.entrySet().stream().filter(e -> user.getProjectsIds().contains(e.getKey())).map(project->project.getValue()).collect(Collectors.toList()));
+
+      user.getProjectsIds().stream().map(id -> projects.get(id)).collect(Collectors.toList());
+    }
+
     public Path getPath() {
         return path;
     }
+
 
     public static void main(String[] args) {
         SystemData systemData = new SystemData();
@@ -159,7 +171,7 @@ public class ProjectRepository {
         for (int i = 0; i < user.getProjects().size(); i++) {
             repository.createNew(user.getProjects().get(i));
         }
-
+        
         //Read project
         //repository.loadProjects();
         //System.out.println("Id of project: " + .getId().toString());
@@ -184,3 +196,4 @@ public class ProjectRepository {
         }*/
     }
 }
+
