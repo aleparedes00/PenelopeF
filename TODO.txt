@@ -1,0 +1,100 @@
+0) Changements à faire
+* Users and Contacts
+	* Contact va devenir une classe contenant uniquement les informations de contact (mail, phone, etc.)
+	* Supprimer le champ User de Contact
+	* Ajouter un champ private Contact contactInfo dans User
+* Messages and Replies
+	* Enlever la sous-classe Reply (commenter)
+* Task
+	* À sérialiser au sein des Project
+	* NE PAS stocker les Tasks dans la HashMap globale de SystemData
+* Document
+	* À supprimer
+* Project
+	* Ajouter un champ String avec le chemin du dossier à observer
+	* exemple : defaultPath + "/" + projectName
+	* exemple (bonus import de projet) : "C:/Users/..."
+	* Ce champ servira pour les Observer : si j'observe ce Project, je dois observer le dossier à cet emplacement.
+	* Note : notre dossier ressemblera donc à ça :
+
+	PenelopeF
+		|_ src...
+		|_ projects
+			|_ 12345b-dejfr5.json
+			|_ ... .json
+			|_ Project1
+				|_ ... fichiers divers
+			|_ Mon Projet
+				|_ ... fichiers divers
+
+1) Deserialize and load
+* Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
+* Repository: doit serialiser et deserialiser, déplacer ça depuis SystemData
+	-> Inclure SystemData dans les repos (constructeur)
+	-> Implémenter serialization pour User Group et Message 
+* Instancier les Repos depuis le main, faire les appels aux fonctions load depuis le main (déplacer la fonction loadSystemData)
+
+2) Login
+* Constructeur de Login : passer le SystemData en paramètre
+* Retour de la fonction login : construire l'activeUser en chargeant les groups, projects etc. nécessaires depuis le SystemData
+
+3) Menu Groups
+* Créer un controller pour ce menu (embarque le SystemData)
+* Afficher tous les groupes.
+* À la sélection d'un groupe, afficher tous ses membres.
+* À la sélection d'un user, afficher sa fiche contact (nom complet, contactInfo...)
+
+4) Menu Projects
+* Affiche la liste des projets *de l'utilisateur*
+	-> le constructeur n'embarque QUE activeUser
+* À la sélection d'un projet, on affiche le menu du projet (voir ProjectController)
+	-> Menu Info
+	-> Menu Dashboard
+	-> Menu Task
+	-> Menu Documents
+	-> Modifier
+	-> Supprimer
+* Menu pour créer un projet
+	-> Créer un nouveau projet vierge dans un dossier que l'on fixera
+		ex : ./projects/[nom du projet entré par l'user]
+	-> (Bonus) Importer un dossier déjà existant
+
+4a) Menu Info
+* Renommer l'élément GROUP en INFO
+* Afficher les infos du projet : nom, description, date de création, *groupes*
+
+4b) Menu Dashboard
+* Restructurer Dashboard.java en MVC
+* Afficher tous les messages du plus récent au plus ancien
+* (Bonus)Implémenter un système de réponse
+* (Bonus)Implémenter un système de pagination
+
+4c) Menu Task
+* Afficher toutes les tasks
+* À la sélection d'une task :
+	* afficher ses infos
+	* renommer
+	* delete
+* Sous-menu créer une nouvelle tâche
+
+4d) Menu Documents
+* Afficher la liste des fichiers dans le dossier correspondant au projet (affichage récursif, exemple : src, src/Test.java, ...)
+* Fonction récursive 
+printAllFiles(String folder, int nbRecursions) {
+	File current = new File(folder);
+	println("\t") * nbRecursions;
+	if (current.isDirectory()) {
+		println(current.baseName);
+		printAllFiles(current);
+	}
+	else println(current.baseName);
+}
+
+5) Menu Admin
+* Afficher uniquement si activeUser a des droits d'admin
+* Contient :
+	- créer un nouvel user
+	- créer un nouveau groupe
+	- ajouter un user dans un groupe
+	- ...
+* Partiellement implémenté dans UserSystem.java (à déplacer, restructurer... ? etc)
