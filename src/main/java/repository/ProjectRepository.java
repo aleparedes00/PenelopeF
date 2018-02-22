@@ -3,7 +3,6 @@ package repository;
 //import com.oracle.javafx.jmx.json.JSONReader;
 //import jdk.nashorn.internal.parser.JSONParser;
 
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import models.Project;
 import models.SystemData;
 import models.User;
@@ -37,7 +36,7 @@ public class ProjectRepository {
         this.systemData = systemData;
     }
 
-    public Path initiateProgram(String folderName) {
+    private Path initiateProgram(String folderName) {
         File file = new File(folderName + "/"); //This line is probably to make the user.
         if (!file.exists()) {
             file.mkdir();
@@ -113,10 +112,10 @@ public class ProjectRepository {
 
     public void loadProjects() {
         File folder = new File(path.toString() + "/");
-        File[] projectsFiles = folder.listFiles(file -> !file.isHidden());
-        if (projectsFiles != null) {
-            for (int i = 0; i < projectsFiles.length; i++) {
-                Project p = readProject(projectsFiles[i].toString());
+        File[] projectFiles = folder.listFiles(file -> !file.isHidden());
+        if (projectFiles != null) {
+            for (File projectFile : projectFiles) {
+                Project p = readProject(projectFile.toString());
                 if (!systemData.existsProject(p.getId())) {
                     systemData.loadProjectInMap(p);
                 }
@@ -124,7 +123,7 @@ public class ProjectRepository {
         }
     }
 
-    public Project readProject(String pathToFile) {
+    private Project readProject(String pathToFile) {
         try {
             return serializer.deserialize(pathToFile, Project.class);
         } catch (IOException e) {

@@ -18,10 +18,11 @@ public class User {
 
     private String password;
 
+    private Contact contactInfo;
+
     @JsonIgnore
     private List<Project> projects;
     private ArrayList<UUID> projectsIds;
-
 
     @JsonIgnore
     private ArrayList<Group> groups;
@@ -52,6 +53,8 @@ public class User {
                 lastName.toLowerCase().substring(0, min(6, lastName.length())) + "_" + firstName.toLowerCase().charAt(0);
 
         this.password = (additional.length >= 2) ? additional[1] : generatePassword();
+
+        this.contactInfo = new Contact();
 
         Group selfGroup = new Group(this);
         this.groups.add(selfGroup);
@@ -84,7 +87,7 @@ public class User {
     }
 
     public ArrayList<Project> getProjects() {
-        return projects;
+        return (ArrayList<Project>) projects;
     }
 
     public ArrayList<UUID> getProjectsIds() {
@@ -125,7 +128,7 @@ public class User {
     }
 
     public void removeProject(Project project) {
-        projects.remove(project.getId());
+        projects.remove(project);
         projectsIds.removeIf(pId -> pId == project.getId());
     }
 
@@ -171,8 +174,8 @@ public class User {
 
     public void printGroupsOfUser() {
         System.out.println("Groups of user " + this.getUsername());
-        for (int i = 0; i < groups.size(); i++) {
-            System.out.println("\t" + this.groups.get(i).getName());
+        for (Group group : groups) {
+            System.out.println("\t" + group.getName());
         }
     }
 

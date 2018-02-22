@@ -33,9 +33,9 @@
     class models.Group {private models.User[] userList; ...}
     class models.Contact {private models.User user; private String email; ...}
 
-    class models.Document
+    class test.Document
     class models.Task
-    class models.Project {private models.Document[] files; private models.Task[] todoList; ...}
+    class models.Project {private test.Document[] files; private models.Task[] todoList; ...}
 
     class Message {private String msg; private models.User author; ...}
     class Mailbox {private Message[] mail; private models.Contact[] contactList; ...} (?)

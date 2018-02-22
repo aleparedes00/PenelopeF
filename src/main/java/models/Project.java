@@ -3,20 +3,19 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
+
+import static views.PenelopeF.defaultProjectsPath;
 
 public class Project {
 
     private String name;
 
-    @JsonIgnore
+//    @JsonIgnore
     private ArrayList<Task> tasks;
-    private ArrayList<UUID> tasksIds;
+//    private ArrayList<UUID> tasksIds;
 
-    @JsonIgnore
-    private ArrayList<Document> files;
-    private ArrayList<UUID> filesIds;
+    private String pathToProject;
 
     //private Dashboard dashboard;
     @JsonIgnore
@@ -30,34 +29,21 @@ public class Project {
     /** ALE this is the explanation about the random ID generator.
      * Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
      *
-     * The {@code UUID} is generated using a cryptographically strong pseudo
+     * The UUID is generated using a cryptographically strong pseudo
      * random number generator.
      *
-     * @return  A randomly generated {@code UUID}
+     * return  A randomly generated {@code UUID}
      */
-
-    //My proposal for this is to make just a list with the name of the Document that will display when the user enter on the DOC menu in the projet. We'll talk about it
-    //ArrayList<Document> files;
-    /*
-    **  Note: ArrayList probably isn't the best structure to model the file hierarchy.
-    **  At first, all files will be in the root folder of the project. But it would be good to be able to create folders
-    **  (src, lib, resources...) and have a complete hierarchy. We'll have to think of a good way to handle this.
-    **
-    **  Right now models.Document objets have a java.io.File field, which can both be a file or a directory. We could imagine a
-    **  recursive way of exploring the Project with that. But there are other possible implementations.
-    */
-    //ArrayList<Task> toDoList;
 
     /* Constructor by default */
     public Project() { }
     /*Constructor*/
 
-    public Project(String nameOfProject, Group group, String date, Priority priority) {
-        this.name = nameOfProject;
+    public Project(String name, Group group, String date, Priority priority) {
+        this.name = name;
         this.tasks = new ArrayList<>();
-        this.tasksIds = new ArrayList<>();
-        this.files = new ArrayList<>();
-        this.filesIds = new ArrayList<>();
+//        this.tasksIds = new ArrayList<>();
+        this.pathToProject = defaultProjectsPath + "/" + name;
         this.group = group;
         this.groupID = group.getId();
         this.id = UUID.randomUUID();
@@ -67,22 +53,12 @@ public class Project {
 
     public void addTask(Task task) {
         tasks.add(task);
-        tasksIds.add(task.getId());
+//        tasksIds.add(task.getId());
     }
 
     public void removeTask(Task task) {
-        tasks.remove(task.getId());
-        tasksIds.removeIf(tId -> tId == task.getId());
-    }
-
-    public void addDocument(Document file) {
-        files.add(file);
-        filesIds.add(file.getId());
-    }
-
-    public void removeDoc(Document file) {
-        files.remove(file.getId());
-        filesIds.removeIf(fId -> fId == file.getId());
+        tasks.remove(task);
+//        tasksIds.removeIf(tId -> tId == task.getId());
     }
 
     public void setGroup(Group group) {
@@ -97,16 +73,9 @@ public class Project {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
-    public ArrayList<UUID> getTasksIds() {
-        return tasksIds;
-    }
-
-    public ArrayList<Document> getFiles() {
-        return files;
-    }
-    public ArrayList<UUID> getFilesIds() {
-        return filesIds;
-    }
+//    public ArrayList<UUID> getTasksIds() {
+//        return tasksIds;
+//    }
 
     public Group getGroup() {
         return group;

@@ -15,11 +15,11 @@ import static views.menus.ProjectElements.*;
 public class ProjectView {
 
     /* Get available commands depending on project */
-    ArrayList<ProjectElements> getAvailableCommands(Project project) {
+    private ArrayList<ProjectElements> getAvailableCommands(Project project) {
         ArrayList<ProjectElements> availableCommands = new ArrayList<>();
 
         if (!project.getTasks().isEmpty()) availableCommands.add(TASK);
-        if (!project.getFiles().isEmpty()) availableCommands.add(DOCUMENT);
+        availableCommands.add(DOCUMENT);
         availableCommands.add(GROUP);
         availableCommands.add(DASHBOARD);
         availableCommands.add(MODIFY);

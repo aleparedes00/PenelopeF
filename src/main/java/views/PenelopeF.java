@@ -1,3 +1,5 @@
+package views;
+
 import controller.HomeMenuController;
 import controller.LoginController;
 import models.*;
@@ -17,6 +19,8 @@ import static tools.DateTools.now;
  * Created by alejandraparedes on 1/27/18.
  */
 public class PenelopeF { // executable main class
+    public static String defaultProjectsPath = "./projects";
+
     public static void main(String[] args) {
         // Initialize Application
         //TODO make a method run() to create the login

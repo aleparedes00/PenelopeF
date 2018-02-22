@@ -8,8 +8,6 @@ import java.util.UUID;
  * Created by alejandraparedes on 1/21/18.
  */
 
-//I commented all the DATE related fields to be able to fix the repository fill.
-
 public class Message {
     private String title;
     private String content;
@@ -44,7 +42,7 @@ public class Message {
     }
 
     /* Sub-class for replies */
-    class Reply extends Message {
+    /*class Reply extends Message {
         private Message inReplyTo;
 
         public Reply(String title, String content, String date, User author, Message inReplyTo) {
@@ -55,7 +53,7 @@ public class Message {
         public Message getInReplyTo() {
             return inReplyTo;
         }
-    }
+    }*/
 
     /* Getters */
     public String getTitle() {

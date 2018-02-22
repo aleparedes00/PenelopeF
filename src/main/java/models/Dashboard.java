@@ -1,7 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import models.Message.Reply;
+//import models.Message.Reply;
 import static tools.DateTools.now;
 
 import java.util.ArrayList;
@@ -13,19 +13,19 @@ import java.util.UUID;
  */
 public class Dashboard implements MessageList {
     @JsonIgnore
-    private HashMap<UUID,Message> messages;
+    private ArrayList<Message> messages;
     private ArrayList<UUID> messagesIds;
 
     /*Constructor*/
     public Dashboard() {
-        messages = new HashMap<>();
+        messages = new ArrayList<>();
         String now = now();
         Message creationMessage = new Message("Hello world!", "This project was started on " + now, now);
-        messages.put(creationMessage.getId(), creationMessage);
+        messages.add(creationMessage); //TODO Add message to global SystemData hashmap
     }
 
     /* Getters */
-    public HashMap<UUID,Message> getMessages() {
+    public ArrayList<Message> getMessages() {
         return messages;
     }
     public ArrayList<UUID> getMessagesIds() {
@@ -36,7 +36,7 @@ public class Dashboard implements MessageList {
         Message msg = messages.get(i);
 
         System.out.print(msg.getTitle() + " | by " + msg.getAuthorName());
-        if (msg instanceof Reply) System.out.print(" in reply to " + ((Reply) msg).getInReplyTo().getAuthorName());
+//        if (msg instanceof Reply) System.out.print(" in reply to " + ((Reply) msg).getInReplyTo().getAuthorName());
         System.out.println(" on " /*+ msg.getDate()*/);
         System.out.println("--------------------");
         System.out.println(msg.getContent());
@@ -51,14 +51,16 @@ public class Dashboard implements MessageList {
     }
 
     public void addMessage(Message msg) {
-        messages.put(msg.getId(), msg);
+        messages.add(msg);
         messagesIds.add(msg.getId());
+        //TODO Add message to global SystemData hashmap
     }
 
     public void addReply(String content, Message originalMessage, User author) {
         Message reply = new Message("RE: " + originalMessage.getTitle(), content, now(), author);
-        messages.put(reply.getId(), reply);
+        messages.add(reply);
         messagesIds.add(reply.getId());
         originalMessage.addReply(reply);
+        //TODO Add message to global SystemData hashmap (this one isn't a priority since we might not implement replies)
     }
 }

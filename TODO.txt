@@ -1,31 +1,6 @@
 0) Changements à faire
-* Users and Contacts
-	* Contact va devenir une classe contenant uniquement les informations de contact (mail, phone, etc.)
-	* Supprimer le champ User de Contact
-	* Ajouter un champ private Contact contactInfo dans User
-* Messages and Replies
-	* Enlever la sous-classe Reply (commenter)
-* Task
-	* À sérialiser au sein des Project
-	* NE PAS stocker les Tasks dans la HashMap globale de SystemData
 * Document
-	* À supprimer
-* Project
-	* Ajouter un champ String avec le chemin du dossier à observer
-	* exemple : defaultPath + "/" + projectName
-	* exemple (bonus import de projet) : "C:/Users/..."
-	* Ce champ servira pour les Observer : si j'observe ce Project, je dois observer le dossier à cet emplacement.
-	* Note : notre dossier ressemblera donc à ça :
-
-	PenelopeF
-		|_ src...
-		|_ projects
-			|_ 12345b-dejfr5.json
-			|_ ... .json
-			|_ Project1
-				|_ ... fichiers divers
-			|_ Mon Projet
-				|_ ... fichiers divers
+	* Mettre à jour UserListenerManager.updateDoc(Document document) pour ne plus manipuler d'objet Document. (Supprimer la classe ?)
 
 1) Deserialize and load
 * Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
@@ -98,3 +73,30 @@ printAllFiles(String folder, int nbRecursions) {
 	- ajouter un user dans un groupe
 	- ...
 * Partiellement implémenté dans UserSystem.java (à déplacer, restructurer... ? etc)
+
+===== DONE =====
+* Users and Contacts
+	* Contact va devenir une classe contenant uniquement les informations de contact (mail, phone, etc.)
+	* Supprimer le champ User de Contact
+	* Ajouter un champ private Contact contactInfo dans User
+* Messages and Replies
+	* Enlever la sous-classe Reply (commenter)
+* Task
+	* À sérialiser au sein des Project
+	* NE PAS stocker les Tasks dans la HashMap globale de SystemData
+* Project
+	* Ajouter un champ String avec le chemin du dossier à observer
+	* exemple : defaultPath + "/" + projectName
+	* exemple (bonus import de projet) : "C:/Users/..."
+	* Ce champ servira pour les Observer : si j'observe ce Project, je dois observer le dossier à cet emplacement.
+	* Note : notre dossier ressemblera donc à ça :
+
+	views.PenelopeF
+		|_ src...
+		|_ projects
+			|_ 12345b-dejfr5.json
+			|_ ... .json
+			|_ Project1
+				|_ ... fichiers divers
+			|_ Mon Projet
+				|_ ... fichiers divers
