@@ -31,7 +31,7 @@ public class UserRepository {
     private HashMap<UUID, User> readUsers(String pathToFile) {
         try {
             TypeReference<HashMap<UUID,User>> typeRef = new TypeReference<HashMap<UUID,User>>() {};
-            return serializer.deserialize(pathToFile, typeRef);
+            return serializer.deserializeHashMap(pathToFile, typeRef);
         } catch (IOException e) {
             System.out.println("Fuck! " + e);
         }

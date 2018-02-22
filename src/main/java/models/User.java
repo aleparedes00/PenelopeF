@@ -86,6 +86,10 @@ public class User {
         return password;
     }
 
+    public Contact getContactInfo() {
+        return contactInfo;
+    }
+
     public ArrayList<Project> getProjects() {
         return (ArrayList<Project>) projects;
     }

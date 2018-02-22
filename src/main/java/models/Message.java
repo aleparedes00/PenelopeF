@@ -72,6 +72,10 @@ public class Message {
         return author;
     }
 
+    public UUID getAuthorId() {
+        return authorId;
+    }
+
     public MessageThread getReplies() {
         return replies;
     }

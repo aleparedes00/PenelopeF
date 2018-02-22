@@ -4,6 +4,7 @@ import controller.HomeMenuController;
 import controller.LoginController;
 import models.*;
 import repository.ProjectRepository;
+import repository.RepositoryManager;
 import tools.Serializer;
 import views.LoginView;
 
@@ -19,42 +20,41 @@ import static tools.DateTools.now;
  * Created by alejandraparedes on 1/27/18.
  */
 public class PenelopeF { // executable main class
-    public static String defaultProjectsPath = "./projects";
+    public static String defaultProjectsPath = "projects";
+    public final static String usersJson = "users.json";
+    public final static String groupsJson = "groups.json";
+    public final static String messagesJson = "messages.json";
 
     public static void main(String[] args) {
         // Initialize Application
         //TODO make a method run() to create the login
-        SystemData os = new SystemData();
+        SystemData systemData = new SystemData();
+        RepositoryManager repositories = new RepositoryManager(systemData);
         User activeUser = null;
 
+        // Load Data
+        repositories.loadData();
+
         // Login Screen
-        Login loginModel = new Login(os.getUserSystem());
+        systemData.initializeUserSystem();
+        Login loginModel = new Login(systemData.getUserSystem());
         LoginView loginView = new LoginView(loginModel);
         LoginController loginController = new LoginController(loginModel, loginView);
         while (activeUser == null) {
             activeUser = loginController.userLogin();
         }
 
-        createNewTestData(os);
+        // Build Active User
+        repositories.loadActiveUserProjects(activeUser);
 
-        // Home Screen
-        // 1 - Users/Groups?
-        // 2 - Projects Screen
-        // 3 - Admin Screen
+        createNewTestData(systemData);
+        repositories.saveData();
 
-        // Initialize repository
-        ProjectRepository projectRepository = new ProjectRepository("./Project", os);
-        //activeUser.setProjects(projectRepository.readAndLoadProjectArray());
-        HomeMenuController homeMenuController = new HomeMenuController(activeUser, projectRepository);
+        // Call Home Menu
+        HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
         homeMenuController.firstMenuControl();
-        // Project Screen
 
         /*//TODO change this function to HomeMenuController. Il faut etablir qu'est-ce que projectManager va vraiment prendre en parametre IF there is no project on User, the menu should be only create project. GROUP will connect to the Project Manager by projetc group attribute.*/
-
-
-        // Admin Screen
-        //ALE: Tu veux mettre quoi dans cet écran ?
-        // ...
 
     }
 
@@ -88,17 +88,6 @@ public class PenelopeF { // executable main class
             for (UUID userId : testProject.getGroup().getUsersIds()) {
                 os.getUserFromId(userId).getProjectsIds().add(testProject.getId());
             }
-            // TODO: serialise this test project to test loading at the next startup. need to somehow use ProjectRepository method createProject, will try later
-        }
-
-        Serializer serializer = new Serializer();
-        try {
-            serializer.serialize(os.getUserSystem().getUsers(), "users.json");
-            System.out.println("Successfully saved users.");
-            serializer.serialize(os.getUserSystem().getGroups(), "groups.json");
-            System.out.println("Successfully saved groups.");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

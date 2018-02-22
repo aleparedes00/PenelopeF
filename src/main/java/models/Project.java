@@ -77,10 +77,17 @@ public class Project {
 //        return tasksIds;
 //    }
 
+    public String getPathToProject() {
+        return pathToProject;
+    }
+
     public Group getGroup() {
         return group;
     }
 
+    public UUID getGroupID() {
+        return groupID;
+    }
 
     public String getDate() {
         return date;

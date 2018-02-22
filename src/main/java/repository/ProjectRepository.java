@@ -1,99 +1,105 @@
 package repository;
 
-//import com.oracle.javafx.jmx.json.JSONReader;
-//import jdk.nashorn.internal.parser.JSONParser;
-
 import models.Project;
 import models.SystemData;
 import models.User;
 import test.TestData;
-import tools.Serializer;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-/*A chaque fois que repository deserialise un ficher, il utilise SystemData pour remplir celui là
- *
- * */
-public class ProjectRepository {
-
-    private final Serializer serializer = new Serializer();
-    private final SystemData systemData;
-    private final Path path;
-
+public class ProjectRepository extends Repository<Project> {
     /*Constructor*/
-
-    public ProjectRepository(String folderName, SystemData systemData) {
-
-        this.path = initiateProgram(folderName);
-        this.systemData = systemData;
+    public ProjectRepository(String pathToFolder, SystemData systemData) {
+        super(pathToFolder, systemData, Project.class);
+        initiateFolder(pathToFolder);
     }
 
-    private Path initiateProgram(String folderName) {
-        File file = new File(folderName + "/"); //This line is probably to make the user.
+    private void initiateFolder(String folderName) { // Create folder if it doesn't exist
+        File file = new File(path);
         if (!file.exists()) {
             file.mkdir();
         }
-/*        try (FileWriter writer = new FileWriter(file))
-        {
-            writer.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        String p = file.getPath();
-        Path path = Paths.get(p);
-        return Paths.get(file.getPath());
     }
 
-    public String createFolder(Project project) {
-        String name = path + "/" + project.getName();
-        File file = new File(name);
-        file.mkdirs();
-
-        return file.getPath();
+    /* Loading */
+    public void loadData() {
+        File projectsFolder = new File(path);
+        File[] projectFiles = projectsFolder.listFiles(file -> !file.isHidden());
+        if (projectFiles != null)
+            for (File projectFile : projectFiles) {
+                Project p = readData(projectFile.toString());
+                if (p != null && !systemData.existsProject(p.getId())) {
+                    systemData.loadProjectInMap(p);
+                }
+            }
     }
 
-    public void createNewUser(User user) {
-        String pathToFile = path.toString() + user.getId().toString() + ".json";
+    private Project readData(String pathToFile) {
         try {
-            serializer.serialize(user, pathToFile);
+            return serializer.deserialize(pathToFile, Project.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fuck! " + e);
+        }
+        return null;
+    }
+
+    public void loadProjectsToUser(User user) {
+        HashMap<UUID, Project> projects = systemData.getProjects();
+        user.setProjects(projects.entrySet().stream().filter(e -> user.getProjectsIds().contains(e.getKey())).map(project -> project.getValue()).collect(Collectors.toList()));
+
+        user.getProjectsIds().stream().map(id -> projects.get(id)).collect(Collectors.toList());
+    }
+
+    /* Saving */
+    public void saveData() {
+        HashMap<UUID, Project> projectsToSave = systemData.getDataFromType(dataType);
+        for (Map.Entry<UUID, Project> projectEntry : projectsToSave.entrySet()) {
+            Project dataToSave = projectEntry.getValue();
+            String pathToFile = path + "/" + dataToSave.getId().toString() + ".json";
+            try {
+                serializer.serialize(dataToSave, pathToFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void createNew(Project project) {
-        String pathFile = path.toString() + "/" + project.getId().toString() + ".json";
-        System.out.println("this is path file: " + pathFile);
+    /* Updating */
+    public void addNewProjectFile(Project project) {
+        String pathToFile = this.path + "/" + project.getId().toString() + ".json";
+//        System.out.println("this is path file: " + pathToFile);
         try {
-            serializer.serialize(project, pathFile);
+            serializer.serialize(project, pathToFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
         if (!(systemData.existsProject(project.getId()))) {
             systemData.loadProjectInMap(project);
         }
-        /*String path = createFolder(project);
-        File file = new File("Project/" + project.getId().toString() + ".properties");
-        try (FileWriter writer = new FileWriter(file)) {
-            Properties projectProperties = new Properties();
-            projectProperties.setProperty("nameOfProject", project.getName());
-            projectProperties.setProperty("id", project.getId().toString());
-            projectProperties.setProperty("dateCreation", project.getDate().toString());
-            projectProperties.store(writer, "Creation of project");
-            writer.flush();
-            writer.close();
+    }
+
+    public void addNewProjectFolder(Project project) {
+        String name = path + "/" + project.getName();
+        File file = new File(name);
+        file.mkdirs();
+    }
+
+    ////////////////////////////////////////////////////////////
+
+    // TODO: this method should be deleted?
+    /*public void createNewUser(User user) {
+        String pathToFile = this.path + user.getId().toString() + ".json";
+        try {
+            serializer.serialize(user, pathToFile);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-    }
+        }
+    }*/
 
     /*public HashMap<UUID,Project> readAndLoadProjectArray() {
         File folder = new File("Project/");
@@ -110,54 +116,6 @@ public class ProjectRepository {
         return projects;
     }*/
 
-    public void loadProjects() {
-        File folder = new File(path.toString() + "/");
-        File[] projectFiles = folder.listFiles(file -> !file.isHidden());
-        if (projectFiles != null) {
-            for (File projectFile : projectFiles) {
-                Project p = readProject(projectFile.toString());
-                if (!systemData.existsProject(p.getId())) {
-                    systemData.loadProjectInMap(p);
-                }
-            }
-        }
-    }
-
-    private Project readProject(String pathToFile) {
-        try {
-            return serializer.deserialize(pathToFile, Project.class);
-        } catch (IOException e) {
-            System.out.println("Fuck! " + e);
-        }
-
-       /* try (FileReader fileReader = new FileReader(file)) {
-            Properties properties = new Properties();
-            properties.load(fileReader);
-            String nameOfProject = properties.get("nameOfProject").toString();
-            Project project = new Project(nameOfProject, new Group("default"), Priority.NORMAL); //TODO: implement reading group ownership and priority from properties file
-            project.setId((String) properties.get("id"));
-            // read all tasks file and fill in the Project
-            // read all documents file and fill in the Project
-            // read group
-            return project;
-        } catch (IOException e) {
-            throw new RuntimeException("GOD DAMMIT! Everything went wrong here... ", e);
-        }*/
-        return null;
-    }
-
-  public void loadProjectToUser(User user){
-        HashMap<UUID, Project> projects = systemData.getProjects();
-        user.setProjects(projects.entrySet().stream().filter(e -> user.getProjectsIds().contains(e.getKey())).map(project->project.getValue()).collect(Collectors.toList()));
-
-      user.getProjectsIds().stream().map(id -> projects.get(id)).collect(Collectors.toList());
-    }
-
-    public Path getPath() {
-        return path;
-    }
-
-
     public static void main(String[] args) {
         SystemData systemData = new SystemData();
         ProjectRepository repository = new ProjectRepository("Project", systemData);
@@ -168,24 +126,24 @@ public class ProjectRepository {
 
         //Save project
         for (int i = 0; i < user.getProjects().size(); i++) {
-            repository.createNew(user.getProjects().get(i));
+            repository.addNewProjectFile(user.getProjects().get(i));
         }
-        
+
         //Read project
         //repository.loadProjects();
         //System.out.println("Id of project: " + .getId().toString());
         //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);
-        //repository.createNew(user.getProjects().get(0));
+        //repository.addNewProjectFile(user.getProjects().get(0));
         //Project p = repository.readProject(new File(repository.getPath() + "/TestProject/fc37b35e-8ddd-4cc5-b563-00f162e35d0a.json"));
         //System.out.println("project name : " + p.getName());
         /*
         for (Project project : user.getProjects()) {
-            repository.createNew(project);
+            repository.addNewProjectFile(project);
         }*/
         /*
         for (int i = 0; i < user.getProjects().size(); i++) {
-        repository.createNew(user.getProjects().get(i));
+        repository.addNewProjectFile(user.getProjects().get(i));
         }*/
         //System.out.println("New project created " + project.getName());
         /*ArrayList<Project> projects = repository.readAndLoadProjectArray();

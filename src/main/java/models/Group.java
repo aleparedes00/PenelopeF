@@ -40,6 +40,8 @@ public class Group {
 
         this.usersIds = new ArrayList<>();
         this.usersIds.add(user.getId());
+
+        this.id = UUID.randomUUID();
     }
 
     /* Getters */
@@ -58,6 +60,8 @@ public class Group {
     public UUID getId() {
         return id;
     }
+
+
 
     /*Other Methods*///AP I think this method should be in View
     public void printUsersInGroup() {

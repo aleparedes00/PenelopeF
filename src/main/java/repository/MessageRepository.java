@@ -31,7 +31,7 @@ public class MessageRepository { // TODO: Not tested yet!!!
     private HashMap<UUID, Message> readMessages(String pathToFile) {
         try {
             TypeReference<HashMap<UUID,Message>> typeRef = new TypeReference<HashMap<UUID,Message>>() {};
-            return serializer.deserialize(pathToFile, typeRef);
+            return serializer.deserializeHashMap(pathToFile, typeRef);
         } catch (IOException e) {
             System.out.println("Fuck! " + e);
         }

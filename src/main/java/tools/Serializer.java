@@ -10,6 +10,7 @@ import test.TestData;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import static tools.DateTools.now;
 
@@ -24,7 +25,7 @@ public class Serializer {
         return objectMapper.readValue(new File(filePath), type);
     }
 
-    public <T> T deserialize(String filePath, TypeReference<T> typeRef) throws IOException {
+    public <T> T deserializeHashMap(String filePath, TypeReference<T> typeRef) throws IOException {
         return objectMapper.readValue(new File(filePath), typeRef);
     }
 

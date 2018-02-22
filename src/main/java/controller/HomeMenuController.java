@@ -4,6 +4,7 @@ import models.FSListener;
 import models.Project;
 import models.User;
 import repository.ProjectRepository;
+import repository.RepositoryManager;
 import views.HomeMenuView;
 import views.PrintTools;
 import views.ProjectView;
@@ -15,15 +16,15 @@ import static tools.MenuTools.showMenu;
 public class HomeMenuController implements FSListener {
 //como declarar esto como un listener también
     private final User user;
-    private final ProjectRepository repository;
+    private final RepositoryManager repositories;
     private HomeMenuView homeMenuView = new HomeMenuView();
     //private FSListenable listenable;
 
     /*Constructor*/
-    public HomeMenuController(User user, ProjectRepository repository) {
+    public HomeMenuController(User user, RepositoryManager repositories) {
         this.user = user;
-        this.repository = repository;
-        //listenable = new FSListenable(repository.getPath(), );
+        this.repositories = repositories;
+        //listenable = new FSListenable(repositories.getPath(), );
     }
 
     /*Getters*/
@@ -38,7 +39,7 @@ public class HomeMenuController implements FSListener {
                 case CREATE_PROJECT:
                     Project project = homeMenuView.createProject();
                     user.addProject(project);
-                    repository.createNew(project);
+                    repositories.createNewProject(project);
 
                     break;
                 case LIST_PROJECTS:

@@ -31,7 +31,7 @@ public class GroupRepository {
     private HashMap<UUID, Group> readGroups(String pathToFile) {
         try {
             TypeReference<HashMap<UUID,Group>> typeRef = new TypeReference<HashMap<UUID,Group>>() {};
-            return serializer.deserialize(pathToFile, typeRef);
+            return serializer.deserializeHashMap(pathToFile, typeRef);
         } catch (IOException e) {
             System.out.println("Fuck! " + e);
         }
