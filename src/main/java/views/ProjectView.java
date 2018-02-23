@@ -18,9 +18,11 @@ public class ProjectView {
     private ArrayList<ProjectElements> getAvailableCommands(Project project) {
         ArrayList<ProjectElements> availableCommands = new ArrayList<>();
 
-        if (!project.getTasks().isEmpty()) availableCommands.add(TASK);
+        availableCommands.add(PROJECT_INFO);
+        if (!project.getTasks().isEmpty())
+            availableCommands.add(TASK);
+        //TODO: if the doc folder is empty?
         availableCommands.add(DOCUMENT);
-        availableCommands.add(GROUP);
         availableCommands.add(DASHBOARD);
         availableCommands.add(MODIFY);
         availableCommands.add(DEACTIVATE);

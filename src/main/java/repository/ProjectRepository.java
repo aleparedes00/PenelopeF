@@ -85,17 +85,6 @@ public class ProjectRepository extends Repository<Project> {
         file.mkdirs();
     }
 
-    ////////////////////////////////////////////////////////////
-
-    // TODO: this method should be deleted?
-    /*public void createNewUser(User user) {
-        String pathToFile = this.path + user.getId().toString() + ".json";
-        try {
-            serializer.serialize(user, pathToFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     /*public HashMap<UUID,Project> readAndLoadProjectArray() {
         File folder = new File("Project/");
