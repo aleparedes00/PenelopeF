@@ -1,9 +1,6 @@
 package views;
 
-import models.Group;
-import models.Priority;
-import models.Project;
-import models.User;
+import models.*;
 import views.menus.ProjectHomeSelection;
 
 import java.util.ArrayList;
@@ -28,17 +25,25 @@ public class HomeMenuView {
     public Project createProject() {
         System.out.println("Welcome to the Project Manager.\nProject Name: ");
         String name = scanString();
-        Project project = new Project(name, new Group("default"), now(), Priority.NORMAL); // TODO: Group selection, from current user's list of groups + Priority selection
+        Priority priority = selectPriority();
+        Project project = new Project(name, new Group("default"), now(), priority); // TODO: Group selection, from current user's list of groups
         System.out.println("New project created. Name: " + project.getName());
         //TODO System.out.println("Add:" + "\n1.-" + ProjectElements.TASK + "\n2.-" + ProjectElements.DOCUMENT + "\n3.-" + ProjectElements.GROUP);
         return project;
+    }
+
+    public Priority selectPriority() {
+        System.out.println("Please, select the priority of your project");
+        System.out.println("1.-" + Priority.HIGH);
+        System.out.println("2.-" + Priority.NORMAL);
+        System.out.println("3.-" + Priority.LOW);
+        return Priority.optionsPriority(printStringAndReadInteger("Enter a number between " + 1 + " and " + Priority.values().length, 1, 3));
     }
 
     public int showAndSelectProject(User user) {
         ArrayList<String> projectNames = new ArrayList<>();
         for (Project project : user.getProjects()) {
             projectNames.add(project.getName());
-
         }
         System.out.println("User: " + user.getUsername());
         System.out.println("Your projects: ");
@@ -50,5 +55,10 @@ public class HomeMenuView {
         int userChoice = scanInt(1, (projectNames.size() + 1));
         if (userChoice == projectNames.size() + 1) return -1;
         return userChoice - 1;
+    }
+    public static void main(String[] args) {
+        HomeMenuView homeMenuView = new HomeMenuView();
+        Priority priority = homeMenuView.selectPriority();
+        System.out.println("This is the priority " + priority.toString());
     }
 }

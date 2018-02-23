@@ -46,7 +46,10 @@ public class ProjectView {
 
     /*Print ProjectInfo*/
     public void drawProjectInformation(Project project) {
-        tools.PrintingTools.printString("");
+        System.out.println("Name: " + project.getName());
+        System.out.println("Group: " + project.getGroup().getName());
+        System.out.println("Created on: " + project.getDate());
+        System.out.println("Priority: " + project.getPriority().toString());
     }
 
     /*Print Project Modify*/

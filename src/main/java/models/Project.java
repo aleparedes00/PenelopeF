@@ -15,8 +15,6 @@ public class Project {
     private ArrayList<Task> tasks;
 //    private ArrayList<UUID> tasksIds;
 
-    private ArrayList<String> documents;
-
     private String pathToProject;
 
     //private Dashboard dashboard;
@@ -44,7 +42,6 @@ public class Project {
     public Project(String name, Group group, String date, Priority priority) {
         this.name = name;
         this.tasks = new ArrayList<>();
-        this.documents = new ArrayList<>();
 //        this.tasksIds = new ArrayList<>();
         this.pathToProject = defaultProjectsPath + "/" + name;
         this.group = group;
@@ -57,10 +54,6 @@ public class Project {
     public void addTask(Task task) {
         tasks.add(task);
 //        tasksIds.add(task.getId());
-    }
-
-    public void addDocument(String docName) {
-        documents.add(docName);
     }
 
     public void removeTask(Task task) {

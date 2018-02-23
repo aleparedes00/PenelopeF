@@ -107,17 +107,17 @@ public class ProjectRepository extends Repository<Project> {
         SystemData systemData = new SystemData();
         ProjectRepository repository = new ProjectRepository("Project", systemData);
 
-        TestData test = new TestData();
-        User user = test.project1_2();
-        System.out.println("Project amount is " + user.getProjects().size());
+        //TestData test = new TestData();
+        //User user = test.project1_2();
+        //System.out.println("Project amount is " + user.getProjects().size());
 
         //Save project
-        for (int i = 0; i < user.getProjects().size(); i++) {
+        /*for (int i = 0; i < user.getProjects().size(); i++) {
             repository.addNewProjectFile(user.getProjects().get(i));
-        }
+        }*/
 
         //Read project
-        //repository.loadProjects();
+        //repository.loadProjectsToUser();
         //System.out.println("Id of project: " + .getId().toString());
         //Project project = new Project("somethingNew", new Group("default"), Priority.NORMAL);
         //repository.createFolder(project);

@@ -47,8 +47,8 @@ public class PenelopeF { // executable main class
         // Build Active User
         repositories.loadActiveUserProjects(activeUser);
 
-        createNewTestData(systemData);
-        repositories.saveData();
+//        createNewTestData(systemData);
+//        repositories.saveData();
 
         // Call Home Menu
         HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
