@@ -4,9 +4,9 @@ package views.menus;
  * Created by alejandraparedes on 1/27/18.
  */
 public enum ProjectElements {
+    PROJECT_INFO("Project Information"),
     TASK("Task"),
     DOCUMENT("Document"),
-    GROUP("Group"),
     DASHBOARD("Dashboard"),
     MODIFY("Modify"),
     DEACTIVATE("Deactivate"),
@@ -21,11 +21,11 @@ public enum ProjectElements {
     public static ProjectElements valueOf(int value) {
         switch (value) {
             case 1:
-                return TASK;
+                return PROJECT_INFO;
             case 2:
-                return DOCUMENT;
+                return TASK;
             case 3:
-                return GROUP;
+                return DOCUMENT;
             case 4:
                 return DASHBOARD;
             case 5:

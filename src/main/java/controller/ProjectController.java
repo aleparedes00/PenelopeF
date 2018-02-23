@@ -37,14 +37,12 @@ public class ProjectController implements FSListener {
     public void showProject() {
         showMenu(ctx -> {
             switch (this.projectView.drawPrintProject(project)) {
+                //TODO: Add project Information here
                 case TASK:
                     System.out.println("More information about Task");
                     break;
                 case DOCUMENT:
                     System.out.println("[Documents]: more information");
-                    break;
-                case GROUP:
-                    System.out.println("[Group] : changes? Modify? deactivate?");
                     break;
                 case DASHBOARD:
                     System.out.println("[Dashboard] : Calling freaking Dashboard");
