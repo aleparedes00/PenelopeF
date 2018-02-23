@@ -37,6 +37,8 @@ public class ProjectController implements FSListener {
     public void showProject() {
         showMenu(ctx -> {
             switch (this.projectView.drawPrintProject(project)) {
+                case PROJECT_INFO:
+
                 //TODO: Add project Information here
                 case TASK:
                     System.out.println("More information about Task");

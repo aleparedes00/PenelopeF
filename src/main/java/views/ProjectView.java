@@ -34,7 +34,6 @@ public class ProjectView {
 
     /*Print Project Information*/
     public ProjectElements drawPrintProject(Project project) {
-        System.out.println("Project Name: " + project.getName());
         ArrayList<ProjectElements> availableCommands = getAvailableCommands(project);
 
         for (int i = 0; i < availableCommands.size(); i++) {
@@ -43,20 +42,14 @@ public class ProjectView {
 
         return availableCommands.get(scanInt(1, availableCommands.size()) - 1);
 
-//        System.out.println("1.-" + TASK + ":");
-//        project.getTasks().forEach(task -> System.out.println(task.getTitle()));
-//        System.out.println("2.-" + ProjectElements.DOCUMENT + ":");
-//        project.getFiles().forEach(document -> System.out.println(document.getNameOfDoc()));
-//        System.out.println("3.-" + ProjectElements.GROUP + ":" + project.getGroup().getName());
-//        System.out.println("4.-" + ProjectElements.DASHBOARD + ":");
-//        System.out.println("5.-" + ProjectElements.MODIFY);
-//        System.out.println("6.-" + ProjectElements.DEACTIVATE);
-//        System.out.println("7.-" + ProjectElements.BACK);
-//        System.out.println("What would you like to do? Please choose a valid number (1-7)");
-//        return ProjectElements.valueOf(scanInt(1, 7));
     }
 
+    /*Print ProjectInfo*/
+    public void drawProjectInformation(Project project) {
+        tools.PrintingTools.printString("");
+    }
 
+    /*Print Project Modify*/
     public ModifyProjectMenu modifyProjectMenu(Project project) {
         System.out.println("What would you like to modify?");
         System.out.println("1.-" + ModifyProjectMenu.PROJECT_NAME + ":");

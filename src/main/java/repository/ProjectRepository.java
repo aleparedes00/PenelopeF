@@ -29,7 +29,7 @@ public class ProjectRepository extends Repository<Project> {
     }
 
     /* Loading */
-    HashMap<UUID, Project> readData(String pathToFile) {
+    public HashMap<UUID, Project> readData(String pathToFile) {
         File[] projectFiles = new File(path).listFiles(file -> !file.isHidden());
         if (projectFiles != null)
             try {
