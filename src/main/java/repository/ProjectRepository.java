@@ -7,6 +7,7 @@ import test.TestData;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -17,10 +18,10 @@ public class ProjectRepository extends Repository<Project> {
     /* Constructor */
     public ProjectRepository(String pathToFolder, SystemData systemData) {
         super(pathToFolder, systemData, Project.class);
-        initiateFolder(pathToFolder);
+        initiateFolder();
     }
 
-    private void initiateFolder(String folderName) { // Create folder if it doesn't exist
+    private void initiateFolder() { // Create folder if it doesn't exist
         File file = new File(path);
         if (!file.exists()) {
             file.mkdir();
@@ -44,11 +45,12 @@ public class ProjectRepository extends Repository<Project> {
         return EMPTY;
     }
 
-    public void loadProjectsToUser(User user) {
+    public void loadProjectsToUser(User activeUser) {
         HashMap<UUID, Project> projects = systemData.getProjects();
-        user.setProjects(projects.entrySet().stream().filter(e -> user.getProjectsIds().contains(e.getKey())).map(project -> project.getValue()).collect(Collectors.toList()));
-
-        user.getProjectsIds().stream().map(id -> projects.get(id)).collect(Collectors.toList());
+        activeUser.setProjects(new ArrayList<>(projects.entrySet().stream()
+                .filter(e -> activeUser.getProjectsIds().contains(e.getKey()))
+                .map(e -> e.getValue())
+                .collect(Collectors.toList())));
     }
 
     /* Saving */

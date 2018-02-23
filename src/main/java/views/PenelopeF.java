@@ -37,7 +37,7 @@ public class PenelopeF { // executable main class
 
         // Login Screen
         systemData.initializeUserSystem();
-        Login loginModel = new Login(systemData.getUserSystem());
+        Login loginModel = new Login(systemData);
         LoginView loginView = new LoginView(loginModel);
         LoginController loginController = new LoginController(loginModel, loginView);
         while (activeUser == null) {

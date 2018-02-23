@@ -3,8 +3,8 @@ package models;
 public class Login {
     private UserSystem system;
 
-    public Login(UserSystem system) {
-        this.system = system;
+    public Login(SystemData systemData) {
+        this.system = systemData.getUserSystem();
     }
 
     public UserSystem getSystem() {

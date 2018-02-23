@@ -4,9 +4,9 @@ import models.*;
 import static views.PenelopeF.*;
 
 public class RepositoryManager {
-    private Repository<User> userRepository;
-    private Repository<Group> groupRepository;
-    private Repository<Message> messageRepository;
+    private UserRepository userRepository;
+    private GroupRepository groupRepository;
+    private MessageRepository messageRepository;
     private ProjectRepository projectRepository;
     private SystemData systemData;
 
@@ -27,6 +27,7 @@ public class RepositoryManager {
     }
 
     public void loadActiveUserProjects(User activeUser) {
+        groupRepository.loadGroupsToUser(activeUser);
         projectRepository.loadProjectsToUser(activeUser);
     }
 

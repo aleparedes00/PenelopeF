@@ -21,7 +21,7 @@ public class User {
     private Contact contactInfo;
 
     @JsonIgnore
-    private List<Project> projects;
+    private ArrayList<Project> projects;
     private ArrayList<UUID> projectsIds;
 
     @JsonIgnore
@@ -91,7 +91,7 @@ public class User {
     }
 
     public ArrayList<Project> getProjects() {
-        return (ArrayList<Project>) projects;
+        return projects;
     }
 
     public ArrayList<UUID> getProjectsIds() {
@@ -119,8 +119,12 @@ public class User {
         this.password = password;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(ArrayList<Project> projects) {
         this.projects = projects;
+    }
+
+    public void setGroups(ArrayList<Group> groups) {
+        this.groups = groups;
     }
 
     /* Other Methods */

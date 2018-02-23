@@ -15,18 +15,6 @@ public class SystemData {
     private HashMap<UUID, Message> messages;
     private HashMap<UUID, Project> projects;
 
-    /* Repositories */ // TODO: to delete
-    private UserRepository userRepository;
-    private GroupRepository groupRepository;
-    private MessageRepository messageRepository;
-    private ProjectRepository projectRepository;
-
-    /* Constants */
-    private final static String usersJson = "users.json";
-    private final static String groupsJson = "groups.json";
-    private final static String messagesJson = "messages.json";
-    private final static String projectsFolder = "Project"; // TODO: Should be named "projects", leaving it as "Project" for now so it doesn't conflict with existing files for testing
-
     private UserSystem userSystem; // TODO: Might not be needed anymore. Revision needed, until then I'm changing the constructor so the code doesn't break.
 
     public SystemData() {
@@ -95,12 +83,13 @@ public class SystemData {
         if (dataType == User.class) this.users = (HashMap<UUID, User>) deserializedHashMap;
         if (dataType == Group.class) this.groups = (HashMap<UUID, Group>) deserializedHashMap;
         if (dataType == Message.class) this.messages = (HashMap<UUID, Message>) deserializedHashMap;
+        if (dataType == Project.class) this.projects = (HashMap<UUID, Project>) deserializedHashMap;
     }
 
     public <T> HashMap getDataFromType(Class<T> dataType) {
         if (dataType == User.class) return this.users;
         if (dataType == Group.class) return this.groups;
         if (dataType == Message.class) return this.messages;
-        return this.projects; // default, won't happen
+        return this.projects;
     }
 }

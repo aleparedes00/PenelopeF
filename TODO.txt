@@ -1,6 +1,9 @@
-2) Login
-* Constructeur de Login : passer le SystemData en paramètre
-* Retour de la fonction login : construire l'activeUser en chargeant les groups, projects etc. nécessaires depuis le SystemData
+0) Changements de structure
+* Des champs de certaines classes sont à null après la déserialisation
+* Il faudrait les supprimer car on ne s'en sert pas directement/on peut récupérer les objets via leur ID dans SystemData
+* Liste de champs à supprimer :
+	- Group.users
+	- Project.group
 
 3) Menu Groups
 * Créer un controller pour ce menu (embarque le SystemData)
@@ -99,3 +102,7 @@ printAllFiles(String folder, int nbRecursions) {
 	-> Inclure SystemData dans les repos (constructeur)
 	-> Implémenter serialization pour User Group et Message 
 * Instancier les Repos depuis le main, faire les appels aux fonctions load depuis le main (déplacer la fonction loadSystemData)
+
+2) Login
+* Constructeur de Login : passer le SystemData en paramètre
+* Retour de la fonction login : construire l'activeUser en chargeant les groups, projects etc. nécessaires depuis le SystemData

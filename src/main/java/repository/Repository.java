@@ -1,6 +1,5 @@
 package repository;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import models.SystemData;
 import tools.Serializer;
 

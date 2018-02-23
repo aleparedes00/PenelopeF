@@ -3,10 +3,13 @@ package repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import models.Group;
 import models.SystemData;
+import models.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class GroupRepository extends Repository<Group> {
 
@@ -26,5 +29,11 @@ public class GroupRepository extends Repository<Group> {
         return EMPTY;
     }
 
-
+    public void loadGroupsToUser(User activeUser) {
+        HashMap<UUID, Group> groups = systemData.getGroups();
+        activeUser.setGroups(new ArrayList<>(groups.entrySet().stream()
+                .filter(e -> activeUser.getGroupsIds().contains(e.getKey()))
+                .map(e -> e.getValue())
+                .collect(Collectors.toList())));
+    }
 }
