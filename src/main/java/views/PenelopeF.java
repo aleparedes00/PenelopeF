@@ -82,12 +82,11 @@ public class PenelopeF { // executable main class
         os.getUserSystem().getGroups().put(userSelfGroup.getId(), userSelfGroup);
         os.getUserSystem().getGroups().put(dev.getId(), dev);
 
-        if (os.getProjects().isEmpty()) {
-            Project testProject = new Project("Test Project", dev, now(), Priority.NORMAL);
-            os.loadProjectInMap(testProject);
-            for (UUID userId : testProject.getGroup().getUsersIds()) {
-                os.getUserFromId(userId).getProjectsIds().add(testProject.getId());
-            }
+        String newProjectName = "Test Project " + (os.getProjects().size() + 1);
+        Project testProject = new Project(newProjectName, dev, now(), Priority.NORMAL);
+        os.loadProjectInMap(testProject);
+        for (UUID userId : testProject.getGroup().getUsersIds()) {
+            os.getUserFromId(userId).getProjectsIds().add(testProject.getId());
         }
     }
 }
