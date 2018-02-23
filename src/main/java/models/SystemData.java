@@ -39,6 +39,7 @@ public class SystemData {
 
     public void initializeUserSystem() {
         this.userSystem = new UserSystem(users, groups);
+
     }
 
     /* Loading Methods */

@@ -1,14 +1,3 @@
-0) Changements à faire
-* Document
-	* Mettre à jour UserListenerManager.updateDoc(Document document) pour ne plus manipuler d'objet Document. (Supprimer la classe ?)
-
-1) Deserialize and load
-* Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
-* Repository: doit serialiser et deserialiser, déplacer ça depuis SystemData
-	-> Inclure SystemData dans les repos (constructeur)
-	-> Implémenter serialization pour User Group et Message 
-* Instancier les Repos depuis le main, faire les appels aux fonctions load depuis le main (déplacer la fonction loadSystemData)
-
 2) Login
 * Constructeur de Login : passer le SystemData en paramètre
 * Retour de la fonction login : construire l'activeUser en chargeant les groups, projects etc. nécessaires depuis le SystemData
@@ -84,6 +73,9 @@ printAllFiles(String folder, int nbRecursions) {
 * Task
 	* À sérialiser au sein des Project
 	* NE PAS stocker les Tasks dans la HashMap globale de SystemData
+* Document
+	* À supprimer
+	* Mettre à jour UserListenerManager.updateDoc(Document document) pour ne plus manipuler d'objet Document. (Supprimer la classe ?)
 * Project
 	* Ajouter un champ String avec le chemin du dossier à observer
 	* exemple : defaultPath + "/" + projectName
@@ -100,3 +92,10 @@ printAllFiles(String folder, int nbRecursions) {
 				|_ ... fichiers divers
 			|_ Mon Projet
 				|_ ... fichiers divers
+
+1) Deserialize and load
+* Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
+* Repository: doit serialiser et deserialiser, déplacer ça depuis SystemData
+	-> Inclure SystemData dans les repos (constructeur)
+	-> Implémenter serialization pour User Group et Message 
+* Instancier les Repos depuis le main, faire les appels aux fonctions load depuis le main (déplacer la fonction loadSystemData)

@@ -13,7 +13,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ProjectRepository extends Repository<Project> {
-    /*Constructor*/
+
+    /* Constructor */
     public ProjectRepository(String pathToFolder, SystemData systemData) {
         super(pathToFolder, systemData, Project.class);
         initiateFolder(pathToFolder);
@@ -27,25 +28,20 @@ public class ProjectRepository extends Repository<Project> {
     }
 
     /* Loading */
-    public void loadData() {
-        File projectsFolder = new File(path);
-        File[] projectFiles = projectsFolder.listFiles(file -> !file.isHidden());
+    HashMap<UUID, Project> readData(String pathToFile) {
+        File[] projectFiles = new File(path).listFiles(file -> !file.isHidden());
         if (projectFiles != null)
-            for (File projectFile : projectFiles) {
-                Project p = readData(projectFile.toString());
-                if (p != null && !systemData.existsProject(p.getId())) {
-                    systemData.loadProjectInMap(p);
+            try {
+                HashMap<UUID, Project> deserializedProjects = new HashMap<>();
+                for (File projectFile : projectFiles) {
+                    Project p = serializer.deserialize(projectFile.getPath(), Project.class);
+                    deserializedProjects.put(p.getId(), p);
                 }
+                return deserializedProjects;
+            } catch (IOException e) {
+                System.out.println("Fuck! " + e);
             }
-    }
-
-    private Project readData(String pathToFile) {
-        try {
-            return serializer.deserialize(pathToFile, Project.class);
-        } catch (IOException e) {
-            System.out.println("Fuck! " + e);
-        }
-        return null;
+        return EMPTY;
     }
 
     public void loadProjectsToUser(User user) {

@@ -1,40 +1,30 @@
 package repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import models.SystemData;
 import models.User;
-import tools.Serializer;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class UserRepository {
+public class UserRepository extends Repository<User> {
 
-    private final Serializer serializer = new Serializer();
-    private final String pathToFile;
-
-    private static final HashMap<UUID, User> NO_USERS = new HashMap<>();
-
-    /*Constructor*/
-
-    public UserRepository(String pathToFile) {
-        this.pathToFile = pathToFile;
+    /* Constructor */
+    public UserRepository(String path, SystemData systemData) {
+        super(path, systemData, User.class);
     }
 
-    public HashMap<UUID, User> loadUsers() {
-        File usersJson = new File(pathToFile);
-        if (usersJson.exists()) return readUsers(pathToFile);
-        return NO_USERS;
-    }
-
-    private HashMap<UUID, User> readUsers(String pathToFile) {
+    /* Loading */
+    HashMap<UUID, User> readData(String pathToFile) {
         try {
-            TypeReference<HashMap<UUID,User>> typeRef = new TypeReference<HashMap<UUID,User>>() {};
-            return serializer.deserializeHashMap(pathToFile, typeRef);
+            TypeReference<HashMap<UUID, User>> typeRef = new TypeReference<HashMap<UUID, User>>() { };
+            return serializer.deserialize(pathToFile, typeRef);
         } catch (IOException e) {
             System.out.println("Fuck! " + e);
         }
-        return NO_USERS;
+        return EMPTY;
     }
+
+
 }
