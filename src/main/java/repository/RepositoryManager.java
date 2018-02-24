@@ -44,4 +44,9 @@ public class RepositoryManager {
         messageRepository.saveData();
         projectRepository.saveData();
     }
+
+    /* Getters */
+    public SystemData getSystemData() {
+        return systemData;
+    }
 }

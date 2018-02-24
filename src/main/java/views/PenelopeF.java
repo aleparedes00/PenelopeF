@@ -1,16 +1,12 @@
 package views;
 
+import controller.GroupsMenuController;
 import controller.HomeMenuController;
 import controller.LoginController;
+import controller.UserSystemController;
 import models.*;
-import repository.ProjectRepository;
 import repository.RepositoryManager;
-import tools.Serializer;
-import views.LoginView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -46,45 +42,55 @@ public class PenelopeF { // executable main class
         // Build Active User
         repositories.loadActiveUserProjects(activeUser);
 
-        //createNewTestData(systemData);
+        // Test: Create User and Project Data
+        createNewTestData(repositories);
+
+        // Test: Groups Menu
+        //GroupsMenuController groupsMenuController = new GroupsMenuController(activeUser, repositories.getSystemData());
+        //groupsMenuController.showGroups();
 
         // Call Home Menu
-        HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
-        homeMenuController.firstMenuControl();
+        //HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
+        //homeMenuController.firstMenuControl();
 
         repositories.saveData();
 
     }
 
-    public static void createNewTestData(SystemData os) { // Ugly, awkward test method to create users, groups etc. and test serialisation. Run, stop, run again, observe
+    public static void createNewTestData(RepositoryManager repositories) { // Ugly, awkward test method to create users, groups etc. and test serialisation. Run, stop, run again, observe
         Scanner sc = new Scanner(System.in);
+        SystemData systemData = repositories.getSystemData();
+        UserSystem userSystem = systemData.getUserSystem();
+        UserSystemController os = new UserSystemController(userSystem, new UserSystemView(userSystem));
 
-        Group dev = os.getUserSystem().getGroupFromName("dev");
-        if (dev == null) dev = new Group("dev");
+        System.out.println("Create new user? Y/N");
+        if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
+            os.createUser();
 
-        os.getUserSystem().getGroups().put(dev.getId(), dev);
-        System.out.print("First name? ");
-        String firstName = sc.next();
-        System.out.print("Last name? ");
-        String lastName = sc.next();
-        User user = new User(firstName, lastName);
-        System.out.println("Created user " + user.getUsername() + " (" + user.getName() + ")");
-        System.out.println("Password is " + user.getPassword() + ", remember it!");
+        System.out.println("Create new group? Y/N");
+        if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
+            os.createGroup();
 
-        Group userSelfGroup = user.getGroups().get(0);
+        System.out.println("Add a user to a previous group? Y/N");
+        if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
+            os.prepareAddUserToGroup();
 
-        user.getGroupsIds().add(dev.getId());
-        dev.getUsersIds().add(user.getId());
+        System.out.println("Create new test project? Y/N");
+        if (tools.ScannerTools.scanString().toUpperCase().equals("Y")) {
+            String newProjectName = "Test Project " + (systemData.getProjects().size() + 1);
+            System.out.println("Which group?");
+            Group group;
+            while ((group = userSystem.getGroupFromName(tools.ScannerTools.scanString())) == null)
+                System.out.println("Not found, which group?");
 
-        os.getUserSystem().getUsers().put(user.getId(), user);
-        os.getUserSystem().getGroups().put(userSelfGroup.getId(), userSelfGroup);
-        os.getUserSystem().getGroups().put(dev.getId(), dev);
-
-        String newProjectName = "Test Project " + (os.getProjects().size() + 1);
-        Project testProject = new Project(newProjectName, dev, now(), Priority.NORMAL);
-        os.loadProjectInMap(testProject);
-        for (UUID userId : testProject.getGroup().getUsersIds()) {
-            os.getUserFromId(userId).getProjectsIds().add(testProject.getId());
+            Project testProject = new Project(newProjectName, group, now(), Priority.NORMAL);
+            systemData.loadProjectInMap(testProject);
+            for (UUID userId : testProject.getGroup().getUsersIds()) {
+                systemData.getUserFromId(userId).getProjectsIds().add(testProject.getId());
+            }
         }
+
+        // Save data
+        repositories.saveData();
     }
 }

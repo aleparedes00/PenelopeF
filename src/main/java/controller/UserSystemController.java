@@ -10,7 +10,6 @@ import static tools.ScannerTools.scanString;
 public class UserSystemController {
     private UserSystem model;
     private UserSystemView view;
-    private User user;
 
     public UserSystemController(UserSystem model, UserSystemView view) {
         this.model = model;
@@ -19,31 +18,73 @@ public class UserSystemController {
 
 
     /* Managing Users and Groups */
-    //TODO Est-ce que on devrait Create UserView to put the print there?
-    public User createUser() {
+    //TODO BETTER REFACTORING FOR MVC!!!
+    public void createUser() {
+        // Input
         System.out.print("First name? ");
         String firstName = scanString();
         System.out.print("Last name? ");
         String lastName = scanString();
 
+        // Create user
         User user = new User(firstName, lastName);
         System.out.println("Created user " + user.getUsername() + " (" + user.getName() + ")");
-        System.out.println("Password is " + user.getPassword() + ", remember it!");
-    this.setUser(user);
-        return user;
+        System.out.println("Password is " + user.getPassword() + " remember it!");
+
+        // Save to systemData
+        model.getUsers().put(user.getId(), user);
+        Group userSelfGroup = user.getSelfGroup();
+        model.getGroups().put(userSelfGroup.getId(), userSelfGroup);
     }
 
-    public Group createGroup() {
+    public void createGroup() {
+        // Input
         System.out.print("Group name? ");
         String groupName = scanString();
 
+        // Create group
         Group group = new Group(groupName);
         System.out.println("Created group " + group.getName());
 
-        return group;
+        // Add users to group
+        boolean addingUsers = true;
+        while (addingUsers) {
+            System.out.println("Add user to created group? Y/N"); // TODO: improve this
+            if (scanString().toUpperCase().equals("Y"))
+                prepareAddUserToGroup(group);
+            else addingUsers = false;
+        }
+
+        // Save to systemData
+        model.getGroups().put(group.getId(), group);
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void prepareAddUserToGroup(Group groupToBeAddedTo) {
+        System.out.print("Which user? ");
+        User userToAdd = model.getUserFromUsername(scanString());
+        if (userToAdd != null) {
+            addUserToGroup(userToAdd, groupToBeAddedTo);
+        } else System.out.println("User not found.");
+    }
+
+    public void prepareAddUserToGroup() {
+        System.out.print("Which user? ");
+        User userToAdd = model.getUserFromUsername(scanString());
+        if (userToAdd != null) {
+            System.out.print("Which group? ");
+            Group groupToBeAddedTo = model.getGroupFromName(scanString());
+            if (groupToBeAddedTo != null)
+                addUserToGroup(userToAdd, groupToBeAddedTo);
+            else System.out.println("Group not found.");
+        } else System.out.println("User not found.");
+    }
+
+    private void addUserToGroup(User user, Group group) {
+        //group.getUsers().add(user);
+        group.getUsersIds().add(user.getId());
+        //user.addGroup(group);
+        user.getGroupsIds().add(group.getId());
+
+        System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
     }
 }

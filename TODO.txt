@@ -19,6 +19,7 @@
 		-> A priori non, plus besoin car SystemData contient déjà toutes les données nécessaires.
 		-> Supprimer le champ userSystem dans SystemData
 	-> Conclusion : cette classe ne devrait que contenir des méthodes pour l'admin.
+* Contact : entrer le mail et le tel à la création de l'user
 
 LOGIN
 * Implémenter une boucle pour qu'à chaque logout, on retourne au menu login plutôt que de fermer l'application complètement.
@@ -97,7 +98,9 @@ printAllFiles(String folder, int nbRecursions) {
 * *Inversement, l'admin n'a pas accès aux deux autres menus*
 * Contient :
 	- créer un nouvel user
+		-> username UNIQUE
 	- créer un nouveau groupe
+		-> groupname UNIQUE
 	- ajouter un user dans un groupe
 	- ...
 * Partiellement implémenté dans UserSystem.java, voir refacto dans 0)

@@ -17,8 +17,7 @@ public class UserSystem {
         if (users.isEmpty()) {
             User root = new User("", "", "root", "root");
 
-            Group admin = root.getGroups().get(0);
-
+            Group admin = root.getSelfGroup();
 
             this.users.put(root.getId(), root);
             this.groups.put(admin.getId(), admin);
@@ -48,24 +47,6 @@ public class UserSystem {
                 return user.getValue();
         }
         return null;
-    }
-
-    public void prepareAddUserToGroup() {
-        System.out.print("Which user? ");
-        User userToAdd = getUserFromUsername(scanString());
-        if (userToAdd != null) {
-            System.out.print("Which group? ");
-            Group groupToBeAddedTo = getGroupFromName(scanString());
-            if (groupToBeAddedTo != null)
-                addUserToGroup(userToAdd, groupToBeAddedTo);
-            else System.out.println("Group not found.");
-        } else System.out.println("User not found.");
-    }
-
-    private void addUserToGroup(User user, Group group) {
-        group.getUsers().add(user);
-        user.addGroup(group);
-        System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
     }
 
     /* Password Methods */

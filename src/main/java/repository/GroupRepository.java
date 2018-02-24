@@ -30,6 +30,8 @@ public class GroupRepository extends Repository<Group> {
     }
 
     public void loadGroupsToUser(User activeUser) {
+        activeUser.setSelfGroup(systemData.getGroupFromId(activeUser.getSelfGroupId()));
+
         HashMap<UUID, Group> groups = systemData.getGroups();
         activeUser.setGroups(new ArrayList<>(groups.entrySet().stream()
                 .filter(e -> activeUser.getGroupsIds().contains(e.getKey()))

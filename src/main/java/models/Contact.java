@@ -28,4 +28,9 @@ public class Contact {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    /* toString */
+    public String toString() {
+        return "E-mail: " + email + "\nPhone: " + phone;
+    }
 }

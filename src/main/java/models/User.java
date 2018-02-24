@@ -25,6 +25,10 @@ public class User {
     private ArrayList<UUID> projectsIds;
 
     @JsonIgnore
+    private Group selfGroup;
+    private UUID selfGroupId;
+
+    @JsonIgnore
     private ArrayList<Group> groups;
     private ArrayList<UUID> groupsIds;
 
@@ -57,8 +61,8 @@ public class User {
         this.contactInfo = new Contact();
 
         Group selfGroup = new Group(this);
-        this.groups.add(selfGroup);
-        this.groupsIds.add(selfGroup.getId());
+        this.selfGroup = selfGroup;
+        this.selfGroupId = selfGroup.getId();
 
         this.projects = new ArrayList<>();
         this.projectsIds = new ArrayList<>();
@@ -106,6 +110,14 @@ public class User {
         return groupsIds;
     }
 
+    public Group getSelfGroup() {
+        return selfGroup;
+    }
+
+    public UUID getSelfGroupId() {
+        return selfGroupId;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -125,6 +137,10 @@ public class User {
 
     public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
+    }
+
+    public void setSelfGroup(Group selfGroup) {
+        this.selfGroup = selfGroup;
     }
 
     /* Other Methods */
