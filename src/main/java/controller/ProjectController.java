@@ -4,8 +4,10 @@ import models.FSListenable;
 import models.FSListener;
 import models.Project;
 import models.User;
+import views.HomeMenuView;
 import views.PrintTools;
 import views.ProjectView;
+import views.TaskView;
 
 import java.io.File;
 
@@ -41,7 +43,9 @@ public class ProjectController implements FSListener {
                     projectView.drawProjectInformation(project);
                     break;
                 case TASK:
-                    System.out.println("More information about Task");
+                    TaskView taskView = new TaskView();
+                    TaskController taskController = new TaskController(taskView, project);
+                    taskController.showListTasks();
                     break;
                 case DOCUMENT:
                     System.out.println("[Documents]: more information");
@@ -71,6 +75,8 @@ public class ProjectController implements FSListener {
                     project.setName(PrintTools.printStringAndReadChoice("Please, enter the new name of the project:"));
                     ctx.leaveCurrentMenu = TRUE;
                     break;
+                case PRIORITY:
+                    project.setPriority(HomeMenuView.selectPriority());
                 case GROUP:
                     System.out.println("Changing group");
                     ctx.leaveCurrentMenu = TRUE;

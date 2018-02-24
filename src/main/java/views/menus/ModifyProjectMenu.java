@@ -2,6 +2,7 @@ package views.menus;
 
 public enum ModifyProjectMenu {
     PROJECT_NAME("Project Name"),
+    PRIORITY("Priority"),
     GROUP("Group"),
     BACK("Back");
 
@@ -14,8 +15,10 @@ public enum ModifyProjectMenu {
             case 1:
                 return PROJECT_NAME;
             case 2:
-                return GROUP;
+                return PRIORITY;
             case 3:
+                return GROUP;
+            case 4:
                 return BACK;
         }
         throw new IllegalStateException("Selection doesn't exist");

@@ -19,8 +19,7 @@ public class ProjectView {
         ArrayList<ProjectElements> availableCommands = new ArrayList<>();
 
         availableCommands.add(PROJECT_INFO);
-        if (!project.getTasks().isEmpty())
-            availableCommands.add(TASK);
+        availableCommands.add(TASK);
         //TODO: dont show Documents of File file = new File (project.pathTOFolder return null
         availableCommands.add(DOCUMENT);
         availableCommands.add(DASHBOARD);
@@ -37,7 +36,7 @@ public class ProjectView {
         ArrayList<ProjectElements> availableCommands = getAvailableCommands(project);
 
         for (int i = 0; i < availableCommands.size(); i++) {
-            System.out.println((i+1) + ".-" + availableCommands.get(i));
+            System.out.println((i + 1) + ".-" + availableCommands.get(i));
         }
 
         return availableCommands.get(scanInt(1, availableCommands.size()) - 1);

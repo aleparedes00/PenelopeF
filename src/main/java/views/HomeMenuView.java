@@ -32,7 +32,7 @@ public class HomeMenuView {
         return project;
     }
 
-    public Priority selectPriority() {
+    public static Priority selectPriority() {
         System.out.println("Please, select the priority of your project");
         System.out.println("1.-" + Priority.HIGH);
         System.out.println("2.-" + Priority.NORMAL);

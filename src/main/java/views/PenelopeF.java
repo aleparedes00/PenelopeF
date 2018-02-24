@@ -21,11 +21,12 @@ public class PenelopeF { // executable main class
     public final static String groupsJson = "groups.json";
     public final static String messagesJson = "messages.json";
 
+    public static User activeUser;
+
     public static void main(String[] args) {
         // Initialize Application
         SystemData systemData = new SystemData();
         RepositoryManager repositories = new RepositoryManager(systemData);
-        User activeUser = null;
 
         // Load Data
         repositories.loadData();

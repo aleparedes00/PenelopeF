@@ -1,8 +1,11 @@
 package models;
 
+import static java.lang.Boolean.*;
+
 public class Task extends Message {
 
     private Priority priority;
+    private Boolean active;
 
     /* Constructor by default */
     public Task() { }
@@ -11,11 +14,20 @@ public class Task extends Message {
     public Task(String title, String content, String date, Priority priority, User owner){
         super(title, content, date, owner);
         this.priority = priority;
+        this.active = TRUE;
     }
 
     /* Getters and Setters */
     public User getOwner() { // getOwner = getAuthor, but we can keep this method if the name is more explicit
         return getAuthor();
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean b) {
+        active = b;
     }
 
     public Priority getPriority() {

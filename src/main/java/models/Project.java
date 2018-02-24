@@ -103,6 +103,7 @@ public class Project {
 
     /* Setters */
     public void setId(String idStr) { id = UUID.fromString(idStr); }
+    public void setPriority(Priority priority) {this.priority = priority; }
 
     public void setName(String name) {
         this.name = name;

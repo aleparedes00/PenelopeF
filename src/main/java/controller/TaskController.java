@@ -1,11 +1,16 @@
 package controller;
 
 import models.Project;
+import models.Task;
 import models.User;
 import test.TestData;
+import views.HomeMenuView;
 import views.TaskView;
 
+import static java.lang.Boolean.*;
 import static tools.MenuTools.showMenu;
+import static tools.ScannerTools.*;
+import static views.HomeMenuView.selectPriority;
 
 public class TaskController {
 
@@ -21,14 +26,53 @@ public class TaskController {
         showMenu(ctx -> {
             Integer userInput = this.taskView.drawListTask(project);
             if (userInput == project.getTasks().size())
-            { System.out.println("Menu for new task"); }
+            { newTask(project); }
             else if (userInput >= project.getTasks().size())
-            { ctx.leaveCurrentMenu = Boolean.TRUE; }
+            { ctx.leaveCurrentMenu = TRUE; }
             else
-            {
+            { taskManager(project.getTasks().get(userInput)); }
+        });
+    }
+
+    public void taskManager(Task task) {
+        showMenu(ctx -> {
+            switch (taskView.drawTask(task)){
+                case DONE:
+                    task.setActive(FALSE);
+                    break;
+                case MODIFY:
+                    modifyTask(task);
+                    break;
+                case BACK:
+                    ctx.leaveCurrentMenu = TRUE;
             }
         });
     }
+
+    public void modifyTask(Task task) {
+        showMenu(ctx -> {
+            switch (taskView.modifyTask())
+            {
+                case TITLE:
+                    task.setTitle(scanString());
+                    break;
+                case CONTENT:
+                    task.setContent(scanString());
+                    break;
+                case PRIORITY:
+                    task.setPriority(selectPriority());
+                    break;
+                case BACK:
+                ctx.leaveCurrentMenu = TRUE;
+            }
+        });
+    }
+
+    public void newTask(Project project) {
+        Task newTask = taskView.drawNewTask();
+        project.addTask(newTask);
+    }
+
     public static void main(String[] args) {
         TestData testData = new TestData();
         User activeUser = testData.project1_2();
