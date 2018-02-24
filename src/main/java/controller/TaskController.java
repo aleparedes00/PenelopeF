@@ -1,10 +1,8 @@
 package controller;
 
 import models.Project;
-import models.Task;
 import models.User;
 import test.TestData;
-import tools.MenuTools;
 import views.TaskView;
 
 import static tools.MenuTools.showMenu;
@@ -19,10 +17,16 @@ public class TaskController {
         this.taskView = taskView;
     }
 
-    public void showListTaks() {
+    public void showListTasks() {
         showMenu(ctx -> {
             Integer userInput = this.taskView.drawListTask(project);
-            System.out.println("The choice is " + userInput);
+            if (userInput == project.getTasks().size())
+            { System.out.println("Menu for new task"); }
+            else if (userInput >= project.getTasks().size())
+            { ctx.leaveCurrentMenu = Boolean.TRUE; }
+            else
+            {
+            }
         });
     }
     public static void main(String[] args) {
@@ -30,7 +34,7 @@ public class TaskController {
         User activeUser = testData.project1_2();
         TaskView taskView = new TaskView();
         TaskController taskController = new TaskController(taskView, activeUser.getProjects().get(0));
-        taskController.showListTaks();
+        taskController.showListTasks();
 
     }
 }

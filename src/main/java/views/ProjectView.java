@@ -21,7 +21,7 @@ public class ProjectView {
         availableCommands.add(PROJECT_INFO);
         if (!project.getTasks().isEmpty())
             availableCommands.add(TASK);
-        //TODO: if the doc folder is empty?
+        //TODO: dont show Documents of File file = new File (project.pathTOFolder return null
         availableCommands.add(DOCUMENT);
         availableCommands.add(DASHBOARD);
         availableCommands.add(MODIFY);
@@ -58,6 +58,7 @@ public class ProjectView {
         System.out.println("1.-" + ModifyProjectMenu.PROJECT_NAME + ":");
         System.out.println("2.-" + ModifyProjectMenu.GROUP + ":");
         System.out.println("3.-" + ModifyProjectMenu.BACK + ".");
+        //TODO add change priority
         System.out.println("What would you like to do?");
         return ModifyProjectMenu.valueOf(scanInt(1, 3));
     }

@@ -36,10 +36,12 @@ public class HomeMenuController implements FSListener {
     public void firstMenuControl() {
         showMenu((ctx) -> {
             switch (homeMenuView.showAndSelectHome()) {
+                //TODO change this to the way you show tasks
                 case CREATE_PROJECT:
                     Project project = homeMenuView.createProject();
                     user.addProject(project);
                     repositories.createNewProject(project);
+                    repositories.saveData();
 
                     break;
                 case LIST_PROJECTS:

@@ -27,7 +27,6 @@ public class PenelopeF { // executable main class
 
     public static void main(String[] args) {
         // Initialize Application
-        //TODO make a method run() to create the login
         SystemData systemData = new SystemData();
         RepositoryManager repositories = new RepositoryManager(systemData);
         User activeUser = null;
@@ -47,14 +46,13 @@ public class PenelopeF { // executable main class
         // Build Active User
         repositories.loadActiveUserProjects(activeUser);
 
-        createNewTestData(systemData);
-        repositories.saveData();
+        //createNewTestData(systemData);
 
         // Call Home Menu
         HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
         homeMenuController.firstMenuControl();
 
-        /*//TODO change this function to HomeMenuController. Il faut etablir qu'est-ce que projectManager va vraiment prendre en parametre IF there is no project on User, the menu should be only create project. GROUP will connect to the Project Manager by projetc group attribute.*/
+        repositories.saveData();
 
     }
 
