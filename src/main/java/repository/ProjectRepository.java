@@ -35,8 +35,10 @@ public class ProjectRepository extends Repository<Project> {
             try {
                 HashMap<UUID, Project> deserializedProjects = new HashMap<>();
                 for (File projectFile : projectFiles) {
-                    Project p = serializer.deserialize(projectFile.getPath(), Project.class);
-                    deserializedProjects.put(p.getId(), p);
+                    if (!projectFile.isDirectory()) {
+                        Project p = serializer.deserialize(projectFile.getPath(), Project.class);
+                        deserializedProjects.put(p.getId(), p);
+                    }
                 }
                 return deserializedProjects;
             } catch (IOException e) {
