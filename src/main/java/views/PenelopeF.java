@@ -27,12 +27,15 @@ public class PenelopeF { // executable main class
         // Initialize Application
         SystemData systemData = new SystemData();
         RepositoryManager repositories = new RepositoryManager(systemData);
+        systemData.initializeUserSystem();
+
+        // Test: Create User and Project Data
+        createNewTestData(repositories);
 
         // Load Data
         repositories.loadData();
 
         // Login Screen
-        systemData.initializeUserSystem();
         Login loginModel = new Login(systemData);
         LoginView loginView = new LoginView(loginModel);
         LoginController loginController = new LoginController(loginModel, loginView);
@@ -43,8 +46,6 @@ public class PenelopeF { // executable main class
         // Build Active User
         repositories.loadActiveUserProjects(activeUser);
 
-        // Test: Create User and Project Data
-        createNewTestData(repositories);
 
         // Test: Groups Menu
         //GroupsMenuController groupsMenuController = new GroupsMenuController(activeUser, repositories.getSystemData());
@@ -64,31 +65,49 @@ public class PenelopeF { // executable main class
         UserSystem userSystem = systemData.getUserSystem();
         UserSystemController os = new UserSystemController(userSystem, new UserSystemView(userSystem));
 
-        System.out.println("Create new user? Y/N");
-        if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
-            os.createUser();
+        boolean creating = true;
+        while (creating) {
+            System.out.println("Create new user? Y/N");
+            if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
+                os.createUser();
+            else creating = false;
+        }
 
-        System.out.println("Create new group? Y/N");
-        if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
-            os.createGroup();
+        creating = true;
+        while (creating) {
+            System.out.println("Create new group? Y/N");
+            if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
+                os.createGroup();
+            else creating = false;
+        }
 
-        System.out.println("Add a user to a previous group? Y/N");
-        if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
-            os.prepareAddUserToGroup();
+        creating = true;
+        while (creating) {
+            System.out.println("Add a user to a previous group? Y/N");
+            if (tools.ScannerTools.scanString().toUpperCase().equals("Y"))
+                os.prepareAddUserToGroup();
+            else creating = false;
+        }
 
-        System.out.println("Create new test project? Y/N");
-        if (tools.ScannerTools.scanString().toUpperCase().equals("Y")) {
-            String newProjectName = "Test Project " + (systemData.getProjects().size() + 1);
-            System.out.println("Which group?");
-            Group group;
-            while ((group = userSystem.getGroupFromName(tools.ScannerTools.scanString())) == null)
-                System.out.println("Not found, which group?");
+        creating = true;
+        while (creating) {
+            System.out.println("Create new test project? Y/N");
+            if (tools.ScannerTools.scanString().toUpperCase().equals("Y")) {
+                String newProjectName = "Test Project " + (systemData.getProjects().size() + 1);
+                System.out.println("Which group?");
+                Group group;
+                while ((group = userSystem.getGroupFromName(tools.ScannerTools.scanString())) == null)
+                    System.out.println("Not found, which group?");
 
-            Project testProject = new Project(newProjectName, group, now(), Priority.NORMAL);
-            systemData.loadProjectInMap(testProject);
-            for (UUID userId : testProject.getGroup().getUsersIds()) {
-                systemData.getUserFromId(userId).getProjectsIds().add(testProject.getId());
+                Project testProject = new Project(newProjectName, group, now(), Priority.NORMAL);
+                repositories.createNewProject(testProject);
+                for (UUID userId : testProject.getGroup().getUsersIds()) {
+                    systemData.getUserFromId(userId).getProjectsIds().add(testProject.getId());
+                }
+
+                System.out.println("Created " + newProjectName);
             }
+            else creating = false;
         }
 
         // Save data

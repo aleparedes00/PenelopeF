@@ -1,16 +1,17 @@
-0) Changements de structure
-* Des champs de certaines classes sont à null après la déserialisation
-* Il faudrait les supprimer car on ne s'en sert pas directement/on peut récupérer les objets via leur ID dans SystemData
-* Liste de champs à supprimer :
-	- Group.users
-	- Project.group
+==========================
+========== TODO ==========
+
+===== STRUCTURE =====
+* Des champs de certaines classes sont à null après la déserialisation. Il faudrait les supprimer car on ne s'en sert pas directement/on peut récupérer les objets via leur ID dans SystemData
+	-> Liste de champs à supprimer :
+		- Group.users
+		- Project.group
 * User : à la création du username, vérifier qu'il est bien UNIQUE
 * (pas urgent) User : retirer la virgule des caractères possibles pour le mot de passe, et tant qu'à faire enlever la virgule dans le message pour éviter toute confusion
 * saveData() : idéalement, il faudrait save à chaque modification importante
 	-> Exemple : création d'un projet, il faudrait save les users qui y ont accès
 	-> Fait pour le menu Create Project, identifier d'autres endroits où ce sera nécessaire
 	-> L'appel à repositories.saveData() devra être fait depuis un *Controller*.
-* User.generatePassword -> déplacer ça dans un tools.PasswordTools
 * UserSystem, le gros chantier :
 	-> Plusieurs fonctions auraient leur place dans un UserSystemView (voir TODO de la fonction createUser)
 	-> Renommer en Admin.java ?
@@ -20,17 +21,17 @@
 		-> Supprimer le champ userSystem dans SystemData
 	-> Conclusion : cette classe ne devrait que contenir des méthodes pour l'admin.
 * Contact : entrer le mail et le tel à la création de l'user
+* systemData, à passer en static ?
+	-> Permet d'accéder à la classe à tout moment pour la traduction UUID -> Object
+	-> Nécessaire pour vérifier si un username ou un nom de groupe existe déjà
 
-LOGIN
+
+===== INITIALIZE =====
+2) Login
 * Implémenter une boucle pour qu'à chaque logout, on retourne au menu login plutôt que de fermer l'application complètement.
 
-MENU PRINCIPAL
-1) Menu Groups -> GroupMenuController
-* Créer un controller pour ce menu (embarque le SystemData)
-* Afficher tous les groupes.
-* À la sélection d'un groupe, afficher tous ses membres.
-* À la sélection d'un user, afficher sa fiche contact (nom complet, contactInfo...)
 
+===== MAIN MENU =====
 2) Menu Projects -> ProjectMenuController (actuellement HomeMenuController)
 
 1 - Project1
@@ -105,7 +106,10 @@ printAllFiles(String folder, int nbRecursions) {
 	- ...
 * Partiellement implémenté dans UserSystem.java, voir refacto dans 0)
 
-===== DONE =====
+==========================
+========== DONE ==========
+
+===== STRUCTURE =====
 * Users and Contacts
 	* Contact va devenir une classe contenant uniquement les informations de contact (mail, phone, etc.)
 	* Supprimer le champ User de Contact
@@ -135,6 +139,11 @@ printAllFiles(String folder, int nbRecursions) {
 			|_ Mon Projet
 				|_ ... fichiers divers
 
+* User.generatePassword -> déplacer ça dans un tools.PasswordTools
+
+
+===== INITIALIZE =====
+
 1) Deserialize and load
 * Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
 * Repository: doit serialiser et deserialiser, déplacer ça depuis SystemData
@@ -145,3 +154,12 @@ printAllFiles(String folder, int nbRecursions) {
 2) Login
 * Constructeur de Login : passer le SystemData en paramètre
 * Retour de la fonction login : construire l'activeUser en chargeant les groups, projects etc. nécessaires depuis le SystemData
+
+
+===== MAIN MENU =====
+
+1) Menu Groups -> GroupMenuController
+* Créer un controller pour ce menu (embarque le SystemData)
+* Afficher tous les groupes.
+* À la sélection d'un groupe, afficher tous ses membres.
+* À la sélection d'un user, afficher sa fiche contact (nom complet, contactInfo...)

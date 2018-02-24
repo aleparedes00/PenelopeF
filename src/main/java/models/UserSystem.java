@@ -1,6 +1,7 @@
 package models;
 
 import static tools.ScannerTools.*;
+import static tools.PasswordTools.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -91,11 +92,11 @@ public class UserSystem {
         boolean hasSpecial = false;
 
         for (int i = 0; i < pwd.length(); i++) {
-            if (User.ALPHA_CAPS.contains("" + pwd.charAt(i)))
+            if (ALPHA_CAPS.contains("" + pwd.charAt(i)))
                 hasCap = true;
-            if (User.NUM.contains("" + pwd.charAt(i)))
+            if (NUM.contains("" + pwd.charAt(i)))
                 hasNum = true;
-            if (User.SPECIAL.contains("" + pwd.charAt(i)))
+            if (SPECIAL.contains("" + pwd.charAt(i)))
                 hasSpecial = true;
         }
 
