@@ -1,0 +1,92 @@
+{
+  "1ebc7c13-cc03-4140-9405-beabf592d181": {
+    "name": "hyvern_a",
+    "usersIds": [
+      "42cce5a9-ad75-49ce-9f24-6e01cb20d6a2"
+    ],
+    "selfGroup": true,
+    "id": "1ebc7c13-cc03-4140-9405-beabf592d181"
+  },
+  "f4cb6b08-bff7-4315-9629-7a0297102818": {
+    "name": "root",
+    "usersIds": [
+      "9fe32cd9-d452-4d84-ab5d-4e6807d079c6"
+    ],
+    "selfGroup": true,
+    "id": "f4cb6b08-bff7-4315-9629-7a0297102818"
+  },
+  "860790bb-00a9-42a2-a13d-411053163e2f": {
+    "name": "Mappy",
+    "usersIds": [
+      "42cce5a9-ad75-49ce-9f24-6e01cb20d6a2"
+    ],
+    "selfGroup": false,
+    "id": "860790bb-00a9-42a2-a13d-411053163e2f"
+  },
+  "0b34f182-0746-4b8e-9e45-6031fbf14688": {
+    "name": "ETNA",
+    "usersIds": [
+      "42cce5a9-ad75-49ce-9f24-6e01cb20d6a2",
+      "f6d6e0ee-094d-479f-ac7c-bc84c4743634",
+      "b2c82c42-85e8-40df-bc36-cffaaed116fa"
+    ],
+    "selfGroup": false,
+    "id": "0b34f182-0746-4b8e-9e45-6031fbf14688"
+  },
+  "d1dd78e0-0097-4990-a179-c57291a5fa27": {
+    "name": "Cool People",
+    "usersIds": [
+      "42cce5a9-ad75-49ce-9f24-6e01cb20d6a2",
+      "f6d6e0ee-094d-479f-ac7c-bc84c4743634"
+    ],
+    "selfGroup": false,
+    "id": "d1dd78e0-0097-4990-a179-c57291a5fa27"
+  },
+  "1b4bb394-fb02-4b3d-a6e7-b099622dfb26": {
+    "name": "parede_a",
+    "usersIds": [
+      "f6d6e0ee-094d-479f-ac7c-bc84c4743634"
+    ],
+    "selfGroup": true,
+    "id": "1b4bb394-fb02-4b3d-a6e7-b099622dfb26"
+  },
+  "84448a06-0513-478c-a6d7-1e8e56f6286a": {
+    "name": "Profs",
+    "usersIds": [
+      "b2c82c42-85e8-40df-bc36-cffaaed116fa"
+    ],
+    "selfGroup": false,
+    "id": "84448a06-0513-478c-a6d7-1e8e56f6286a"
+  },
+  "d595b60e-47db-4ca7-8a41-e09f79df4d8e": {
+    "name": "thirio_g",
+    "usersIds": [
+      "b2c82c42-85e8-40df-bc36-cffaaed116fa"
+    ],
+    "selfGroup": true,
+    "id": "d595b60e-47db-4ca7-8a41-e09f79df4d8e"
+  },
+  "fb27ce9b-91b8-40a9-96f0-12f95ae27e8f": {
+    "name": "Dev",
+    "usersIds": [
+      "42cce5a9-ad75-49ce-9f24-6e01cb20d6a2",
+      "f6d6e0ee-094d-479f-ac7c-bc84c4743634"
+    ],
+    "selfGroup": false,
+    "id": "fb27ce9b-91b8-40a9-96f0-12f95ae27e8f"
+  },
+  "cd509d61-a080-466d-9ead-fb7d78cec718": {
+    "name": "Aperam",
+    "usersIds": [
+      "f6d6e0ee-094d-479f-ac7c-bc84c4743634"
+    ],
+    "selfGroup": false,
+    "id": "cd509d61-a080-466d-9ead-fb7d78cec718"
+  },
+  "91ac143a-df72-41b3-a5a8-f935f16c52d8": {
+    "name": "No Man's Land",
+    "usersIds": [],
+    "selfGroup": false,
+    "id": "91ac143a-df72-41b3-a5a8-f935f16c52d8"
+  }
+}

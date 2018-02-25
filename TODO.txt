@@ -6,8 +6,6 @@
 	-> Liste de champs à supprimer :
 		- Group.users
 		- Project.group
-* User : à la création du username, vérifier qu'il est bien UNIQUE
-* (pas urgent) User : retirer la virgule des caractères possibles pour le mot de passe, et tant qu'à faire enlever la virgule dans le message pour éviter toute confusion
 * saveData() : idéalement, il faudrait save à chaque modification importante
 	-> Exemple : création d'un projet, il faudrait save les users qui y ont accès
 	-> Fait pour le menu Create Project, identifier d'autres endroits où ce sera nécessaire
@@ -24,6 +22,11 @@
 * systemData, à passer en static ?
 	-> Permet d'accéder à la classe à tout moment pour la traduction UUID -> Object
 	-> Nécessaire pour vérifier si un username ou un nom de groupe existe déjà
+
+* Dashboard!!!
+	-> Implémenter définitivement les dashboards
+	-> Sérialiser les dashboards (où ?)
+	-> Tester que la sérialisation des messages se fait bien
 
 
 ===== INITIALIZE =====
@@ -95,16 +98,8 @@ printAllFiles(String folder, int nbRecursions) {
 }
 
 3) Menu Admin
-* Afficher uniquement si activeUser a des droits d'admin
+* Afficher uniquement si activeUser a des droits d'admin // à ajouter une fois qu'on aura l'affichage du Main Menu
 * *Inversement, l'admin n'a pas accès aux deux autres menus*
-* Contient :
-	- créer un nouvel user
-		-> username UNIQUE
-	- créer un nouveau groupe
-		-> groupname UNIQUE
-	- ajouter un user dans un groupe
-	- ...
-* Partiellement implémenté dans UserSystem.java, voir refacto dans 0)
 
 ==========================
 ========== DONE ==========
@@ -140,6 +135,8 @@ printAllFiles(String folder, int nbRecursions) {
 				|_ ... fichiers divers
 
 * User.generatePassword -> déplacer ça dans un tools.PasswordTools
+* User : à la création du username, vérifier qu'il est bien UNIQUE
+* User : retirer la virgule dans le message pour éviter toute confusion
 
 
 ===== INITIALIZE =====
@@ -163,3 +160,12 @@ printAllFiles(String folder, int nbRecursions) {
 * Afficher tous les groupes.
 * À la sélection d'un groupe, afficher tous ses membres.
 * À la sélection d'un user, afficher sa fiche contact (nom complet, contactInfo...)
+
+3) Menu Admin
+* Contient :
+	- créer un nouvel user
+		-> username UNIQUE
+	- créer un nouveau groupe
+		-> groupname UNIQUE
+	- ajouter un user dans un groupe
+	- ...

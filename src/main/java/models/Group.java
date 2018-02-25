@@ -70,6 +70,12 @@ public class Group {
         return id;
     }
 
+    /* Setters */
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /*Other Methods*///AP I think this method should be in View
     public void printUsersInGroup() {
         System.out.println("Users in group " + this.getName());

@@ -28,6 +28,18 @@ public class UserSystemController {
 
         // Create user
         User user = new User(firstName, lastName);
+        if (!checkUsername(user.getUsername())) {
+            if (!fixUsername(user)) {
+                System.out.println("Couldn't generate username, please enter one manually");
+                String customUsername = scanString();
+                while (!checkUsername(customUsername)) {
+                    System.out.println("Username " + customUsername + " already taken, please enter another username.");
+                    customUsername = scanString();
+                }
+                user.setUsername(customUsername);
+                user.getSelfGroup().setName(customUsername);
+            }
+        }
         System.out.println("Created user " + user.getUsername() + " (" + user.getName() + ")");
         System.out.println("Password is " + user.getPassword() + " remember it!");
 
@@ -37,10 +49,31 @@ public class UserSystemController {
         model.getGroups().put(userSelfGroup.getId(), userSelfGroup);
     }
 
+    private boolean checkUsername(String username) {
+        return (model.getUserFromUsername(username) == null);
+    }
+
+    private boolean fixUsername(User user) {
+        String[] usernameParts = user.getUsername().split("_");
+
+        for (char newLetter = 'a'; newLetter <= 'z'; newLetter++) {
+            if (checkUsername(usernameParts[0] + "_" + newLetter)) {
+                user.setUsername(usernameParts[0] + "_" + newLetter);
+                user.getSelfGroup().setName(usernameParts[0] + "_" + newLetter);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void createGroup() {
         // Input
         System.out.print("Group name? ");
         String groupName = scanString();
+        while (!checkGroupName(groupName)) {
+            System.out.println("Group name " + groupName + " is already taken. Try another name.");
+            groupName = scanString();
+        }
 
         // Create group
         Group group = new Group(groupName);
@@ -57,6 +90,10 @@ public class UserSystemController {
 
         // Save to systemData
         model.getGroups().put(group.getId(), group);
+    }
+
+    private boolean checkGroupName(String groupName) {
+        return (model.getGroupFromName(groupName) == null);
     }
 
     public void prepareAddUserToGroup(Group groupToBeAddedTo) {
@@ -80,11 +117,15 @@ public class UserSystemController {
     }
 
     private void addUserToGroup(User user, Group group) {
-        //group.getUsers().add(user);
-        group.getUsersIds().add(user.getId());
-        //user.addGroup(group);
-        user.getGroupsIds().add(group.getId());
+        if (group.getUsersIds().contains(user.getId()))
+            System.out.println("Group " + group.getName() + " already contains user " + user.getUsername() + "!");
+        else {
+            //group.getUsers().add(user);
+            group.getUsersIds().add(user.getId());
+            //user.addGroup(group);
+            user.getGroupsIds().add(group.getId());
 
-        System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
+            System.out.println("Added user " + user.getUsername() + " to group " + group.getName());
+        }
     }
 }

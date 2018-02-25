@@ -1,9 +1,6 @@
 package views;
 
-import controller.GroupsMenuController;
-import controller.HomeMenuController;
-import controller.LoginController;
-import controller.UserSystemController;
+import controller.*;
 import models.*;
 import repository.RepositoryManager;
 
@@ -27,13 +24,13 @@ public class PenelopeF { // executable main class
         // Initialize Application
         SystemData systemData = new SystemData();
         RepositoryManager repositories = new RepositoryManager(systemData);
-        systemData.initializeUserSystem();
-
-        // Test: Create User and Project Data
-        createNewTestData(repositories);
 
         // Load Data
         repositories.loadData();
+        systemData.initializeUserSystem();
+
+        // Test: Create User and Project Data
+        //createNewTestData(repositories);
 
         // Login Screen
         Login loginModel = new Login(systemData);
@@ -51,9 +48,13 @@ public class PenelopeF { // executable main class
         //GroupsMenuController groupsMenuController = new GroupsMenuController(activeUser, repositories.getSystemData());
         //groupsMenuController.showGroups();
 
-        // Call Home Menu
+        // Test: Projects Menu
         //HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
         //homeMenuController.firstMenuControl();
+
+        // Test: Admin Menu
+        AdminMenuController adminMenuController = new AdminMenuController(repositories);
+        adminMenuController.showAdminMenu();
 
         repositories.saveData();
 
