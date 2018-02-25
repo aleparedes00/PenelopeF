@@ -85,6 +85,7 @@ public class Message {
         return id;
     }
 
+    @JsonIgnore
     public String getAuthorName() {
         return (author != null) ? author.getUsername() : "System";
     }

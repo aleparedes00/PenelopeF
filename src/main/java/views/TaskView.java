@@ -1,22 +1,20 @@
 package views;
 
 import models.Priority;
-import models.Project;
 import models.Task;
 import views.menus.TaskElements;
 
-import java.util.Collection;
-import java.util.stream.Collector;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static views.PenelopeF.*;
 import static views.PrintTools.*;
 
 public class TaskView {
-    public Integer drawListTask(Project project){
+    public Integer drawListTask(List<Task> tasks){
         int i = 1;
-        for (Task task: project.getTasks().stream().filter(Task::isActive).collect(Collectors.toList())) {
-            System.out.println(i++ + ".-" + task.getTitle());
+        for (Task task : tasks) {
+            System.out.println(i++ + ".- " + task.getTitle());
         }
         System.out.println(i++ + ".- Create new");
         System.out.println(i + ".- Back");

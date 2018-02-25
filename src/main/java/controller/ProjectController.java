@@ -38,7 +38,7 @@ public class ProjectController implements FSListener {
 
     public void showProject() {
         showMenu(ctx -> {
-            switch (this.projectView.drawPrintProject(project)) {
+            switch (this.projectView.drawPrintProject()) {
                 case PROJECT_INFO:
                     projectView.drawProjectInformation(project);
                     break;
@@ -48,7 +48,7 @@ public class ProjectController implements FSListener {
                     taskController.showListTasks();
                     break;
                 case DOCUMENT:
-                    System.out.println("[Documents]: more information");
+                    System.out.println("[Documents]: Insert your file inside the folder " + project.getPathToProject());
                     break;
                 case DASHBOARD:
                     System.out.println("[Dashboard] : Calling freaking Dashboard");

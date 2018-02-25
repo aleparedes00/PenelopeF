@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import static java.lang.Boolean.*;
 
 public class Task extends Message {
@@ -18,6 +20,7 @@ public class Task extends Message {
     }
 
     /* Getters and Setters */
+    @JsonIgnore
     public User getOwner() { // getOwner = getAuthor, but we can keep this method if the name is more explicit
         return getAuthor();
     }

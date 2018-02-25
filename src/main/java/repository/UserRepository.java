@@ -21,6 +21,7 @@ public class UserRepository extends Repository<User> {
             TypeReference<HashMap<UUID, User>> typeRef = new TypeReference<HashMap<UUID, User>>() { };
             return serializer.deserialize(pathToFile, typeRef);
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Fuck! " + e);
         }
         return EMPTY;

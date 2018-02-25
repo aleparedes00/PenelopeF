@@ -15,7 +15,7 @@ import static views.menus.ProjectElements.*;
 public class ProjectView {
 
     /* Get available commands depending on project */
-    private ArrayList<ProjectElements> getAvailableCommands(Project project) {
+    private ArrayList<ProjectElements> getAvailableCommands() {
         ArrayList<ProjectElements> availableCommands = new ArrayList<>();
 
         availableCommands.add(PROJECT_INFO);
@@ -32,8 +32,8 @@ public class ProjectView {
 
 
     /*Print Project Information*/
-    public ProjectElements drawPrintProject(Project project) {
-        ArrayList<ProjectElements> availableCommands = getAvailableCommands(project);
+    public ProjectElements drawPrintProject() {
+        ArrayList<ProjectElements> availableCommands = getAvailableCommands();
 
         for (int i = 0; i < availableCommands.size(); i++) {
             System.out.println((i + 1) + ".-" + availableCommands.get(i));

@@ -24,6 +24,7 @@ public class GroupRepository extends Repository<Group> {
             TypeReference<HashMap<UUID, Group>> typeRef = new TypeReference<HashMap<UUID, Group>>() { };
             return serializer.deserialize(pathToFile, typeRef);
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Fuck! " + e);
         }
         return EMPTY;

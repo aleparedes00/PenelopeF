@@ -42,6 +42,7 @@ public class ProjectRepository extends Repository<Project> {
                 }
                 return deserializedProjects;
             } catch (IOException e) {
+                e.printStackTrace();
                 System.out.println("Fuck! " + e);
             }
         return EMPTY;

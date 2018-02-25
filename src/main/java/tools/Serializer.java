@@ -2,6 +2,7 @@ package tools;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import models.Group;
 import models.Priority;
 import models.Project;
@@ -10,12 +11,16 @@ import test.TestData;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import static tools.DateTools.now;
 
 public class Serializer {
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    public Serializer() {
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    }
     public <T> void serialize(T object, String filePath) throws IOException {
         objectMapper.writeValue(new File(filePath), object);
     }

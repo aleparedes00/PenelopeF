@@ -21,6 +21,7 @@ public class MessageRepository extends Repository<Message> {
             TypeReference<HashMap<UUID, Message>> typeRef = new TypeReference<HashMap<UUID, Message>>() { };
             return serializer.deserialize(pathToFile, typeRef);
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Fuck! " + e);
         }
         return EMPTY;

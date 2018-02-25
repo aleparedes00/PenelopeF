@@ -1,90 +1,50 @@
-==========================
-========== TODO ==========
+0) Changements à faire
+* Document
+	* Mettre à jour UserListenerManager.updateDoc(Document document) pour ne plus manipuler d'objet Document. (Supprimer la classe ?)
 
-===== STRUCTURE =====
-* Des champs de certaines classes sont à null après la déserialisation. Il faudrait les supprimer car on ne s'en sert pas directement/on peut récupérer les objets via leur ID dans SystemData
-	-> Liste de champs à supprimer :
-		- Group.users
-		- Project.group
-* saveData() : idéalement, il faudrait save à chaque modification importante
-	-> Exemple : création d'un projet, il faudrait save les users qui y ont accès
-	-> Fait pour le menu Create Project, identifier d'autres endroits où ce sera nécessaire
-	-> L'appel à repositories.saveData() devra être fait depuis un *Controller*.
-* UserSystem, le gros chantier :
-	-> Plusieurs fonctions auraient leur place dans un UserSystemView (voir TODO de la fonction createUser)
-	-> Renommer en Admin.java ?
-	-> Structurer ça en MVC
-	-> Est-il toujours nécessaire d'en faire un champ de SystemData ?
-		-> A priori non, plus besoin car SystemData contient déjà toutes les données nécessaires.
-		-> Supprimer le champ userSystem dans SystemData
-	-> Conclusion : cette classe ne devrait que contenir des méthodes pour l'admin.
-* Contact : entrer le mail et le tel à la création de l'user
-* systemData, à passer en static ?
-	-> Permet d'accéder à la classe à tout moment pour la traduction UUID -> Object
-	-> Nécessaire pour vérifier si un username ou un nom de groupe existe déjà
+1) Deserialize and load
+* Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
+* Repository: doit serialiser et deserialiser, déplacer ça depuis SystemData
+	-> Inclure SystemData dans les repos (constructeur)
+	-> Implémenter serialization pour User Group et Message 
+* Instancier les Repos depuis le main, faire les appels aux fonctions load depuis le main (déplacer la fonction loadSystemData)
 
-* Dashboard!!!
-	-> Implémenter définitivement les dashboards
-	-> Sérialiser les dashboards (où ?)
-	-> Tester que la sérialisation des messages se fait bien
-
-
-===== INITIALIZE =====
 2) Login
-* Implémenter une boucle pour qu'à chaque logout, on retourne au menu login plutôt que de fermer l'application complètement.
+* Constructeur de Login : passer le SystemData en paramètre
+* Retour de la fonction login : construire l'activeUser en chargeant les groups, projects etc. nécessaires depuis le SystemData
 
+3) Menu Groups
+* Créer un controller pour ce menu (embarque le SystemData)
+* Afficher tous les groupes.
+* À la sélection d'un groupe, afficher tous ses membres.
+* À la sélection d'un user, afficher sa fiche contact (nom complet, contactInfo...)
 
-===== MAIN MENU =====
-2) Menu Projects -> ProjectMenuController (actuellement HomeMenuController)
-
-1 - Project1
-2 - Mon Projet
-3 - Create project
-4 - Back
-
+4) Menu Projects
 * Affiche la liste des projets *de l'utilisateur*
-	-> le constructeur n'embarque QUE activeUser
-
-	* À la sélection d'un projet, on affiche le menu du projet (voir ProjectController)
-		-> Menu Info
-		-> Menu Dashboard
-		-> Menu Task
-		-> Menu Documents
-			-> comme pour Task, ne pas afficher l'option si le dossier est vide
-			-> exemple : if (new File(project.getPathToProject()).listFiles() != null))
-		-> Modifier
-		-> Supprimer
-
-* Menu pour créer un projet
+	-> le constructeur n'embarque QUE activeUser 
+* À la sélection d'un projet, on affiche le menu du projet (voir ProjectController)
+	-> Menu Info 			(DONE)
+	-> Menu Dashboard
+	-> Menu Task 			(DONE)
+	-> Menu Documents
+	-> Modifier 			(DONE) 
+	-> Supprimer 			(DONE)
+* Menu pour créer un projet 		(DONE)
 	-> Créer un nouveau projet vierge dans un dossier que l'on fixera
 		ex : ./projects/[nom du projet entré par l'user]
-	-> Demander à quel groupe l'assigner
-		-> lister les groupes de l'activeUser
-	-> Remplacer le user.addProject par une itération sur tous les users du groupe affecté, appeler addProject sur chacun de ces users
-	->	for (User user : project.getGroup().getUsers())
-        	user.addProject(project);
 	-> (Bonus) Importer un dossier déjà existant
 
-2a) Menu Info
-* Renommer l'élément GROUP en INFO
-* Afficher les infos du projet : nom, description, date de création, *groupes*
+4a) Menu Info 				(DONE ALL) voir section DONE
 
-2b) Menu Dashboard
+4b) Menu Dashboard
 * Restructurer Dashboard.java en MVC
 * Afficher tous les messages du plus récent au plus ancien
-* Ajouter les messages du Dashboard à SystemData!!!
 * (Bonus)Implémenter un système de réponse
 * (Bonus)Implémenter un système de pagination
 
-2c) Menu Task
-* Afficher toutes les tasks
-* À la sélection d'une task :
-	* afficher ses infos
-	* renommer
-	* delete
-* Sous-menu créer une nouvelle tâche
+4c) Menu Task 				(DONE ALL) voir section DONE
 
-2d) Menu Documents
+4d) Menu Documents
 * Afficher la liste des fichiers dans le dossier correspondant au projet (affichage récursif, exemple : src, src/Test.java, ...)
 * Fonction récursive 
 printAllFiles(String folder, int nbRecursions) {
@@ -97,26 +57,39 @@ printAllFiles(String folder, int nbRecursions) {
 	else println(current.baseName);
 }
 
-3) Menu Admin
-* Afficher uniquement si activeUser a des droits d'admin // à ajouter une fois qu'on aura l'affichage du Main Menu
-* *Inversement, l'admin n'a pas accès aux deux autres menus*
+5) Menu Admin
+* Afficher uniquement si activeUser a des droits d'admin
+* Contient :
+	- créer un nouvel user
+	- créer un nouveau groupe
+	- ajouter un user dans un groupe
+	- ...
+* Partiellement implémenté dans UserSystem.java (à déplacer, restructurer... ? etc)
 
-==========================
-========== DONE ==========
-
-===== STRUCTURE =====
+===== DONE =====
 * Users and Contacts
 	* Contact va devenir une classe contenant uniquement les informations de contact (mail, phone, etc.)
 	* Supprimer le champ User de Contact
 	* Ajouter un champ private Contact contactInfo dans User
 * Messages and Replies
 	* Enlever la sous-classe Reply (commenter)
+
+4a) Menu Info (DONE ALL)
+* Renommer l'élément GROUP en INFO
+* Afficher les infos du projet : nom, description, date de création, *groupes*
+
 * Task
 	* À sérialiser au sein des Project
 	* NE PAS stocker les Tasks dans la HashMap globale de SystemData
-* Document
-	* À supprimer
-	* Mettre à jour UserListenerManager.updateDoc(Document document) pour ne plus manipuler d'objet Document. (Supprimer la classe ?)
+
+4c) Menu Task (DONE ALL)
+* Afficher toutes les tasks
+* À la sélection d'une task :
+	* afficher ses infos
+	* renommer
+	* delete
+* Sous-menu créer une nouvelle tâche
+
 * Project
 	* Ajouter un champ String avec le chemin du dossier à observer
 	* exemple : defaultPath + "/" + projectName
@@ -133,39 +106,3 @@ printAllFiles(String folder, int nbRecursions) {
 				|_ ... fichiers divers
 			|_ Mon Projet
 				|_ ... fichiers divers
-
-* User.generatePassword -> déplacer ça dans un tools.PasswordTools
-* User : à la création du username, vérifier qu'il est bien UNIQUE
-* User : retirer la virgule dans le message pour éviter toute confusion
-
-
-===== INITIALIZE =====
-
-1) Deserialize and load
-* Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
-* Repository: doit serialiser et deserialiser, déplacer ça depuis SystemData
-	-> Inclure SystemData dans les repos (constructeur)
-	-> Implémenter serialization pour User Group et Message 
-* Instancier les Repos depuis le main, faire les appels aux fonctions load depuis le main (déplacer la fonction loadSystemData)
-
-2) Login
-* Constructeur de Login : passer le SystemData en paramètre
-* Retour de la fonction login : construire l'activeUser en chargeant les groups, projects etc. nécessaires depuis le SystemData
-
-
-===== MAIN MENU =====
-
-1) Menu Groups -> GroupMenuController
-* Créer un controller pour ce menu (embarque le SystemData)
-* Afficher tous les groupes.
-* À la sélection d'un groupe, afficher tous ses membres.
-* À la sélection d'un user, afficher sa fiche contact (nom complet, contactInfo...)
-
-3) Menu Admin
-* Contient :
-	- créer un nouvel user
-		-> username UNIQUE
-	- créer un nouveau groupe
-		-> groupname UNIQUE
-	- ajouter un user dans un groupe
-	- ...

@@ -7,6 +7,10 @@ import test.TestData;
 import views.HomeMenuView;
 import views.TaskView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static java.lang.Boolean.*;
 import static tools.MenuTools.showMenu;
 import static tools.ScannerTools.*;
@@ -17,26 +21,40 @@ public class TaskController {
     private final TaskView taskView;
     private final Project project;
 
-    public TaskController(TaskView taskView, Project project){
+    public TaskController(TaskView taskView, Project project) {
         this.project = project;
         this.taskView = taskView;
     }
 
     public void showListTasks() {
         showMenu(ctx -> {
-            Integer userInput = this.taskView.drawListTask(project);
-            if (userInput == project.getTasks().size())
-            { newTask(project); }
-            else if (userInput >= project.getTasks().size())
-            { ctx.leaveCurrentMenu = TRUE; }
-            else
-            { taskManager(project.getTasks().get(userInput)); }
+            List<Task> undoneTasks = project.getTasks().stream().filter(Task::isActive).collect(Collectors.toList());
+            Integer userInput = this.taskView.drawListTask(undoneTasks);
+            ArrayList<Task> tasks = project.getTasks();
+
+            if (userInput == undoneTasks.size()) {
+                newTask(project);
+            } else if (userInput >= undoneTasks.size()) {
+                ctx.leaveCurrentMenu = TRUE;
+            } else {
+                int i = 0;
+                for (Task task : tasks) {
+                    if (task.isActive()) {
+                        if (i == userInput) {
+                            // do something with task
+                            taskManager(task);
+                            break;
+                        }
+                        i++;
+                    }
+                }
+            }
         });
     }
 
     public void taskManager(Task task) {
         showMenu(ctx -> {
-            switch (taskView.drawTask(task)){
+            switch (taskView.drawTask(task)) {
                 case DONE:
                     task.setActive(FALSE);
                     break;
@@ -51,8 +69,7 @@ public class TaskController {
 
     public void modifyTask(Task task) {
         showMenu(ctx -> {
-            switch (taskView.modifyTask())
-            {
+            switch (taskView.modifyTask()) {
                 case TITLE:
                     task.setTitle(scanString());
                     break;
@@ -63,7 +80,7 @@ public class TaskController {
                     task.setPriority(selectPriority());
                     break;
                 case BACK:
-                ctx.leaveCurrentMenu = TRUE;
+                    ctx.leaveCurrentMenu = TRUE;
             }
         });
     }

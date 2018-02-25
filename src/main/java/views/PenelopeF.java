@@ -30,7 +30,7 @@ public class PenelopeF { // executable main class
         systemData.initializeUserSystem();
 
         // Test: Create User and Project Data
-        //createNewTestData(repositories);
+        createNewTestData(repositories);
 
         // Login Screen
         Login loginModel = new Login(systemData);
@@ -49,12 +49,12 @@ public class PenelopeF { // executable main class
         //groupsMenuController.showGroups();
 
         // Test: Projects Menu
-        //HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
-        //homeMenuController.firstMenuControl();
+        HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
+        homeMenuController.firstMenuControl();
 
         // Test: Admin Menu
-        AdminMenuController adminMenuController = new AdminMenuController(repositories);
-        adminMenuController.showAdminMenu();
+        //AdminMenuController adminMenuController = new AdminMenuController(repositories);
+        //adminMenuController.showAdminMenu();
 
         repositories.saveData();
 
