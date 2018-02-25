@@ -28,7 +28,10 @@ public class TaskController {
 
     public void showListTasks() {
         showMenu(ctx -> {
-            List<Task> undoneTasks = project.getTasks().stream().filter(Task::isActive).collect(Collectors.toList());
+            List<Task> undoneTasks = project.getTasks()
+                    .stream()
+                    .filter(Task::isActive)
+                    .collect(Collectors.toList());
             Integer userInput = this.taskView.drawListTask(undoneTasks);
             ArrayList<Task> tasks = project.getTasks();
 

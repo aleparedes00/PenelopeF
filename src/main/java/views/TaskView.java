@@ -21,7 +21,6 @@ public class TaskView {
         Integer userInput = printStringAndReadInteger("Please, select the talk you would like to see", 1, i);
         return (userInput - 1);
     }
-    //TODO envoyer directment object task soit faire le meme filer dans le controller
 
     public TaskElements drawTask(Task task) {
         System.out.println(TaskElements.TITLE + ": " + task.getTitle() +

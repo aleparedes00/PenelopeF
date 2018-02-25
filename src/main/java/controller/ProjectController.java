@@ -11,6 +11,7 @@ import views.TaskView;
 
 import java.io.File;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
 
@@ -89,8 +90,8 @@ public class ProjectController implements FSListener {
 
     private void controlDeactiveProject(Project project) {
         //this.user.addDeactiveProject(project);
-        this.user.removeProject(project);
-        PrintTools.printString("Your project has been successfully deactive");
+        project.setActive(FALSE);
+        PrintTools.printString("Your project has been successfully deactived");
     }
 
     @Override

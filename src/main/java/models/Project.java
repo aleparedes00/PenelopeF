@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static java.lang.Boolean.*;
 import static views.PenelopeF.defaultProjectsPath;
 
 public class Project {
@@ -24,6 +25,8 @@ public class Project {
 
     private String date;
     private Priority priority;
+
+    private Boolean active;
     private UUID id;
 
     /** ALE this is the explanation about the random ID generator.
@@ -49,6 +52,7 @@ public class Project {
         this.id = UUID.randomUUID();
         this.date = date;
         this.priority = priority;
+        this.active = TRUE;
     }
 
     public void addTask(Task task) {
@@ -63,6 +67,10 @@ public class Project {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     /* Getters */
@@ -101,6 +109,9 @@ public class Project {
         return id;
     }
 
+    public Boolean isActive() {
+        return active;
+    }
     /* Setters */
     public void setId(String idStr) { id = UUID.fromString(idStr); }
     public void setPriority(Priority priority) {this.priority = priority; }

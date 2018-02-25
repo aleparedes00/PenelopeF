@@ -4,12 +4,14 @@ import models.*;
 import views.menus.ProjectHomeSelection;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import static tools.DateTools.now;
 import static tools.ScannerTools.scanInt;
 import static tools.ScannerTools.scanString;
+import static views.PenelopeF.activeUser;
 import static views.PrintTools.printStringAndReadInteger;
 
 public class HomeMenuView {
@@ -40,12 +42,22 @@ public class HomeMenuView {
         return Priority.optionsPriority(printStringAndReadInteger("Enter a number between " + 1 + " and " + Priority.values().length, 1, 3));
     }
 
-    public int showAndSelectProject(User user) {
+    public int showAndSelectProject(List<Project> projects) {
+        int i = 1;
+        System.out.println("User: " + activeUser.getName() + "\n\n Projects:");
+        for (Project project : projects) {
+            System.out.println(i++ + ".- " + project.getName());
+        }
+        System.out.println(i++ + ".- Create new project");
+        System.out.println(i + ".- Back");
+
+        Integer userInput = printStringAndReadInteger("Please, select the project you would like to see or create one", 1, i);
+        return (userInput - 1);/*
         ArrayList<String> projectNames = new ArrayList<>();
-        for (Project project : user.getProjects()) {
+        for (Project project : activeUser.getProjects()) {
             projectNames.add(project.getName());
         }
-        System.out.println("User: " + user.getUsername());
+        System.out.println("User: " + activeUser.getUsername());
         System.out.println("Your projects: ");
         for (int j = 0; j < projectNames.size(); j++) {
             System.out.println((j + 1) + ".-" + projectNames.get(j));
@@ -54,7 +66,7 @@ public class HomeMenuView {
         System.out.println("\n Which project would you like to see?");
         int userChoice = scanInt(1, (projectNames.size() + 1));
         if (userChoice == projectNames.size() + 1) return -1;
-        return userChoice - 1;
+        return userChoice - 1;*/
     }
     public static void main(String[] args) {
         HomeMenuView homeMenuView = new HomeMenuView();
