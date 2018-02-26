@@ -1,5 +1,6 @@
 package controller;
 
+import models.FSListenable;
 import models.FSListener;
 import models.Project;
 import models.User;
@@ -9,6 +10,7 @@ import views.HomeMenuView;
 import views.PrintTools;
 import views.ProjectView;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 import static java.lang.Boolean.TRUE;
 import static tools.MenuTools.showMenu;
 import static views.PenelopeF.activeUser;
+import static views.PenelopeF.defaultProjectsPath;
 
 
 public class HomeMenuController implements FSListener {
@@ -23,13 +26,13 @@ public class HomeMenuController implements FSListener {
     private final User user;
     private final RepositoryManager repositories;
     private HomeMenuView homeMenuView = new HomeMenuView();
-    //private FSListenable listenable;
+    private FSListenable listenable;
 
     /*Constructor*/
     public HomeMenuController(User user, RepositoryManager repositories) {
         this.user = user;
         this.repositories = repositories;
-        //listenable = new FSListenable(repositories.getPath(), );
+        listenable = new FSListenable(defaultProjectsPath, this);
     }
 
     /*Getters*/
@@ -43,11 +46,6 @@ public class HomeMenuController implements FSListener {
             switch (homeMenuView.showAndSelectHome()) {
                 case CREATE_PROJECT:
                     createProject();
-                    /*Project project = homeMenuView.createProject();
-                    user.addProject(project);
-                    repositories.createNewProject(project);
-                    repositories.saveData();
-*/
                     break;
                 case LIST_PROJECTS:
                     listProjects();
@@ -64,6 +62,8 @@ public class HomeMenuController implements FSListener {
         activeUser.addProject(project);
         repositories.createNewProject(project);
         repositories.saveData();
+        listenable.run();
+        //TODO call function to write the historic "new feed" file
     }
 
     public void listProjects() {
@@ -96,7 +96,7 @@ public class HomeMenuController implements FSListener {
 
     @Override
     public void onCreate(String pathToNewFile) {
-        System.out.println("Creating");
+        System.out.println("Creating " + pathToNewFile);
     }
 
     @Override

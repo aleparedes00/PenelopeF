@@ -22,19 +22,21 @@ import static tools.MenuTools.showMenu;
 //It's listener because it wants to update its view/data throgh the FS (using repository) everytime someone changes something inside.
 // It's listenable because the model(data) that will be updated are managed will be watched (to be able to update other views and etc)
 @SuppressWarnings("SpellCheckingInspection")
+
+//TODO 1.- All controlleurs take repository     2.- every create, modify and delete function will call repository and write inside historicFile     3.- after both actions, listenable run() function ask FileSystem what changed (identify if it was create, modify or delete) and listener.onCreate() will deseliariser the file and update all list and attributes
 public class ProjectController implements FSListener {
 
     private final ProjectView projectView;
     private User user;
     private Project project;
-    private FSListenable listenable;
+    //private FSListenable listenable;
 
     /*Constructor*/
     public ProjectController(ProjectView projectView, User user, Project project) {
         this.projectView = projectView;
         this.project = project;
         this.user = user;
-        this.listenable = new FSListenable(new File("./project").toPath(), this);
+        //this.listenable = new FSListenable(new File(project.getPathToProject()).toPath(), this);
     }
 
     public void showProject() {
@@ -56,7 +58,8 @@ public class ProjectController implements FSListener {
                     break;
                 case MODIFY:
                     controlModifyProject(project);
-                    listenable.run();
+                    //saveData
+                    //listenable.run();
                     break;
                 case DEACTIVATE:
                     controlDeactiveProject(project);
@@ -91,7 +94,7 @@ public class ProjectController implements FSListener {
     private void controlDeactiveProject(Project project) {
         //this.user.addDeactiveProject(project);
         project.setActive(FALSE);
-        PrintTools.printString("Your project has been successfully deactived");
+        PrintTools.printString("\nYour project has been successfully deactived\n");
     }
 
     @Override

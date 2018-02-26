@@ -73,7 +73,6 @@ public class ProjectRepository extends Repository<Project> {
     /* Updating */
     public void addNewProjectFile(Project project) {
         String pathToFile = this.path + "/" + project.getId().toString() + ".json";
-//        System.out.println("this is path file: " + pathToFile);
         try {
             serializer.serialize(project, pathToFile);
         } catch (IOException e) {
