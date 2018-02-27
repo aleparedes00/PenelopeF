@@ -2,13 +2,6 @@
 ========== TODO ==========
 
 ===== STRUCTURE =====
-* Des champs de certaines classes sont à null après la déserialisation. Il faudrait les supprimer car on ne s'en sert pas directement/on peut récupérer les objets via leur ID dans SystemData
-	-> Liste de champs à supprimer :
-		- Group.users
-		- Project.group
-
-* Contact : pouvoir remplir les informations dans un menu profil
-
 * Dashboard!!!
 	-> Implémenter définitivement les dashboards
 	-> Sérialiser les dashboards (où ?)
@@ -21,7 +14,7 @@
 
 
 ===== MAIN MENU =====
-2) Menu Projects -> ProjectMenuController (actuellement HomeMenuController)
+2) Menu Projects -> ProjectsMenuController (actuellement HomeMenuController)
 
 1 - Project1
 2 - Mon Projet
@@ -64,12 +57,6 @@ printAllFiles(String folder, int nbRecursions) {
 	}
 	else println(current.baseName);
 }
-
-4) Menu Profil (partagé avec Admin ?)
-* Changer son mot de passe
-* Changer son email
-* Changer son téléphone
-
 
 
 ==========================
@@ -123,10 +110,14 @@ printAllFiles(String folder, int nbRecursions) {
 * systemData, à passer en static ?
 	-> Permet d'accéder à la classe à tout moment pour la traduction UUID -> Object
 	-> Nécessaire pour vérifier si un username ou un nom de groupe existe déjà
+* Contact : pouvoir remplir les informations dans un menu profil
+* Des champs de certaines classes sont à null après la déserialisation. Il faudrait les supprimer car on ne s'en sert pas directement/on peut récupérer les objets via leur ID dans SystemData
+	-> Liste de champs à supprimer :
+		- Group.users
+		- Project.group
 
 
 ===== INITIALIZE =====
-
 1) Deserialize and load
 * Créer une classe parente ou une interface Repository, dont hériteront les 4 repos
 * Repository: doit serialiser et deserialiser, déplacer ça depuis SystemData
@@ -140,7 +131,6 @@ printAllFiles(String folder, int nbRecursions) {
 
 
 ===== MAIN MENU =====
-
 1) Menu Groups -> GroupMenuController
 * Créer un controller pour ce menu (embarque le SystemData)
 * Afficher tous les groupes.
@@ -171,3 +161,8 @@ printAllFiles(String folder, int nbRecursions) {
 
 * Afficher uniquement si activeUser a des droits d'admin (fait en mode test)
 * *Inversement, l'admin n'a pas accès aux deux autres menus*
+
+4) Menu Profil (partagé avec Admin ?)
+* Changer son mot de passe
+* Changer son email
+* Changer son téléphone
