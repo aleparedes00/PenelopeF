@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import static java.lang.Boolean.*;
+import static tools.DataTools.getGroupFromId;
 import static views.PenelopeF.defaultProjectsPath;
 
 public class Project {
@@ -19,8 +20,8 @@ public class Project {
     private String pathToProject;
 
     //private Dashboard dashboard;
-    @JsonIgnore
-    private Group group;
+//    @JsonIgnore
+//    private Group group;
     private UUID groupId;
 
     private String date;
@@ -47,7 +48,7 @@ public class Project {
         this.tasks = new ArrayList<>();
 //        this.tasksIds = new ArrayList<>();
         this.pathToProject = defaultProjectsPath + "/" + name;
-        this.group = group;
+//        this.group = group;
         this.groupId = group.getId();
         this.id = UUID.randomUUID();
         this.date = date;
@@ -65,9 +66,9 @@ public class Project {
 //        tasksIds.removeIf(tId -> tId == task.getId());
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
+//    public void setGroup(Group group) {
+//        this.group = group;
+//    }
 
     public void setActive(Boolean active) {
         this.active = active;
@@ -90,7 +91,7 @@ public class Project {
     }
 
     public Group getGroup() {
-        return group;
+        return getGroupFromId(groupId);
     }
 
     public UUID getGroupId() {

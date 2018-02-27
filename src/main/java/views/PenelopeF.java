@@ -3,7 +3,6 @@ package views;
 import controller.*;
 import models.*;
 import repository.RepositoryManager;
-import views.menus.ProfileMenuSelection;
 
 import java.util.Scanner;
 import java.util.UUID;

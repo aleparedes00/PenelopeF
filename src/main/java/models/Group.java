@@ -11,8 +11,8 @@ public class Group {
 
     private String name;
 
-    @JsonIgnore
-    private ArrayList<User> users;
+//    @JsonIgnore
+//    private ArrayList<User> users;
     private ArrayList<UUID> usersIds;
 
     private boolean selfGroup;
@@ -26,7 +26,7 @@ public class Group {
     /* Constructor */
     public Group(String name) {
         this.name = name;
-        this.users = new ArrayList<>();
+//        this.users = new ArrayList<>();
         this.usersIds = new ArrayList<>();
         this.selfGroup = false;
         this.id = UUID.randomUUID();
@@ -36,8 +36,8 @@ public class Group {
 
         this.name = user.getUsername();
 
-        this.users = new ArrayList<>();
-        this.users.add(user);
+//        this.users = new ArrayList<>();
+//        this.users.add(user);
 
         this.usersIds = new ArrayList<>();
         this.usersIds.add(user.getId());
@@ -52,9 +52,9 @@ public class Group {
         return name;
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
-    }
+//    public ArrayList<User> getUsers() {
+//        return users;
+//    }
 
     public ArrayList<UUID> getUsersIds() {
         return usersIds;
@@ -72,14 +72,5 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    /*Other Methods*///AP I think this method should be in View
-    public void printUsersInGroup() {
-        System.out.println("Users in group " + this.getName());
-        for(User users : users)
-        {
-            System.out.println("\t" + users.getUsername());
-        }
     }
 }
