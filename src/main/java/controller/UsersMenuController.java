@@ -10,14 +10,12 @@ import static tools.MenuTools.showMenu;
 public class UsersMenuController {
     private UsersMenuView usersMenuView;
     private final Group selectedGroup;
-    private final User activeUser;
     private final SystemData systemData;
 
-    public UsersMenuController(Group selectedGroup, User activeUser, SystemData systemData) {
+    public UsersMenuController(Group selectedGroup, SystemData systemData) {
         this.usersMenuView = new UsersMenuView(systemData);
 
         this.selectedGroup = selectedGroup;
-        this.activeUser = activeUser;
         this.systemData = systemData;
     }
 

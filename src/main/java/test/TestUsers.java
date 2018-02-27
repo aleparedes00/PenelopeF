@@ -199,7 +199,7 @@ public class TestUsers {
             System.out.println("Available commands:");
 
             if (admin) System.out.println("addusertogroup\t\tAdds a user to a group");
-            System.out.println("changepassword\t\tChanges your password");
+            System.out.println("changePassword\t\tChanges your password");
             if (admin) System.out.println("changeuserpassword\tChanges the password of another user");
             if (admin) System.out.println("creategroup\t\t\tCreates a new group");
             if (admin) System.out.println("createuser\t\t\tCreates a new user");
@@ -229,7 +229,7 @@ public class TestUsers {
                     if (admin) changeuserpassword();
                     else unknowncommand();
                     break;
-                case "changepassword":
+                case "changePassword":
                     changepassword(user);
                     break;
                 case "creategroup":

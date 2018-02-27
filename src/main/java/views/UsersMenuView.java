@@ -7,6 +7,8 @@ import models.SystemData;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static tools.DataTools.getGroupFromId;
+import static tools.DataTools.getUserFromId;
 import static tools.ScannerTools.scanInt;
 
 public class UsersMenuView {
@@ -23,7 +25,7 @@ public class UsersMenuView {
         ArrayList<User> users = new ArrayList<User>();
 
         for (UUID userId : selectedGroup.getUsersIds()) {
-            User user = systemData.getUserFromId(userId);
+            User user = getUserFromId(userId);
             System.out.println(i++ + ".- " + user.getName());
             users.add(user);
         }
@@ -46,7 +48,7 @@ public class UsersMenuView {
         System.out.print("Member of groups: ");
 
         while (i < 3 && i < selectedUser.getGroupsIds().size()) {
-            System.out.print(systemData.getGroupFromId(selectedUser.getGroupsIds().get(i)).getName());
+            System.out.print(getGroupFromId(selectedUser.getGroupsIds().get(i)).getName());
             i++;
             if (i < 3 && i < selectedUser.getGroupsIds().size())
                 System.out.print(", ");

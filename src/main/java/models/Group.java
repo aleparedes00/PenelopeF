@@ -9,8 +9,6 @@ import java.util.UUID;
 
 public class Group {
 
-    static String ADMIN_GROUP = "root";
-
     private String name;
 
     @JsonIgnore

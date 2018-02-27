@@ -9,14 +9,12 @@ import static tools.MenuTools.showMenu;
 
 public class GroupsMenuController {
     private GroupsMenuView groupsMenuView;
-    private final User activeUser;
     private final SystemData systemData;
 
     /* Constructor */
-    public GroupsMenuController(User activeUser, SystemData systemData) {
+    public GroupsMenuController(SystemData systemData) {
         this.groupsMenuView = new GroupsMenuView(systemData);
 
-        this.activeUser = activeUser;
         this.systemData = systemData;
     }
 
@@ -24,7 +22,7 @@ public class GroupsMenuController {
         showMenu(ctx -> {
             Group selectedGroup = groupsMenuView.listGroups();
             if (selectedGroup != null) {
-                UsersMenuController usersMenuController = new UsersMenuController(selectedGroup, activeUser, systemData);
+                UsersMenuController usersMenuController = new UsersMenuController(selectedGroup, systemData);
                 usersMenuController.showUsers();
             } else ctx.leaveCurrentMenu = true;
         });

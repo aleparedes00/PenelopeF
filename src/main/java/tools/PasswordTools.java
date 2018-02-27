@@ -45,4 +45,21 @@ public class PasswordTools {
 
         return pwd.toString();
     }
+
+    public static boolean hasRightFormat(String pwd) {
+        boolean hasCap = false;
+        boolean hasNum = false;
+        boolean hasSpecial = false;
+
+        for (int i = 0; i < pwd.length(); i++) {
+            if (ALPHA_CAPS.contains("" + pwd.charAt(i)))
+                hasCap = true;
+            if (NUM.contains("" + pwd.charAt(i)))
+                hasNum = true;
+            if (SPECIAL.contains("" + pwd.charAt(i)))
+                hasSpecial = true;
+        }
+
+        return (hasCap && hasNum && hasSpecial);
+    }
 }

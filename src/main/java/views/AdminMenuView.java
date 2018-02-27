@@ -12,6 +12,6 @@ public class AdminMenuView {
             System.out.println((menuItem.ordinal() + 1) + ".- " + menuItem);
         }
 
-        return AdminMenuSelection.valueOf(scanInt(1, AdminMenuSelection.values().length));
+        return AdminMenuSelection.valueOf(scanInt(1, AdminMenuSelection.values().length) - 1);
     }
 }

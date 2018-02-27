@@ -5,12 +5,6 @@ import models.*;
 import static tools.ScannerTools.*;
 
 public class LoginView {
-    private Login model;
-
-    public LoginView(Login model) {
-        this.model = model;
-    }
-
     public String[] askUserToLogin() {
         System.out.print("Username? ");
         String username = scanString();

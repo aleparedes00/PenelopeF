@@ -1,12 +1,9 @@
 package models;
 
-import repository.*;
-import test.TestData;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
+
+import static tools.DataTools.getUserFromUsername;
 
 public class SystemData {
     /* Main Data Maps */
@@ -15,7 +12,7 @@ public class SystemData {
     private HashMap<UUID, Message> messages;
     private HashMap<UUID, Project> projects;
 
-    private UserSystem userSystem; // TODO: Might not be needed anymore. Revision needed, until then I'm changing the constructor so the code doesn't break.
+    public static UUID ADMIN_GROUP;
 
     public SystemData() {
         // Initializing Empty Maps
@@ -26,8 +23,17 @@ public class SystemData {
     }
 
     public void initializeUserSystem() {
-        this.userSystem = new UserSystem(users, groups);
+        if (users.isEmpty()) {
+            User root = new User("", "", "root", "root");
 
+            Group adminGroup = root.getSelfGroup();
+
+            this.users.put(root.getId(), root);
+            this.groups.put(adminGroup.getId(), adminGroup);
+
+            ADMIN_GROUP = adminGroup.getId();
+        }
+        else ADMIN_GROUP = getUserFromUsername("root").getSelfGroupId();
     }
 
     /* Loading Methods */
@@ -41,24 +47,7 @@ public class SystemData {
         return projects.containsKey(id);
     }
 
-    /* Getters From ID */
-    public User getUserFromId(UUID id) {
-        return users.get(id);
-    }
-
-    public Group getGroupFromId(UUID id) {
-        return groups.get(id);
-    }
-
-    public Project getProjectFromId(UUID id) {
-        return projects.get(id);
-    }
-
-    public Message getMessageFromId(UUID id) {
-        return messages.get(id);
-    }
-
-    /* Other Getters */
+    /* Getters */
     public HashMap<UUID, User> getUsers() {
         return users;
     }
@@ -73,10 +62,6 @@ public class SystemData {
 
     public HashMap<UUID, Project> getProjects() {
         return projects;
-    }
-
-    public UserSystem getUserSystem() {
-        return userSystem;
     }
 
     public <T> void load(HashMap<UUID, T> deserializedHashMap, Class<T> dataType) {

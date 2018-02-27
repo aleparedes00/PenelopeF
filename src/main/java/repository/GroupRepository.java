@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static tools.DataTools.getGroupFromId;
+
 public class GroupRepository extends Repository<Group> {
 
     /* Constructor */
@@ -31,7 +33,7 @@ public class GroupRepository extends Repository<Group> {
     }
 
     public void loadGroupsToUser(User activeUser) {
-        activeUser.setSelfGroup(systemData.getGroupFromId(activeUser.getSelfGroupId()));
+        activeUser.setSelfGroup(getGroupFromId(activeUser.getSelfGroupId()));
 
         HashMap<UUID, Group> groups = systemData.getGroups();
         activeUser.setGroups(new ArrayList<>(groups.entrySet().stream()

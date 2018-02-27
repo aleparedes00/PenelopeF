@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Math.min;
-import static models.Group.ADMIN_GROUP;
+import static models.SystemData.ADMIN_GROUP;
 import static tools.PasswordTools.generatePassword;
 
 public class User {
@@ -165,11 +165,9 @@ public class User {
 
     @JsonIgnore
     public Boolean isAdmin() {
-        for (Group group : groups) {
-            if (group.getName().equals(ADMIN_GROUP)) {
-                return true;
-            }
-        }
+        if (selfGroupId.equals(ADMIN_GROUP)) return true;
+        for (UUID groupId : groupsIds)
+            if (groupId.equals(ADMIN_GROUP)) return true;
         return false;
     }
 

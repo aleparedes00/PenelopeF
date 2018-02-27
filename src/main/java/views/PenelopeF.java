@@ -19,10 +19,11 @@ public class PenelopeF { // executable main class
     public final static String messagesJson = "messages.json";
 
     public static User activeUser;
+    public static SystemData systemData;
 
     public static void main(String[] args) {
         // Initialize Application
-        SystemData systemData = new SystemData();
+        systemData = new SystemData();
         RepositoryManager repositories = new RepositoryManager(systemData);
 
         // Load Data
@@ -30,12 +31,10 @@ public class PenelopeF { // executable main class
         systemData.initializeUserSystem();
 
         // Test: Create User and Project Data
-        createNewTestData(repositories);
+        //createNewTestData(repositories);
 
         // Login Screen
-        Login loginModel = new Login(systemData);
-        LoginView loginView = new LoginView(loginModel);
-        LoginController loginController = new LoginController(loginModel, loginView);
+        LoginController loginController = new LoginController(new LoginView());
         while (activeUser == null) {
             activeUser = loginController.userLogin();
         }
@@ -43,28 +42,29 @@ public class PenelopeF { // executable main class
         // Build Active User
         repositories.loadActiveUserProjects(activeUser);
 
+        if (!activeUser.isAdmin()) {
+            // Test: Groups Menu
+            GroupsMenuController groupsMenuController = new GroupsMenuController(repositories.getSystemData());
+            groupsMenuController.showGroups();
 
-        // Test: Groups Menu
-        //GroupsMenuController groupsMenuController = new GroupsMenuController(activeUser, repositories.getSystemData());
-        //groupsMenuController.showGroups();
+            // Test: Projects Menu
+            //HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
+            //homeMenuController.firstMenuControl();
+        } else {
+            // Test: Admin Menu
+            AdminMenuController adminMenuController = new AdminMenuController(repositories);
+            adminMenuController.showAdminMenu();
+        }
 
-        // Test: Projects Menu
-        HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
-        homeMenuController.firstMenuControl();
-
-        // Test: Admin Menu
-        //AdminMenuController adminMenuController = new AdminMenuController(repositories);
-        //adminMenuController.showAdminMenu();
-
+        // Save upon shutdown
         repositories.saveData();
-
     }
 
     public static void createNewTestData(RepositoryManager repositories) { // Ugly, awkward test method to create users, groups etc. and test serialisation. Run, stop, run again, observe
         Scanner sc = new Scanner(System.in);
         SystemData systemData = repositories.getSystemData();
-        UserSystem userSystem = systemData.getUserSystem();
-        UserSystemController os = new UserSystemController(userSystem, new UserSystemView(userSystem));
+        Admin admin = new Admin(systemData);
+        AdminController os = new AdminController(admin, new AdminView(admin));
 
         boolean creating = true;
         while (creating) {
@@ -97,13 +97,13 @@ public class PenelopeF { // executable main class
                 String newProjectName = "Test Project " + (systemData.getProjects().size() + 1);
                 System.out.println("Which group?");
                 Group group;
-                while ((group = userSystem.getGroupFromName(tools.ScannerTools.scanString())) == null)
+                while ((group = tools.DataTools.getGroupFromName(tools.ScannerTools.scanString())) == null)
                     System.out.println("Not found, which group?");
 
                 Project testProject = new Project(newProjectName, group, now(), Priority.NORMAL);
                 repositories.createNewProject(testProject);
                 for (UUID userId : testProject.getGroup().getUsersIds()) {
-                    systemData.getUserFromId(userId).getProjectsIds().add(testProject.getId());
+                    tools.DataTools.getUserFromId(userId).getProjectsIds().add(testProject.getId());
                 }
 
                 System.out.println("Created " + newProjectName);

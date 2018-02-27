@@ -21,7 +21,7 @@ public class Project {
     //private Dashboard dashboard;
     @JsonIgnore
     private Group group;
-    private UUID groupID;
+    private UUID groupId;
 
     private String date;
     private Priority priority;
@@ -48,7 +48,7 @@ public class Project {
 //        this.tasksIds = new ArrayList<>();
         this.pathToProject = defaultProjectsPath + "/" + name;
         this.group = group;
-        this.groupID = group.getId();
+        this.groupId = group.getId();
         this.id = UUID.randomUUID();
         this.date = date;
         this.priority = priority;
@@ -93,8 +93,8 @@ public class Project {
         return group;
     }
 
-    public UUID getGroupID() {
-        return groupID;
+    public UUID getGroupId() {
+        return groupId;
     }
 
     public String getDate() {

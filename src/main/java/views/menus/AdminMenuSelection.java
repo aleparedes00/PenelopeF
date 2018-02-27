@@ -1,11 +1,15 @@
 package views.menus;
 
+import models.Admin;
+
 public enum AdminMenuSelection {
 
     CREATEUSER("Create user"),
     CREATEGROUP("Create group"),
     ADDUSERTOGROUP("Add user to group"),
-    //MODIFY_USER("Modify user") (change password, available for yourself in Profile menu)
+    RESETUSERPASSWORD("Reset user password"),
+    DELETEUSER("Delete user"),
+    DELETEGROUP("Delete group"),
     BACK("Back");
 
     String description;
@@ -19,16 +23,6 @@ public enum AdminMenuSelection {
     }
 
     public static AdminMenuSelection valueOf(int index) {
-        switch (index) {
-            case 1:
-                return CREATEUSER;
-            case 2:
-                return CREATEGROUP;
-            case 3:
-                return ADDUSERTOGROUP;
-            case 4:
-                return BACK;
-        }
-        throw new IllegalStateException("Selection doesn't exists.");
+        return AdminMenuSelection.values()[index];
     }
 }
