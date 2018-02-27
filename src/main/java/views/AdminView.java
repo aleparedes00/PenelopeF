@@ -6,12 +6,6 @@ import static tools.ScannerTools.scanString;
 import static tools.DataTools.*;
 
 public class AdminView {
-    private Admin model;
-
-    public AdminView(Admin model) {
-        this.model = model;
-    }
-
     /* User Creation */
     public String[] enterUserToCreate() {
         String[] fullName = new String[2];

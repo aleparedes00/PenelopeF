@@ -38,7 +38,7 @@ public class UsersMenuView {
     public void showSelectedUser(User selectedUser) {
         System.out.println("===== USER INFO =====");
 
-        System.out.println(selectedUser.getName());
+        System.out.println(selectedUser.getName() + " (" + selectedUser.getUsername() + ")");
         showGroups(selectedUser);
         System.out.println(selectedUser.getContactInfo());
     }

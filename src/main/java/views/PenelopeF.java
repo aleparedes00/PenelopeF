@@ -3,6 +3,7 @@ package views;
 import controller.*;
 import models.*;
 import repository.RepositoryManager;
+import views.menus.ProfileMenuSelection;
 
 import java.util.Scanner;
 import java.util.UUID;
@@ -44,12 +45,16 @@ public class PenelopeF { // executable main class
 
         if (!activeUser.isAdmin()) {
             // Test: Groups Menu
-            GroupsMenuController groupsMenuController = new GroupsMenuController(repositories.getSystemData());
-            groupsMenuController.showGroups();
+            //GroupsMenuController groupsMenuController = new GroupsMenuController(repositories.getSystemData());
+            //groupsMenuController.showGroups();
 
             // Test: Projects Menu
             //HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
             //homeMenuController.firstMenuControl();
+
+            // Test: Profile Menu
+            ProfileMenuController profileMenuController = new ProfileMenuController(repositories);
+            profileMenuController.showProfileMenu();
         } else {
             // Test: Admin Menu
             AdminMenuController adminMenuController = new AdminMenuController(repositories);
@@ -64,7 +69,7 @@ public class PenelopeF { // executable main class
         Scanner sc = new Scanner(System.in);
         SystemData systemData = repositories.getSystemData();
         Admin admin = new Admin(systemData);
-        AdminController os = new AdminController(admin, new AdminView(admin));
+        AdminController os = new AdminController(admin, new AdminView());
 
         boolean creating = true;
         while (creating) {

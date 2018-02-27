@@ -15,7 +15,7 @@ public class AdminMenuController {
 
     public AdminMenuController(RepositoryManager repositories) {
         Admin admin = new Admin(repositories.getSystemData());
-        this.os = new AdminController(admin, new AdminView(admin));
+        this.os = new AdminController(admin, new AdminView());
         this.repositories = repositories;
         this.adminMenuView = new AdminMenuView();
     }
