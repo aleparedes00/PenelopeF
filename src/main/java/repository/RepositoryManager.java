@@ -1,6 +1,10 @@
 package repository;
 
 import models.*;
+import views.PenelopeF;
+
+import java.io.File;
+
 import static views.PenelopeF.*;
 
 public class RepositoryManager {
@@ -35,6 +39,7 @@ public class RepositoryManager {
     public void createNewProject(Project project) {
         projectRepository.addNewProjectFile(project);
         projectRepository.addNewProjectFolder(project);
+        FSListenable.addListener(project, new File(PenelopeF.defaultProjectsPath + project.getName()).toPath());
     }
 
     /* Saving */

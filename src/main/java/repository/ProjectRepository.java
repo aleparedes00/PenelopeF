@@ -1,16 +1,15 @@
 package repository;
 
+import models.FSListenable;
 import models.Project;
 import models.SystemData;
 import models.User;
 import test.TestData;
+import views.PenelopeF;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectRepository extends Repository<Project> {
@@ -26,6 +25,17 @@ public class ProjectRepository extends Repository<Project> {
         if (!file.exists()) {
             file.mkdir();
         }
+    }
+
+    public List<String> readDocFolder(String nameOfProject) {
+        File[] documents = new File(path + "/" + nameOfProject).listFiles(file -> !file.isHidden());
+        List<String> docList = new ArrayList<>();
+        if (documents != null) {
+            for (File doc : documents) {
+                docList.add(doc.getName());
+            }
+        }
+        return docList;
     }
 
     /* Loading */

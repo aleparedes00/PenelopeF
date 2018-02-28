@@ -4,12 +4,10 @@ import models.FSListenable;
 import models.FSListener;
 import models.Project;
 import models.User;
-import views.HomeMenuView;
-import views.PrintTools;
-import views.ProjectView;
-import views.TaskView;
+import views.*;
 
 import java.io.File;
+import java.util.UUID;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -23,8 +21,7 @@ import static tools.MenuTools.showMenu;
 // It's listenable because the model(data) that will be updated are managed will be watched (to be able to update other views and etc)
 @SuppressWarnings("SpellCheckingInspection")
 
-//TODO 1.- All controlleurs take repository     2.- every create, modify and delete function will call repository and write inside historicFile     3.- after both actions, listenable run() function ask FileSystem what changed (identify if it was create, modify or delete) and listener.onCreate() will deseliariser the file and update all list and attributes
-public class ProjectController implements FSListener {
+public class ProjectController {
 
     private final ProjectView projectView;
     private User user;
@@ -51,15 +48,14 @@ public class ProjectController implements FSListener {
                     taskController.showListTasks();
                     break;
                 case DOCUMENT:
-                    System.out.println("[Documents]: Insert your file inside the folder " + project.getPathToProject());
+                    projectView.drawProjectDocuments(project);
                     break;
                 case DASHBOARD:
                     System.out.println("[Dashboard] : Calling freaking Dashboard");
                     break;
                 case MODIFY:
                     controlModifyProject(project);
-                    //saveData
-                    //listenable.run();
+                    //TODO saveData
                     break;
                 case DEACTIVATE:
                     controlDeactiveProject(project);
@@ -91,24 +87,10 @@ public class ProjectController implements FSListener {
         });
     }
 
+
     private void controlDeactiveProject(Project project) {
         //this.user.addDeactiveProject(project);
         project.setActive(FALSE);
         PrintTools.printString("\nYour project has been successfully deactived\n");
-    }
-
-    @Override
-    public void onCreate(String pathToNewFile) {
-        System.out.println("I'm creting this" + pathToNewFile);
-    }
-
-    @Override
-    public void onDelete(String pathToDeleteFile) {
-        System.out.println("I'm deleating this" + pathToDeleteFile);
-    }
-
-    @Override
-    public void onUpdate(String pathToUpdateFile) {
-        System.out.println("I'm updating this" + pathToUpdateFile);
     }
 }

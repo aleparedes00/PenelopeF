@@ -1,15 +1,18 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import views.PenelopeF;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static java.lang.Boolean.*;
 import static tools.DataTools.getGroupFromId;
 import static views.PenelopeF.defaultProjectsPath;
 
-public class Project {
+public class Project implements FSListener {
 
     private String name;
 
@@ -17,11 +20,14 @@ public class Project {
     private ArrayList<Task> tasks;
 //    private ArrayList<UUID> tasksIds;
 
+    @JsonIgnore
+    private List<String> documents;
+
     private String pathToProject;
 
     //private Dashboard dashboard;
 //    @JsonIgnore
-//    private Group group;
+   // private Group group;
     private UUID groupId;
 
     private String date;
@@ -40,20 +46,28 @@ public class Project {
      */
 
     /* Constructor by default */
-    public Project() { }
+    public Project() {
+    }
     /*Constructor*/
 
     public Project(String name, Group group, String date, Priority priority) {
         this.name = name;
+
         this.tasks = new ArrayList<>();
 //        this.tasksIds = new ArrayList<>();
-        this.pathToProject = defaultProjectsPath + "/" + name;
+
+        this.pathToProject = defaultProjectsPath + name;
 //        this.group = group;
         this.groupId = group.getId();
+
         this.id = UUID.randomUUID();
+
         this.date = date;
+
         this.priority = priority;
         this.active = TRUE;
+
+        this.documents = new ArrayList<>();
     }
 
     public void addTask(Task task) {
@@ -89,7 +103,7 @@ public class Project {
     public String getPathToProject() {
         return pathToProject;
     }
-
+    @JsonIgnore
     public Group getGroup() {
         return getGroupFromId(groupId);
     }
@@ -121,6 +135,29 @@ public class Project {
         this.name = name;
     }
 
+    public List<String> getDocuments() {
+        if (documents == null) {
+            documents = new ArrayList<>();
+        }
+        return documents;
+    }
 
+    @Override
+    public void onCreate(String pathToNewFile) {
+        File file = new File(defaultProjectsPath+name+"/"+pathToNewFile);
+        if (!file.isFile() || file.isHidden()) return;
+        documents.add(pathToNewFile);
+    }
+
+    @Override
+    public void onDelete(String pathToDeleteFile) {
+        File file = new File(pathToDeleteFile);
+        if (!file.isFile() && !file.isHidden()) return;
+        documents.remove(pathToDeleteFile);
+    }
+
+    @Override
+    public void onUpdate(String pathToUpdateFile) {
+    }
 }
 

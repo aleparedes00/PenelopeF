@@ -1,5 +1,6 @@
 package controller;
 
+import jdk.nashorn.internal.ir.PropertyKey;
 import models.FSListenable;
 import models.FSListener;
 import models.Project;
@@ -7,12 +8,16 @@ import models.User;
 import repository.ProjectRepository;
 import repository.RepositoryManager;
 import views.HomeMenuView;
+import views.PenelopeF;
 import views.PrintTools;
 import views.ProjectView;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static java.lang.Boolean.TRUE;
@@ -21,18 +26,15 @@ import static views.PenelopeF.activeUser;
 import static views.PenelopeF.defaultProjectsPath;
 
 
-public class HomeMenuController implements FSListener {
-    //como declarar esto como un listener también
+public class HomeMenuController {
     private final User user;
     private final RepositoryManager repositories;
     private HomeMenuView homeMenuView = new HomeMenuView();
-    private FSListenable listenable;
 
     /*Constructor*/
     public HomeMenuController(User user, RepositoryManager repositories) {
         this.user = user;
         this.repositories = repositories;
-        listenable = new FSListenable(defaultProjectsPath, this);
     }
 
     /*Getters*/
@@ -62,11 +64,11 @@ public class HomeMenuController implements FSListener {
         activeUser.addProject(project);
         repositories.createNewProject(project);
         repositories.saveData();
-        listenable.run();
         //TODO call function to write the historic "new feed" file
     }
 
     public void listProjects() {
+
         showMenu(ctx -> {
             List<Project> activeProjects = activeUser.getProjects()
                     .stream()
@@ -92,20 +94,5 @@ public class HomeMenuController implements FSListener {
                 }
             }
         });
-    }
-
-    @Override
-    public void onCreate(String pathToNewFile) {
-        System.out.println("Creating " + pathToNewFile);
-    }
-
-    @Override
-    public void onDelete(String pathToDeleteFile) {
-        System.out.println("deleting");
-    }
-
-    @Override
-    public void onUpdate(String pathToUpdateFile) {
-        System.out.println("updating");
     }
 }

@@ -1,6 +1,7 @@
 package views;
 
 import models.Project;
+import models.SystemData;
 import views.menus.ModifyProjectMenu;
 import views.menus.ProjectElements;
 
@@ -62,4 +63,12 @@ public class ProjectView {
         return ModifyProjectMenu.valueOf(scanInt(1, 3));
     }
 
+    public void drawProjectDocuments(Project project) {
+        if (project.getDocuments().isEmpty()) {
+            System.out.println("-> No documents!!");
+            return;
+        }
+        System.out.println("List of documents:");
+        project.getDocuments().forEach(d -> System.out.println("- " + d));
+    }
 }
