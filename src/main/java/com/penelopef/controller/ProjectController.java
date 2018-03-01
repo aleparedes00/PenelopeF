@@ -44,7 +44,9 @@ public class ProjectController {
                     projectView.drawProjectDocuments(project);
                     break;
                 case DASHBOARD:
-                    System.out.println("[Dashboard] : Calling freaking Dashboard");
+                    DashboardView dashboardView = new DashboardView(project.getDashboard().getMessages());
+                    DashboardController dashboardController = new DashboardController(dashboardView, project);
+                    dashboardController.showDashboard();
                     break;
                 case EDIT:
                     controlModifyProject();

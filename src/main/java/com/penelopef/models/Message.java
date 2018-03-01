@@ -16,7 +16,7 @@ public class Message {
     private String date;
 
     private UUID authorId;
-//TODO No serializer found for class models.MessageThread and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Project["tasks"]->java.util.ArrayList[0]->models.Task["replies"])
+
     @JsonIgnore
     private MessageThread replies;
     private UUID id;
@@ -53,6 +53,7 @@ public class Message {
             return inReplyTo;
         }
     }*/
+
 
     /* Getters */
     public String getTitle() {

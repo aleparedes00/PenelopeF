@@ -22,7 +22,8 @@ public class Project implements FSListener {
 
     private String pathToProject;
 
-    //private Dashboard dashboard;
+
+    private Dashboard dashboard;
 
     private UUID groupId;
 
@@ -52,6 +53,8 @@ public class Project implements FSListener {
         this.tasks = new ArrayList<>();
 
         this.pathToProject = defaultProjectsPath + name;
+
+        this.dashboard = new Dashboard();
 
         this.groupId = group.getId();
 
@@ -109,6 +112,10 @@ public class Project implements FSListener {
 
     public UUID getId() {
         return id;
+    }
+
+    public Dashboard getDashboard() {
+        return dashboard;
     }
 
     public Boolean isActive() {

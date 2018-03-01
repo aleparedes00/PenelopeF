@@ -10,7 +10,7 @@ public class TestDashboard {
         User testUser = new User("Test", "McDebug");
         Dashboard dash = new Dashboard();
 
-        dash.drawMessageList();
+       /* dash.drawMessageList();
 
         Scanner sc = new Scanner(System.in);
 
@@ -23,6 +23,6 @@ public class TestDashboard {
         User replyUser = new User("Yes", "ImReplying");
         dash.addReply("Hello this is a reply", dash.getMessages().get(1), replyUser);
 
-        dash.drawMessageList();
+        dash.drawMessageList();*/
     }
 }
