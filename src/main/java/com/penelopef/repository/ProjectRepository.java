@@ -25,16 +25,16 @@ public class ProjectRepository extends Repository<Project> {
         }
     }
 
-    public List<String> readDocFolder(String nameOfProject) {
-        File[] documents = new File(path + "/" + nameOfProject).listFiles(file -> !file.isHidden());
-        List<String> docList = new ArrayList<>();
-        if (documents != null) {
-            for (File doc : documents) {
-                docList.add(doc.getName());
-            }
-        }
-        return docList;
-    }
+//    public List<String> readDocFolder(String nameOfProject) {
+//        File[] documents = new File(path + "/" + nameOfProject).listFiles(file -> !file.isHidden());
+//        List<String> docList = new ArrayList<>();
+//        if (documents != null) {
+//            for (File doc : documents) {
+//                docList.add(doc.getName());
+//            }
+//        }
+//        return docList;
+//    }
 
     /* Loading */
     public HashMap<UUID, Project> readData(String pathToFile) {
@@ -62,9 +62,9 @@ public class ProjectRepository extends Repository<Project> {
                 .filter(e -> activeUser.getProjectsIds().contains(e.getKey()))
                 .map(e -> e.getValue())
                 .collect(Collectors.toList())));
-        activeUser.getProjects().forEach(project -> {
-            project.setDocuments(readDocFolder(project.getName()));
-        });
+//        activeUser.getProjects().forEach(project -> {
+//            project.setDocuments(readDocFolder(project.getName()));
+//        });
     }
 
     /* Saving */

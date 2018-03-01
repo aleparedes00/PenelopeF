@@ -17,8 +17,8 @@ public class Project implements FSListener {
 
     private ArrayList<Task> tasks;
 
-    @JsonIgnore
-    private List<String> documents;
+//    @JsonIgnore
+//    private List<String> documents;
 
     private String pathToProject;
 
@@ -67,7 +67,7 @@ public class Project implements FSListener {
         this.priority = priority;
         this.active = TRUE;
 
-        this.documents = new ArrayList<>();
+//        this.documents = new ArrayList<>();
     }
 
     public void addTask(Task task) {
@@ -138,9 +138,10 @@ public class Project implements FSListener {
         this.name = name;
     }
 
-    public void setDocuments(List<String> docs) {
-        this.documents = docs;
-    }
+//    public void setDocuments(List<String> docs) {
+//        this.documents = docs;
+//    }
+
     public void setGroupId(UUID groupId) {
         this.groupId = groupId;
     }
@@ -149,18 +150,18 @@ public class Project implements FSListener {
         this.pathToProject = pathToProject;
     }
 
-    public List<String> getDocuments() {
-        if (documents == null) {
-            documents = new ArrayList<>();
-        }
-        return documents;
-    }
+//    public List<String> getDocuments() {
+//        if (documents == null) {
+//            documents = new ArrayList<>();
+//        }
+//        return documents;
+//    }
 
     @Override
     public void onCreate(String pathToNewFile) {
         File file = new File(defaultProjectsPath+name+"/"+pathToNewFile);
         if (!file.isFile() || file.isHidden()) return;
-        documents.add(pathToNewFile);
+//        documents.add(pathToNewFile);
         dashboard.createNewSystemMessage("New file: " + pathToNewFile);
     }
 
@@ -168,7 +169,7 @@ public class Project implements FSListener {
     public void onDelete(String pathToDeleteFile) {
         File file = new File(pathToDeleteFile);
         if (!file.isFile() && !file.isHidden()) return;
-        documents.remove(pathToDeleteFile);
+//        documents.remove(pathToDeleteFile);
         dashboard.createNewSystemMessage("File deleted: " + pathToDeleteFile);
     }
 

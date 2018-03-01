@@ -6,7 +6,9 @@ public class ScannerTools {
     private static Scanner sc = new Scanner(System.in);
 
     public static String scanString() {
-        return sc.nextLine();
+        String line = "";
+        while (line.equals("")) line = sc.nextLine();
+        return line;
     }
 
     public static int scanInt(int min, int max) {

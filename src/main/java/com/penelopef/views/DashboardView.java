@@ -2,6 +2,7 @@ package com.penelopef.views;
 
 import com.penelopef.models.Message;
 import com.penelopef.models.MessageList;
+import com.penelopef.models.MessageThread;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -28,7 +29,8 @@ public class DashboardView implements MessageList {
     public void drawMessage(Message msg) {
         System.out.println("--------------------------------------------------");
         System.out.print(msg.getTitle() + " | by " + msg.getAuthorName());
-        if (msg instanceof Message.Reply) System.out.print(" in reply to " + ((Message.Reply) msg).getInReplyTo().getAuthorName());
+        if (msg instanceof Message.Reply)
+            System.out.print(" in reply to " + ((Message.Reply) msg).getInReplyTo().getAuthorName());
         System.out.println(" on " + msg.getDate());
         System.out.println("--------------------");
         System.out.println(msg.getContent());
@@ -51,7 +53,7 @@ public class DashboardView implements MessageList {
         System.out.println((messages.size() + 1) + ".- Write a message");
         System.out.println((messages.size() + 2) + ".- Back");
 
-        int input = scanInt(1,messages.size() + 2);
+        int input = scanInt(1, messages.size() + 2);
         return messages.size() - input;
     }
 
@@ -73,12 +75,15 @@ public class DashboardView implements MessageList {
     }
 
     public int drawSelectedMessage(Message selectedMessage) {
-        if (selectedMessage.getReplies().getThread().isEmpty())
-            drawMessage(selectedMessage);
+        drawMessage(selectedMessage);
+        if (!selectedMessage.getReplies().getThread().isEmpty()) {
+            MessageThreadView messageThreadView = new MessageThreadView(selectedMessage);
+            messageThreadView.drawMessageList();
+        }
         System.out.println();
         System.out.println("1.- Reply\n2.- Back");
 
-        return scanInt(1,2);
+        return scanInt(1, 2);
     }
 }
 
