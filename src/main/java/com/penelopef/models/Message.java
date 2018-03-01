@@ -17,7 +17,6 @@ public class Message {
 
     private UUID authorId;
 
-    @JsonIgnore
     private MessageThread replies;
     private UUID id;
 
@@ -32,7 +31,7 @@ public class Message {
         setTitle(title);
         this.date = date;
         this.authorId = (author != null) ? author.getId() : null;
-        this.replies = new MessageThread(this);
+        this.replies = new MessageThread();
         this.id = UUID.randomUUID();
     }
 
@@ -41,7 +40,8 @@ public class Message {
     }
 
     /* Sub-class for replies */
-    /*class Reply extends Message {
+    public static class Reply extends Message {
+        @JsonIgnore
         private Message inReplyTo;
 
         public Reply(String title, String content, String date, User author, Message inReplyTo) {
@@ -52,7 +52,7 @@ public class Message {
         public Message getInReplyTo() {
             return inReplyTo;
         }
-    }*/
+    }
 
 
     /* Getters */

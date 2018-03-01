@@ -8,7 +8,7 @@ public class TestDashboard {
 
     public static void main(String[] args) {
         User testUser = new User("Test", "McDebug");
-        Dashboard dash = new Dashboard();
+//        Dashboard dash = new Dashboard();
 
        /* dash.drawMessageList();
 

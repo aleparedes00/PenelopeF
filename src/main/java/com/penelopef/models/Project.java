@@ -22,6 +22,8 @@ public class Project implements FSListener {
 
     private String pathToProject;
 
+    private ArrayList<UUID> dashboardMessages;
+    @JsonIgnore
     private Dashboard dashboard;
 
     private UUID groupId;
@@ -53,7 +55,8 @@ public class Project implements FSListener {
 
         this.pathToProject = defaultProjectsPath + name;
 
-        this.dashboard = new Dashboard();
+        this.dashboardMessages = new ArrayList<>();
+        this.dashboard = new Dashboard(dashboardMessages);
 
         this.groupId = group.getId();
 
@@ -113,7 +116,12 @@ public class Project implements FSListener {
         return id;
     }
 
+    public ArrayList<UUID> getDashboardMessages() {
+        return dashboardMessages;
+    }
+
     public Dashboard getDashboard() {
+        if (dashboard == null) dashboard = new Dashboard(dashboardMessages);
         return dashboard;
     }
 

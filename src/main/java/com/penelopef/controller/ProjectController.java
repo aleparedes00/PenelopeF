@@ -44,7 +44,7 @@ public class ProjectController {
                     projectView.drawProjectDocuments(project);
                     break;
                 case DASHBOARD:
-                    DashboardView dashboardView = new DashboardView(project.getDashboard().getMessages());
+                    DashboardView dashboardView = new DashboardView(project.getDashboard().getMessagesIds());
                     DashboardController dashboardController = new DashboardController(dashboardView, project);
                     dashboardController.showDashboard();
                     break;

@@ -37,7 +37,7 @@ public class RepositoryManager {
     public void createNewProject(Project project) {
         projectRepository.addNewProjectFile(project);
         projectRepository.addNewProjectFolder(project);
-        FSListenable.addListener(project, new File(PenelopeF.defaultProjectsPath + project.getName()).toPath());
+        FSListenable.addListener(project, new File(project.getPathToProject()).toPath());
     }
 
     /* Saving */

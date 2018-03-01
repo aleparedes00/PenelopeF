@@ -1,1 +1,48 @@
-{"a0f9e471-86c8-4a61-ad56-0216d1a4e5e0":{"username":"root","firstName":"","lastName":"","password":"root","contactInfo":{"email":"","phone":""},"projectsIds":[],"selfGroupId":"6b038b15-8d3f-482a-b059-1062d138220a","groupsIds":[],"id":"a0f9e471-86c8-4a61-ad56-0216d1a4e5e0"},"fd4b3a07-d24d-445c-a78a-af844b13119d":{"username":"parede_a","firstName":"Alejandra","lastName":"Paredes","password":"vsD4;w^1","contactInfo":{"email":"parede_h@etna-alternance.net","phone":""},"projectsIds":[],"selfGroupId":"dadabe94-025b-4e67-844d-27f067f62793","groupsIds":["37251506-f31f-419e-826e-5cb778cab284"],"id":"fd4b3a07-d24d-445c-a78a-af844b13119d"},"c53b3fe0-9315-4d4b-8162-748f88b8569e":{"username":"hyvern_a","firstName":"Alexandre","lastName":"Hyvernaud","password":"Alex1!","contactInfo":{"email":"hyvern_a@etna-alternance.net","phone":"0769644457"},"projectsIds":[],"selfGroupId":"901bf5bb-b809-4064-9dab-80faa608164d","groupsIds":["37251506-f31f-419e-826e-5cb778cab284"],"id":"c53b3fe0-9315-4d4b-8162-748f88b8569e"},"399529a6-b200-44e9-9e99-edfe73a19c22":{"username":"thirio_g","firstName":"Guillaume","lastName":"Thirion","password":"y6&aL$Q-","contactInfo":{"email":"guillaume@etna-learning.fr","phone":""},"projectsIds":[],"selfGroupId":"541642d2-cca7-4411-92c8-836052718df1","groupsIds":["db621e0f-e5e6-4d74-9918-c8d4491035fa"],"id":"399529a6-b200-44e9-9e99-edfe73a19c22"}}
+{
+  "eb95ae6d-237d-49ee-a92c-a63725ef8a37": {
+    "username": "parede_a",
+    "firstName": "Alejandra",
+    "lastName": "Paredes",
+    "password": "55vUK*^@",
+    "contactInfo": {
+      "email": "",
+      "phone": ""
+    },
+    "projectsIds": [],
+    "selfGroupId": "1764f21e-2c89-48da-ae75-d87995e8f900",
+    "groupsIds": [
+      "0385b760-a2ea-4b1d-9a70-8b09a21bd4cf"
+    ],
+    "id": "eb95ae6d-237d-49ee-a92c-a63725ef8a37"
+  },
+  "ef70b336-d63b-418b-a169-e1ce0a0b0200": {
+    "username": "hyvern_a",
+    "firstName": "Alexandre",
+    "lastName": "Hyvernaud",
+    "password": "Alex1!",
+    "contactInfo": {
+      "email": "hyvern_a@etna-alternance.net",
+      "phone": "0769644457"
+    },
+    "projectsIds": [],
+    "selfGroupId": "5260e52a-0f0e-4cbd-8d2e-ad3d17b14e25",
+    "groupsIds": [
+      "0385b760-a2ea-4b1d-9a70-8b09a21bd4cf"
+    ],
+    "id": "ef70b336-d63b-418b-a169-e1ce0a0b0200"
+  },
+  "505cf660-1d79-4b15-bb15-9964cdc3c58d": {
+    "username": "root",
+    "firstName": "",
+    "lastName": "",
+    "password": "root",
+    "contactInfo": {
+      "email": "",
+      "phone": ""
+    },
+    "projectsIds": [],
+    "selfGroupId": "c5469e48-e15f-4a53-99b4-1590427c8eb0",
+    "groupsIds": [],
+    "id": "505cf660-1d79-4b15-bb15-9964cdc3c58d"
+  }
+}
