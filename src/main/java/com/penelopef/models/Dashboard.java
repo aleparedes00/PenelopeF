@@ -2,6 +2,8 @@ package com.penelopef.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 //import models.Message.Reply;
+import static com.penelopef.PenelopeF.getRepositories;
+import static com.penelopef.PenelopeF.getSystemData;
 import static com.penelopef.tools.DateTools.now;
 
 import java.util.ArrayList;
@@ -32,21 +34,21 @@ public class Dashboard {
         return messagesIds;
     }
 
-
-
+    /* Message creation */
     public void addMessage(Message msg) {
         messages.add(msg);
         messagesIds.add(msg.getId());
-        //TODO Add message to global SystemData hashmap
+        getSystemData().getMessages().put(msg.getId(), msg);
+        getRepositories().saveData();
     }
 
-    public void addReply(String content, Message originalMessage, User author) {
+    /*public void addReply(String content, Message originalMessage, User author) {
         Message reply = new Message("RE: " + originalMessage.getTitle(), content, now(), author);
         messages.add(reply);
         messagesIds.add(reply.getId());
         originalMessage.addReply(reply);
         //TODO Add message to global SystemData hashmap (this one isn't a priority since we might not implement replies)
-    }
+    }*/
 
     public void createNewSystemMessage(String content) {
         Message newMessage = new Message("System Notification", content, now(), null);

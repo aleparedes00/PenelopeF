@@ -22,7 +22,6 @@ public class Project implements FSListener {
 
     private String pathToProject;
 
-
     private Dashboard dashboard;
 
     private UUID groupId;

@@ -115,10 +115,16 @@ class AdminController {
         boolean alreadyInGroup = group.getUsersIds().contains(user.getId());
         if (alreadyInGroup) view.errorUserAlreadyInGroup(user, group);
         else {
-            //group.getUsers().add(user);
+            // Add user to group
             group.getUsersIds().add(user.getId());
-            //user.addGroup(group);
             user.getGroupsIds().add(group.getId());
+
+            // Add group's project to user
+            for (Project project : getSystemData().getProjects().values()) {
+                if (project.getGroupId().equals(group.getId()))
+                    user.addProject(project);
+            }
+
             view.additionSuccessful(user, group);
         }
     }
