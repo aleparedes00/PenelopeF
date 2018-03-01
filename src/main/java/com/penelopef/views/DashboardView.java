@@ -75,11 +75,6 @@ public class DashboardView implements MessageList {
     public int drawSelectedMessage(Message selectedMessage) {
         if (selectedMessage.getReplies().getThread().isEmpty())
             drawMessage(selectedMessage);
-        else {
-            MessageThreadView messageThreadView = new MessageThreadView(selectedMessage);
-            messageThreadView.drawMessageList();
-        }
-
         System.out.println();
         System.out.println("1.- Reply\n2.- Back");
 
