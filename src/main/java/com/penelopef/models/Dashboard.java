@@ -23,7 +23,7 @@ public class Dashboard {
         messagesIds = new ArrayList<>();
         String now = now();
         Message creationMessage = new Message("Hello world!", "This project was started on " + now, now );
-        messages.add(creationMessage); //TODO Add message to global SystemData hashmap
+        messages.add(creationMessage);
     }
 
     /* Getters */
@@ -47,7 +47,6 @@ public class Dashboard {
         messages.add(reply);
         messagesIds.add(reply.getId());
         originalMessage.addReply(reply);
-        //TODO Add message to global SystemData hashmap (this one isn't a priority since we might not implement replies)
     }*/
 
     public void createNewSystemMessage(String content) {

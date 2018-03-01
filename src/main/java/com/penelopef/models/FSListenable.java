@@ -118,34 +118,3 @@ public class FSListenable {
     }
 
 }
-
-    /*public void run() {
-        try {
-            WatchService watcher = FileSystems.getDefault().newWatchService();
-                    // path.getFileSystem().newWatchService();
-            path.register(watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-
-            WatchKey watchKey = watcher.poll();
-            if (watcher != null) //TODO check this condition
-            {
-                List<WatchEvent<?>> events = watchKey.pollEvents();
-                for (WatchEvent event : events) {
-                    if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-                        listener.onCreate(event.context().toString());
-                    }
-                    if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
-                        listener.onDelete(event.toString());
-                    }
-                    if (event.kind() == StandardWatchEventKinds.ENTRY_MODIFY) {
-                        listener.onUpdate(event.context().toString());
-                    }
-                }
-            }
-            watchKey.reset();
-        } catch (Exception e) {
-            e.printStackTrace();
-            //System.out.println("Error: " + e.toString());
-        }
-
-    }
-*/
