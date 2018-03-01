@@ -5,6 +5,8 @@ import com.penelopef.views.menus.ProjectHomeSelection;
 
 import java.util.List;
 
+import static com.penelopef.PenelopeF.activeUser;
+import static com.penelopef.tools.DataTools.getGroupFromName;
 import static com.penelopef.tools.DateTools.now;
 import static com.penelopef.tools.ScannerTools.scanInt;
 import static com.penelopef.tools.ScannerTools.scanString;
@@ -21,21 +23,40 @@ public class ProjectsMenuView {
     }
 
     public Project createProject() {
-        System.out.println("Welcome to the Project Manager.\nProject Name: ");
+        // Enter name
+        System.out.print("Project Name: ");
         String name = scanString();
+
+        // Select priority
         Priority priority = selectPriority();
-        Project project = new Project(name, new Group("default"), now(), priority); // TODO: Group selection, from current user's list of groups
-        System.out.println("New project created. Name: " + project.getName());
-        //TODO System.out.println("Add:" + "\n1.-" + ProjectElements.TASK + "\n2.-" + ProjectElements.DOCUMENT + "\n3.-" + ProjectElements.GROUP);
-        return project;
+
+        // Select group
+        Group group = selectGroup();
+
+        if (group != null) {
+            // Create project
+            Project project = new Project(name, group, now(), priority);
+            System.out.println("New project created : " + project.getName());
+            return project;
+        } else return null;
+    }
+
+    private Group selectGroup() {
+        System.out.print("Which group? ");
+            Group groupToBeAddedTo = getGroupFromName(scanString());
+            if (groupToBeAddedTo == null || !activeUser.getGroups().contains(groupToBeAddedTo)) {
+                System.out.println("Group not found. (Make sure you belong to the group you're trying to select)");
+                return null;
+            }
+            return groupToBeAddedTo;
     }
 
     public static Priority selectPriority() {
-        System.out.println("Please, select the priority of your project");
+        System.out.println("Select a priority:");
         System.out.println("1.-" + Priority.HIGH);
         System.out.println("2.-" + Priority.NORMAL);
         System.out.println("3.-" + Priority.LOW);
-        return Priority.optionsPriority(printStringAndReadInteger("Enter a number between " + 1 + " and " + Priority.values().length, 1, 3));
+        return Priority.optionsPriority(scanInt(1, 3));
     }
 
     public int showAndSelectProject(List<Project> projects) {

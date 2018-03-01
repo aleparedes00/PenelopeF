@@ -139,10 +139,9 @@ public class User {
 
     /* Other Methods */
     public void addProject(Project project) {
-        this.projects.add(project);
-        if (!projectsIds.contains(project.getId())) {
-            this.projectsIds.add(project.getId());
-        }
+        if (this.projects != null) // activeUser
+            this.projects.add(project);
+        this.projectsIds.add(project.getId());
     }
 
     public void removeProject(Project project) {

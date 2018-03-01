@@ -7,8 +7,10 @@ import com.penelopef.views.ProjectView;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.penelopef.tools.DataTools.getUserFromId;
 import static com.penelopef.tools.MenuTools.showMenu;
 import static com.penelopef.PenelopeF.activeUser;
 
@@ -42,9 +44,13 @@ public class ProjectsMenuController {
 
     public void createProject() {
         Project project = projectsMenuView.createProject();
-        activeUser.addProject(project);
-        repositories.createNewProject(project);
-        repositories.saveData();
+        if (project != null) {
+            for (UUID userId : project.getGroup().getUsersIds()) {
+                getUserFromId(userId).addProject(project);
+            }
+            repositories.createNewProject(project);
+            repositories.saveData();
+        }
         //TODO call function to write the historic "new feed" file
     }
 }
