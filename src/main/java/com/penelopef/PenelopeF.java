@@ -48,7 +48,7 @@ public class PenelopeF {
 
         // Initialise observers
         activeUser.getProjects().forEach(p ->
-                FSListenable.addListener(p, new File(defaultProjectsPath + p.getName()).toPath()));
+                FSListenable.addListener(p, new File(p.getPathToProject()).toPath()));
 
         // Call Home Menu
         HomeMenuController homeMenuController = new HomeMenuController();
@@ -56,7 +56,7 @@ public class PenelopeF {
 
         // Remove observers upon shutdown
         activeUser.getProjects().forEach(p ->
-                FSListenable.removeListener(p, new File(defaultProjectsPath + p.getName()).toPath()));
+                FSListenable.removeListener(p, new File(p.getPathToProject()).toPath()));
 
         // Save upon shutdown
         repositories.saveData();

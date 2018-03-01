@@ -1,12 +1,17 @@
 package com.penelopef.views;
 
+import com.penelopef.models.Group;
 import com.penelopef.models.Project;
 import com.penelopef.views.menus.ModifyProjectMenu;
 import com.penelopef.views.menus.ProjectElements;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import static com.penelopef.PenelopeF.activeUser;
+import static com.penelopef.tools.DataTools.getGroupFromName;
 import static com.penelopef.tools.ScannerTools.scanInt;
+import static com.penelopef.tools.ScannerTools.scanString;
 import static com.penelopef.views.menus.ProjectElements.*;
 
 /**
@@ -32,7 +37,9 @@ public class ProjectView {
 
 
     /*Print Project Information*/
-    public ProjectElements drawProject() {
+    public ProjectElements drawProject(Project project) {
+        System.out.println("===== PROJECT " + project.getName() + " =====");
+
         ArrayList<ProjectElements> availableCommands = getAvailableCommands();
 
         for (int i = 0; i < availableCommands.size(); i++) {
@@ -49,25 +56,71 @@ public class ProjectView {
         System.out.println("Group: " + project.getGroup().getName());
         System.out.println("Created on: " + project.getDate());
         System.out.println("Priority: " + project.getPriority().toString());
+        System.out.println();
     }
 
     /*Print Project Modify*/
     public ModifyProjectMenu modifyProjectMenu() {
         System.out.println("What would you like to edit?");
-        System.out.println("1.- " + ModifyProjectMenu.PROJECT_NAME + ":");
-        System.out.println("2.- " + ModifyProjectMenu.GROUP + ":");
-        System.out.println("3.- " + ModifyProjectMenu.BACK + ".");
-        //TODO add change priority
-        System.out.println("What would you like to do?");
-        return ModifyProjectMenu.valueOf(scanInt(1, 3));
+        System.out.println("1.- " + ModifyProjectMenu.PROJECT_NAME);
+        System.out.println("2.- " + ModifyProjectMenu.GROUP);
+        System.out.println("3.- " + ModifyProjectMenu.PRIORITY);
+        System.out.println("4.- " + ModifyProjectMenu.BACK);
+        return ModifyProjectMenu.valueOf(scanInt(1, 4));
     }
 
     public void drawProjectDocuments(Project project) {
-        if (project.getDocuments().isEmpty()) {
-            System.out.println("-> No documents!!");
-            return;
+        System.out.println("===== FILES OF PROJECT " + project.getName() + " =====");
+
+        File projectRoot = new File(project.getPathToProject());
+        System.out.println("|_ " + projectRoot.getName());
+        if (projectRoot.exists())
+            drawFilesInDirectory(projectRoot, 1);
+
+        System.out.println();
+    }
+
+    private void drawFilesInDirectory(File directory, int recursionLevel) {
+        for (File file : directory.listFiles(file -> !file.isHidden())) {
+            printTreeBranch(recursionLevel);
+            System.out.println(file.getName());
+            if (file.isDirectory())
+                drawFilesInDirectory(file, recursionLevel + 1);
         }
-        System.out.println("List of documents:");
-        project.getDocuments().forEach(d -> System.out.println("- " + d));
+
+    }
+
+    private void printTreeBranch(int recursionLevel) {
+        for (int i = 0; i < recursionLevel; i++) {
+            System.out.print("\t");
+        }
+        System.out.print("|_ ");
+    }
+
+    public String editName() {
+        System.out.print("New name? ");
+        return scanString();
+    }
+
+    public Group editGroup() {
+        System.out.print("New group? ");
+        Group newGroup = getGroupFromName(scanString());
+        if (newGroup == null || !activeUser.getGroups().contains(newGroup)) {
+            System.out.println("Group not found. (Make sure you belong to the group you're trying to select)");
+            return null;
+        } else return newGroup;
+    }
+
+    public void modificationSaved() {
+        System.out.println("Modification saved.");
+    }
+
+    public boolean alsoChangeDirectoryName() {
+        System.out.println("Would you like to also rename the project's folder? Y/N");
+        return (scanString().toUpperCase().equals("Y"));
+    }
+
+    public void errorDirectoryExists(String name) {
+        System.out.println("Error: directory " + name + " already exists");
     }
 }

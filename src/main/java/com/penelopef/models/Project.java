@@ -117,6 +117,7 @@ public class Project implements FSListener {
 
     /* Setters */
     public void setId(String idStr) { id = UUID.fromString(idStr); }
+
     public void setPriority(Priority priority) {this.priority = priority; }
 
     public void setName(String name) {
@@ -126,6 +127,14 @@ public class Project implements FSListener {
     public void setDocuments(List<String> docs) {
         this.documents = docs;
     }
+    public void setGroupId(UUID groupId) {
+        this.groupId = groupId;
+    }
+
+    public void setPathToProject(String pathToProject) {
+        this.pathToProject = pathToProject;
+    }
+
     public List<String> getDocuments() {
         if (documents == null) {
             documents = new ArrayList<>();

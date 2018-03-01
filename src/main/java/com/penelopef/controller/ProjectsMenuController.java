@@ -38,6 +38,7 @@ class ProjectsMenuController {
 
     private void createProject() {
         Project project = projectsMenuView.createProject();
+
         if (project != null) {
             for (UUID userId : project.getGroup().getUsersIds()) {
                 getUserFromId(userId).addProject(project);

@@ -34,12 +34,12 @@ public class ProjectsMenuView {
 
     private Group selectGroup() {
         System.out.print("Which group? ");
-            Group groupToBeAddedTo = getGroupFromName(scanString());
-            if (groupToBeAddedTo == null || !activeUser.getGroups().contains(groupToBeAddedTo)) {
+            Group group = getGroupFromName(scanString());
+            if (group == null || !activeUser.getGroups().contains(group)) {
                 System.out.println("Group not found. (Make sure you belong to the group you're trying to select)");
                 return null;
             }
-            return groupToBeAddedTo;
+            return group;
     }
 
     public int showAndSelectProject(List<Project> projects) {

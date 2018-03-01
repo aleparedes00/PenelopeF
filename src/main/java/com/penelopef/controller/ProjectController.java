@@ -1,9 +1,17 @@
 package com.penelopef.controller;
 
+import com.penelopef.models.FSListenable;
+import com.penelopef.models.Group;
 import com.penelopef.models.Project;
 import com.penelopef.views.*;
 
+import java.io.File;
+import java.util.UUID;
+
+import static com.penelopef.PenelopeF.defaultProjectsPath;
+import static com.penelopef.PenelopeF.getRepositories;
 import static com.penelopef.models.Priority.selectPriority;
+import static com.penelopef.tools.DataTools.getUserFromId;
 import static com.penelopef.tools.MenuTools.showMenu;
 
 /**
@@ -23,7 +31,7 @@ public class ProjectController {
 
     void showProject() {
         showMenu(ctx -> {
-            switch (this.projectView.drawProject()) {
+            switch (this.projectView.drawProject(project)) {
                 case PROJECT_INFO:
                     projectView.drawProjectInformation(project);
                     break;
@@ -39,11 +47,10 @@ public class ProjectController {
                     System.out.println("[Dashboard] : Calling freaking Dashboard");
                     break;
                 case EDIT:
-                    controlModifyProject(project);
-                    //TODO saveData
+                    controlModifyProject();
                     break;
                 case DEACTIVATE:
-                    controlDeactiveProject(project);
+                    controlDeactiveProject();
                     ctx.leaveCurrentMenu = true;
                     break;
                 case BACK:
@@ -53,18 +60,27 @@ public class ProjectController {
         });
     }
 
-    private void controlModifyProject(Project project) {
+    private void controlModifyProject() {
         showMenu(ctx -> {
             switch (this.projectView.modifyProjectMenu()) {
                 case PROJECT_NAME:
-                    project.setName(PrintTools.printStringAndReadChoice("Please, enter the new name of the project:"));
-                    ctx.leaveCurrentMenu = true;
+                    String newName = projectView.editName();
+                    changeName(newName);
+                    getRepositories().saveData();
+                    projectView.modificationSaved();
                     break;
                 case PRIORITY:
                     project.setPriority(selectPriority());
+                    getRepositories().saveData();
+                    projectView.modificationSaved();
+                    break;
                 case GROUP:
-                    System.out.println("Changing group");
-                    ctx.leaveCurrentMenu = true;
+                    Group newGroup = projectView.editGroup();
+                    if (newGroup != null) {
+                        changeGroup(newGroup);
+                        getRepositories().saveData();
+                        projectView.modificationSaved();
+                    }
                     break;
                 case BACK:
                     ctx.leaveCurrentMenu = true;
@@ -72,9 +88,50 @@ public class ProjectController {
         });
     }
 
+    private void changeName(String newName) {
+        // Change Project name
+        project.setName(newName);
 
-    private void controlDeactiveProject(Project project) {
+        // Change Project directory
+        if (projectView.alsoChangeDirectoryName()) {
+            String newDirectoryName = defaultProjectsPath + newName;
+
+            File projectDirectory = new File(project.getPathToProject());
+            File newDirectory = new File(newDirectoryName);
+
+            if (newDirectory.exists())
+                projectView.errorDirectoryExists(newDirectoryName);
+            else {
+                if (!projectDirectory.exists()) projectDirectory.mkdir();
+                projectDirectory.renameTo(newDirectory);
+
+                // Update listeners
+                FSListenable.removeListener(project, new File(project.getPathToProject()).toPath());
+                FSListenable.addListener(project, new File(newDirectoryName).toPath());
+
+                project.setPathToProject(defaultProjectsPath + newName);
+            }
+        }
+    }
+
+    private void changeGroup(Group newGroup) {
+        // Remove Project from previous owners
+        for (UUID userId : project.getGroup().getUsersIds()) {
+            getUserFromId(userId).removeProject(project);
+        }
+
+        // Set new Group ID
+        project.setGroupId(newGroup.getId());
+
+        // Add Project to new owners
+        for (UUID userId : project.getGroup().getUsersIds()) {
+            getUserFromId(userId).addProject(project);
+        }
+    }
+
+    private void controlDeactiveProject() {
         project.setActive(false);
+        getRepositories().saveData();
         PrintTools.printString("\nYour project has been successfully deactived\n");
     }
 }

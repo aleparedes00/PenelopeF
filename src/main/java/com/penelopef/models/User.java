@@ -141,12 +141,14 @@ public class User {
     public void addProject(Project project) {
         if (this.projects != null) // activeUser
             this.projects.add(project);
-        this.projectsIds.add(project.getId());
+        if (!this.projectsIds.contains(project.getId()))
+            this.projectsIds.add(project.getId());
     }
 
     public void removeProject(Project project) {
-        projects.remove(project);
-        projectsIds.removeIf(pId -> pId == project.getId());
+        if (this.projects != null) // activeUser
+            this.projects.remove(project);
+        this.projectsIds.removeIf(pId -> pId.equals(project.getId()));
     }
 
     public void addGroup(Group group) {

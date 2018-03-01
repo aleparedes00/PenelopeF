@@ -2,8 +2,8 @@ package com.penelopef.views.menus;
 
 public enum ModifyProjectMenu {
     PROJECT_NAME("Project Name"),
-    PRIORITY("Priority"),
     GROUP("Group"),
+    PRIORITY("Priority"),
     BACK("Back");
 
     String value;
@@ -15,9 +15,9 @@ public enum ModifyProjectMenu {
             case 1:
                 return PROJECT_NAME;
             case 2:
-                return PRIORITY;
-            case 3:
                 return GROUP;
+            case 3:
+                return PRIORITY;
             case 4:
                 return BACK;
         }
