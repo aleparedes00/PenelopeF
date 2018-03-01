@@ -62,6 +62,9 @@ public class ProjectRepository extends Repository<Project> {
                 .filter(e -> activeUser.getProjectsIds().contains(e.getKey()))
                 .map(e -> e.getValue())
                 .collect(Collectors.toList())));
+        activeUser.getProjects().forEach(project -> {
+            project.setDocuments(readDocFolder(project.getName()));
+        });
     }
 
     /* Saving */

@@ -123,6 +123,9 @@ public class Project implements FSListener {
         this.name = name;
     }
 
+    public void setDocuments(List<String> docs) {
+        this.documents = docs;
+    }
     public List<String> getDocuments() {
         if (documents == null) {
             documents = new ArrayList<>();
