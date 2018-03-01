@@ -23,6 +23,7 @@ public class ProjectsMenuView {
 
         // Select group
         Group group = selectGroup();
+        //TODO: list available groups
 
         if (group != null) {
             // Create project
