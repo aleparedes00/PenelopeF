@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Math.random;
-import static com.penelopef.tools.RegexTools.match;
 
 public class PasswordTools {
     /* Password alphabets */
@@ -13,9 +12,6 @@ public class PasswordTools {
     private static final String ALPHA_CAPS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String NUM = "0123456789";
     private static final String SPECIAL = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-
-    private static final String passwordRegex = "^(?=.*[" + ALPHA + "])(?=.*[" + ALPHA_CAPS + "])(?=.*[" + NUM + "])" +
-            "(?=.*[" + SPECIAL + "])[" + ALPHA + ALPHA_CAPS + NUM + SPECIAL + "]{8,}";
 
     public static String generatePassword() {
         Character[] pwdBuilder = new Character[8];
@@ -55,6 +51,22 @@ public class PasswordTools {
     }
 
     public static boolean hasRightFormat(String pwd) {
-        return match(pwd, passwordRegex);
+        boolean hasLower = false;
+        boolean hasCap = false;
+        boolean hasNum = false;
+        boolean hasSpecial = false;
+
+        for (int i = 0; i < pwd.length(); i++) {
+            if (ALPHA.contains("" + pwd.charAt(i)))
+                hasLower = true;
+            if (ALPHA_CAPS.contains("" + pwd.charAt(i)))
+                hasCap = true;
+            if (NUM.contains("" + pwd.charAt(i)))
+                hasNum = true;
+            if (SPECIAL.contains("" + pwd.charAt(i)))
+                hasSpecial = true;
+        }
+
+        return (hasLower && hasCap && hasNum && hasSpecial);
     }
 }

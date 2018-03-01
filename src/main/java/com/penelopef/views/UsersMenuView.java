@@ -41,6 +41,7 @@ public class UsersMenuView {
         System.out.println(selectedUser.getName() + " (" + selectedUser.getUsername() + ")");
         showGroups(selectedUser);
         System.out.println(selectedUser.getContactInfo());
+        System.out.println();
     }
 
     private void showGroups(User selectedUser) {

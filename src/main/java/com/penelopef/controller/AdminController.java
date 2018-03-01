@@ -137,12 +137,12 @@ public class AdminController {
         String newPwd = view.enterNewPassword();
 
         if (user.isRightPassword(oldPwd) || activeUser.isAdmin()) {
-            if (hasRightFormat(newPwd)) {
-                if (newPwd != null) {
+            if (newPwd != null) {
+                if (hasRightFormat(newPwd)) {
                     user.setPassword(newPwd);
                     view.passwordChangeSuccessful();
-                }
-            } else view.errorWrongFormat();
+                } else view.errorWrongFormat();
+            }
         } else view.errorWrongPassword();
     }
 

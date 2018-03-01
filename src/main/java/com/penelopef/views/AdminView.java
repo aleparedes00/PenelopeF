@@ -84,8 +84,8 @@ public class AdminView {
     }
 
     public String enterNewPassword() {
-        System.out.print("New password? " +
-                "(Must contain at least 1 capital letter, 1 number and 1 special character) ");
+        System.out.print("(New password must contain at least 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character)\n" +
+                "New password? ");
         String newPwd = scanString();
         System.out.print("Confirm new password: ");
         String confirmPwd = scanString();
@@ -103,7 +103,7 @@ public class AdminView {
     }
 
     public void errorWrongFormat() {
-        System.out.println("Password must contain at least 1 capital letter, 1 number and 1 SPECIAL character");
+        System.out.println("Error: New password must contain at least 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character");
     }
 
     public void passwordChangeSuccessful() {
