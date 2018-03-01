@@ -2,7 +2,6 @@ package com.penelopef.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.penelopef.models.Group;
-import com.penelopef.models.SystemData;
 import com.penelopef.models.User;
 
 import java.io.IOException;
@@ -11,13 +10,14 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.penelopef.PenelopeF.getSystemData;
 import static com.penelopef.tools.DataTools.getGroupFromId;
 
-public class GroupRepository extends Repository<Group> {
+class GroupRepository extends Repository<Group> {
 
     /* Constructor */
-    public GroupRepository(String path, SystemData systemData) {
-        super(path, systemData, Group.class);
+    GroupRepository(String path) {
+        super(path, Group.class);
     }
 
     /* Loading */
@@ -32,10 +32,10 @@ public class GroupRepository extends Repository<Group> {
         return EMPTY;
     }
 
-    public void loadGroupsToUser(User activeUser) {
+    void loadGroupsToUser(User activeUser) {
         activeUser.setSelfGroup(getGroupFromId(activeUser.getSelfGroupId()));
 
-        HashMap<UUID, Group> groups = systemData.getGroups();
+        HashMap<UUID, Group> groups = getSystemData().getGroups();
         activeUser.setGroups(new ArrayList<>(groups.entrySet().stream()
                 .filter(e -> activeUser.getGroupsIds().contains(e.getKey()))
                 .map(e -> e.getValue())

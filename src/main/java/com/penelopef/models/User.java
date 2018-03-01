@@ -153,14 +153,6 @@ public class User {
         this.groups.add(group);
         this.groupsIds.add(group.getId());
     }
-    //public void addDeactiveProject(Project project) {this.deactiveProjects.add(project);}
-
-    public void printGroupsOfUser() {
-        System.out.println("Groups of user " + this.getUsername());
-        for (Group group : groups) {
-            System.out.println("\t" + group.getName());
-        }
-    }
 
     @JsonIgnore
     public Boolean isAdmin() {
@@ -175,7 +167,7 @@ public class User {
     }
 
     /* Message Methods */
-    public void writeNewMessage(Dashboard dash) {
+    public void writeNewMessage(Dashboard dash) { // TODO MVC/move/delete
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Add a message. Title [Enter] Content [Enter]");

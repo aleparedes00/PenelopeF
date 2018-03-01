@@ -9,20 +9,23 @@ public class ScannerTools {
         return sc.nextLine();
     }
 
-    public static int scanInt(int minimal, int max) {
+    public static int scanInt(int min, int max) {
         int userInput = -1;
+
         do {
             if (userInput != -1) {
-                System.out.println("mardito, entre " + minimal + "y " + max);
+                System.out.println("Please enter a number between " + min + " and " + max);
             }
             while (!sc.hasNextInt()) {
                 sc.next();
-                System.out.println("Escribe bien mardito");
+                System.out.println("Please enter a number between " + min + " and " + max);
             }
             userInput = sc.nextInt();
 
-        } while (userInput < minimal || userInput > max);
+        } while (userInput < min || userInput > max);
+
         sc.nextLine();
+
         return userInput;
     }
 

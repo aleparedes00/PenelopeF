@@ -25,7 +25,7 @@ public enum ProjectHomeSelection {
         }
         throw new IllegalStateException("Selection doesn't exist.");
     }
-// ALE Si voy a usar toString is voy s tomar este valor fuera de println
+
     @Override
     public String toString() {
         return value;

@@ -12,14 +12,12 @@ public class RepositoryManager {
     private GroupRepository groupRepository;
     private MessageRepository messageRepository;
     private ProjectRepository projectRepository;
-    private SystemData systemData;
 
-    public RepositoryManager(SystemData systemData) {
-        this.userRepository = new UserRepository(usersJson, systemData);
-        this.groupRepository = new GroupRepository(groupsJson, systemData);
-        this.messageRepository = new MessageRepository(messagesJson, systemData);
-        this.projectRepository = new ProjectRepository(defaultProjectsPath, systemData);
-        this.systemData = systemData;
+    public RepositoryManager() {
+        this.userRepository = new UserRepository(usersJson);
+        this.groupRepository = new GroupRepository(groupsJson);
+        this.messageRepository = new MessageRepository(messagesJson);
+        this.projectRepository = new ProjectRepository(defaultProjectsPath);
     }
 
     /* Loading */
@@ -30,7 +28,7 @@ public class RepositoryManager {
         projectRepository.loadData();
     }
 
-    public void loadActiveUserProjects(User activeUser) {
+    public void loadActiveUserProjects() {
         groupRepository.loadGroupsToUser(activeUser);
         projectRepository.loadProjectsToUser(activeUser);
     }
@@ -48,10 +46,5 @@ public class RepositoryManager {
         groupRepository.saveData();
         messageRepository.saveData();
         projectRepository.saveData();
-    }
-
-    /* Getters */
-    public SystemData getSystemData() {
-        return systemData;
     }
 }

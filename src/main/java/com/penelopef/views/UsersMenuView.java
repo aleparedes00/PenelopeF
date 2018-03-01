@@ -2,7 +2,6 @@ package com.penelopef.views;
 
 import com.penelopef.models.Group;
 import com.penelopef.models.User;
-import com.penelopef.models.SystemData;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -12,17 +11,12 @@ import static com.penelopef.tools.DataTools.getUserFromId;
 import static com.penelopef.tools.ScannerTools.scanInt;
 
 public class UsersMenuView {
-    private SystemData systemData;
-
-    public UsersMenuView(SystemData systemData) {
-        this.systemData = systemData;
-    }
 
     public User listUsers(Group selectedGroup) {
         System.out.println("===== MEMBERS OF GROUP " + selectedGroup.getName() + " =====");
 
         int i = 1;
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<>();
 
         for (UUID userId : selectedGroup.getUsersIds()) {
             User user = getUserFromId(userId);

@@ -1,8 +1,8 @@
-package com.penelopef.tools;
+package com.penelopef.test;
 
 import java.io.IOException;
 
-public class PrintingTools {
+public class PrintingTools { // TODO: delete
     private static void waitForEnter() {
         try {
             System.in.read();

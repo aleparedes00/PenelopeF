@@ -3,22 +3,22 @@ package com.penelopef.controller;
 import com.penelopef.models.Group;
 import com.penelopef.views.GroupsMenuView;
 
+import static com.penelopef.PenelopeF.getSystemData;
 import static com.penelopef.tools.MenuTools.showMenu;
-import static com.penelopef.PenelopeF.systemData;
 
-public class GroupsMenuController {
+class GroupsMenuController {
     private GroupsMenuView groupsMenuView;
 
     /* Constructor */
-    public GroupsMenuController() {
-        this.groupsMenuView = new GroupsMenuView(systemData);
+    GroupsMenuController() {
+        this.groupsMenuView = new GroupsMenuView(getSystemData());
     }
 
-    public void showGroups() {
+    void showGroups() {
         showMenu(ctx -> {
             Group selectedGroup = groupsMenuView.listGroups();
             if (selectedGroup != null) {
-                UsersMenuController usersMenuController = new UsersMenuController(selectedGroup, systemData);
+                UsersMenuController usersMenuController = new UsersMenuController(selectedGroup);
                 usersMenuController.showUsers();
             } else ctx.leaveCurrentMenu = true;
         });

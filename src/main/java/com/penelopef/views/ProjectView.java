@@ -52,7 +52,7 @@ public class ProjectView {
     }
 
     /*Print Project Modify*/
-    public ModifyProjectMenu modifyProjectMenu(Project project) {
+    public ModifyProjectMenu modifyProjectMenu() {
         System.out.println("What would you like to modify?");
         System.out.println("1.- " + ModifyProjectMenu.PROJECT_NAME + ":");
         System.out.println("2.- " + ModifyProjectMenu.GROUP + ":");

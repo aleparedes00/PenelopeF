@@ -1,7 +1,6 @@
 package com.penelopef.repository;
 
 import com.penelopef.models.Project;
-import com.penelopef.models.SystemData;
 import com.penelopef.models.User;
 
 import java.io.File;
@@ -9,11 +8,13 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.penelopef.PenelopeF.getSystemData;
+
 public class ProjectRepository extends Repository<Project> {
 
     /* Constructor */
-    public ProjectRepository(String pathToFolder, SystemData systemData) {
-        super(pathToFolder, systemData, Project.class);
+    ProjectRepository(String pathToFolder) {
+        super(pathToFolder, Project.class);
         initiateFolder();
     }
 
@@ -55,8 +56,8 @@ public class ProjectRepository extends Repository<Project> {
         return EMPTY;
     }
 
-    public void loadProjectsToUser(User activeUser) {
-        HashMap<UUID, Project> projects = systemData.getProjects();
+    void loadProjectsToUser(User activeUser) {
+        HashMap<UUID, Project> projects = getSystemData().getProjects();
         activeUser.setProjects(new ArrayList<>(projects.entrySet().stream()
                 .filter(e -> activeUser.getProjectsIds().contains(e.getKey()))
                 .map(e -> e.getValue())
@@ -65,7 +66,7 @@ public class ProjectRepository extends Repository<Project> {
 
     /* Saving */
     public void saveData() {
-        HashMap<UUID, Project> projectsToSave = systemData.getDataFromType(dataType);
+        HashMap<UUID, Project> projectsToSave = getSystemData().getDataFromType(dataType);
         for (Map.Entry<UUID, Project> projectEntry : projectsToSave.entrySet()) {
             Project dataToSave = projectEntry.getValue();
             String pathToFile = path + "/" + dataToSave.getId().toString() + ".json";
@@ -78,19 +79,19 @@ public class ProjectRepository extends Repository<Project> {
     }
 
     /* Updating */
-    public void addNewProjectFile(Project project) {
+    void addNewProjectFile(Project project) {
         String pathToFile = this.path + "/" + project.getId().toString() + ".json";
         try {
             serializer.serialize(project, pathToFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (!(systemData.existsProject(project.getId()))) {
-            systemData.loadProjectInMap(project);
+        if (!(getSystemData().existsProject(project.getId()))) {
+            getSystemData().loadProjectInMap(project);
         }
     }
 
-    public void addNewProjectFolder(Project project) {
+    void addNewProjectFolder(Project project) {
         String name = path + "/" + project.getName();
         File file = new File(name);
         file.mkdirs();

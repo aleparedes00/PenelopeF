@@ -25,7 +25,6 @@ public class Message {
     public Message() { }
 
     /* Constructors */
-    /* Message(title, content, date, user, replyUser) -> by user, in reply to replyUser */
     /* Message(title, content, date, user) -> message written by user */
     /* Message(title, content, date) -> message written by system */
     public Message(String title, String content, String date, User author){
@@ -69,7 +68,7 @@ public class Message {
         return date;
     }
 
-    public User getAuthor() {
+    User getAuthor() {
         return author;
     }
 
@@ -100,7 +99,7 @@ public class Message {
     }
 
     /* Other Methods */
-    public void addReply(Message reply) {
+    void addReply(Message reply) {
         replies.addReply(reply);
     }
 }

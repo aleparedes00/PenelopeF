@@ -12,7 +12,7 @@ public class SystemData {
     private HashMap<UUID, Message> messages;
     private HashMap<UUID, Project> projects;
 
-    public static UUID ADMIN_GROUP;
+    static UUID ADMIN_GROUP;
 
     public SystemData() {
         // Initializing Empty Maps
@@ -36,16 +36,7 @@ public class SystemData {
         else ADMIN_GROUP = getUserFromUsername("root").getSelfGroupId();
     }
 
-    /* Loading Methods */
-    //**AP**This method will be transfer to a service that wil be called by the repository (when we deserialize the json, we'll fill in)
-    public void loadProjectInMap(Project project) {
-        projects.put(project.getId(), project);
-    }
 
-    /* Exists Method */
-    public Boolean existsProject(UUID id) { // renamed from "getProjectFromMap"
-        return projects.containsKey(id);
-    }
 
     /* Getters */
     public HashMap<UUID, User> getUsers() {
@@ -64,6 +55,14 @@ public class SystemData {
         return projects;
     }
 
+    public <T> HashMap getDataFromType(Class<T> dataType) {
+        if (dataType == User.class) return this.users;
+        if (dataType == Group.class) return this.groups;
+        if (dataType == Message.class) return this.messages;
+        return this.projects;
+    }
+
+    /* Loading Methods */
     public <T> void load(HashMap<UUID, T> deserializedHashMap, Class<T> dataType) {
         if (dataType == User.class) this.users = (HashMap<UUID, User>) deserializedHashMap;
         if (dataType == Group.class) this.groups = (HashMap<UUID, Group>) deserializedHashMap;
@@ -71,10 +70,12 @@ public class SystemData {
         if (dataType == Project.class) this.projects = (HashMap<UUID, Project>) deserializedHashMap;
     }
 
-    public <T> HashMap getDataFromType(Class<T> dataType) {
-        if (dataType == User.class) return this.users;
-        if (dataType == Group.class) return this.groups;
-        if (dataType == Message.class) return this.messages;
-        return this.projects;
+    public void loadProjectInMap(Project project) {
+        projects.put(project.getId(), project);
+    }
+
+    /* Exists Method */
+    public Boolean existsProject(UUID id) { // renamed from "getProjectFromMap"
+        return projects.containsKey(id);
     }
 }

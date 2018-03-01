@@ -1,17 +1,13 @@
 package com.penelopef.controller;
 
-import com.penelopef.repository.RepositoryManager;
 import com.penelopef.views.HomeMenuView;
 
 import static com.penelopef.tools.MenuTools.showMenu;
 
 public class HomeMenuController {
-    private final RepositoryManager repositories;
-
     private HomeMenuView homeMenuView;
 
-    public HomeMenuController(RepositoryManager repositories) {
-        this.repositories = repositories;
+    public HomeMenuController() {
         this.homeMenuView = new HomeMenuView();
     }
 
@@ -23,15 +19,15 @@ public class HomeMenuController {
                     groupsMenuController.showGroups();
                     break;
                 case PROJECTS:
-                    ProjectsMenuController projectsMenuController = new ProjectsMenuController(repositories);
+                    ProjectsMenuController projectsMenuController = new ProjectsMenuController();
                     projectsMenuController.showProjects();
                     break;
                 case PROFILE:
-                    ProfileMenuController profileMenuController = new ProfileMenuController(repositories);
+                    ProfileMenuController profileMenuController = new ProfileMenuController();
                     profileMenuController.showProfileMenu();
                     break;
                 case ADMIN:
-                    AdminMenuController adminMenuController = new AdminMenuController(repositories);
+                    AdminMenuController adminMenuController = new AdminMenuController();
                     adminMenuController.showAdminMenu();
                     break;
                 case LOGOUT:

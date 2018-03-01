@@ -17,7 +17,7 @@ public class ContactView {
         System.out.println("Successfully changed " + info);
     }
 
-    public void formatError(String info) {
+    public void formatError() {
         System.out.println("Error: unrecognised format");
     }
 }

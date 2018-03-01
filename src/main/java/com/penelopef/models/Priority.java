@@ -7,7 +7,7 @@ public enum Priority {
     NORMAL(0, "Normal"),
     LOW(-1, "Low");
 
-    int value; // Allows for simple test on sign: > 0 -> high, < 0 -> low
+    int value;
     String name;
 
     Priority(int value, String name) {

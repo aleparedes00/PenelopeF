@@ -18,7 +18,7 @@ public class GroupsMenuView {
         System.out.println("===== GROUPS =====");
 
         int i = 1;
-        ArrayList<Group> groups = new ArrayList<Group>();
+        ArrayList<Group> groups = new ArrayList<>();
 
         for (Group group : systemData.getGroups().values()) {
             if (!group.isSelfGroup()) {

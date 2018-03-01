@@ -15,9 +15,7 @@ public class Project implements FSListener {
 
     private String name;
 
-//    @JsonIgnore
     private ArrayList<Task> tasks;
-//    private ArrayList<UUID> tasksIds;
 
     @JsonIgnore
     private List<String> documents;
@@ -25,8 +23,7 @@ public class Project implements FSListener {
     private String pathToProject;
 
     //private Dashboard dashboard;
-//    @JsonIgnore
-   // private Group group;
+
     private UUID groupId;
 
     private String date;
@@ -53,10 +50,9 @@ public class Project implements FSListener {
         this.name = name;
 
         this.tasks = new ArrayList<>();
-//        this.tasksIds = new ArrayList<>();
 
         this.pathToProject = defaultProjectsPath + name;
-//        this.group = group;
+
         this.groupId = group.getId();
 
         this.id = UUID.randomUUID();
@@ -71,17 +67,11 @@ public class Project implements FSListener {
 
     public void addTask(Task task) {
         tasks.add(task);
-//        tasksIds.add(task.getId());
     }
 
     public void removeTask(Task task) {
         tasks.remove(task);
-//        tasksIds.removeIf(tId -> tId == task.getId());
     }
-
-//    public void setGroup(Group group) {
-//        this.group = group;
-//    }
 
     public void setActive(Boolean active) {
         this.active = active;
@@ -95,13 +85,11 @@ public class Project implements FSListener {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
-//    public ArrayList<UUID> getTasksIds() {
-//        return tasksIds;
-//    }
 
     public String getPathToProject() {
         return pathToProject;
     }
+
     @JsonIgnore
     public Group getGroup() {
         return getGroupFromId(groupId);
@@ -126,6 +114,7 @@ public class Project implements FSListener {
     public Boolean isActive() {
         return active;
     }
+
     /* Setters */
     public void setId(String idStr) { id = UUID.fromString(idStr); }
     public void setPriority(Priority priority) {this.priority = priority; }

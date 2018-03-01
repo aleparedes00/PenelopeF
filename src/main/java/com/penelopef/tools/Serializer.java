@@ -3,16 +3,9 @@ package com.penelopef.tools;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.penelopef.models.Group;
-import com.penelopef.models.Priority;
-import com.penelopef.models.Project;
-import com.penelopef.models.User;
-import com.penelopef.test.TestData;
 
 import java.io.File;
 import java.io.IOException;
-
-import static com.penelopef.tools.DateTools.now;
 
 public class Serializer {
     private ObjectMapper objectMapper = new ObjectMapper();

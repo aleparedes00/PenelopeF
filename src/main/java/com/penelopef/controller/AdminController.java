@@ -6,22 +6,21 @@ import com.penelopef.views.AdminView;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.penelopef.PenelopeF.getSystemData;
 import static com.penelopef.tools.PasswordTools.*;
 import static com.penelopef.tools.DataTools.*;
 import static com.penelopef.PenelopeF.activeUser;
 
-public class AdminController {
-    private Admin model;
+class AdminController {
     private AdminView view;
 
-    public AdminController(Admin model, AdminView view) {
-        this.model = model;
+    AdminController(AdminView view) {
         this.view = view;
     }
 
     /* Creation Methods */
     /* User Creation */
-    public void createUser() {
+    void createUser() {
         // Input
         String[] fullName = view.enterUserToCreate();
         String firstName = fullName[0];
@@ -44,9 +43,9 @@ public class AdminController {
         view.creationSuccessful(user);
 
         // Save to systemData
-        model.getUsers().put(user.getId(), user);
+        getSystemData().getUsers().put(user.getId(), user);
         Group userSelfGroup = user.getSelfGroup();
-        model.getGroups().put(userSelfGroup.getId(), userSelfGroup);
+        getSystemData().getGroups().put(userSelfGroup.getId(), userSelfGroup);
     }
 
     private boolean checkUsername(String username) {
@@ -66,7 +65,7 @@ public class AdminController {
     }
 
     /* Group Creation */
-    public void createGroup() {
+    void createGroup() {
         // Input
         String groupName = view.enterGroupToCreate();
         while (!checkGroupName(groupName))
@@ -80,7 +79,7 @@ public class AdminController {
         addUsersToCreatedGroup(group);
 
         // Save to systemData
-        model.getGroups().put(group.getId(), group);
+        getSystemData().getGroups().put(group.getId(), group);
     }
 
     private boolean checkGroupName(String groupName) {
@@ -103,7 +102,7 @@ public class AdminController {
             addUserToGroup(userToAdd, groupToBeAddedTo);
     }
 
-    public void prepareAddUserToGroup() {
+    void prepareAddUserToGroup() {
         User userToAdd = view.selectUser();
         if (userToAdd != null) {
             Group groupToBeAddedTo = view.selectGroup();
@@ -125,13 +124,13 @@ public class AdminController {
     }
 
     /* Password Methods */
-    public void changeUserPassword() {
+    void changeUserPassword() {
         User userToEdit = view.selectUser();
         if (userToEdit != null)
             changePassword(userToEdit);
     }
 
-    public void changePassword(User user) {
+    void changePassword(User user) {
         String oldPwd = "";
         if (!activeUser.isAdmin()) oldPwd = view.enterOldPassword();
         String newPwd = view.enterNewPassword();
@@ -147,16 +146,16 @@ public class AdminController {
     }
 
     /* Deletion Methods */
-    public void deleteUser() {
+    void deleteUser() {
         User userToDelete = view.selectUser();
         if (userToDelete != null)
             if (userToDelete.equals(activeUser)) view.errorDeletingSelf();
             else if (view.confirmation()) {
                 // Delete User from Users List
-                model.getUsers().remove(userToDelete.getId());
+                getSystemData().getUsers().remove(userToDelete.getId());
 
                 // Delete User's SelfGroup
-                model.getGroups().remove(userToDelete.getSelfGroupId());
+                getSystemData().getGroups().remove(userToDelete.getSelfGroupId());
 
                 // Delete User from the Groups they're in
                 for (UUID groupId : userToDelete.getGroupsIds()) {
@@ -165,16 +164,16 @@ public class AdminController {
                 }
 
                 // Delete Messages by User
-                for (Map.Entry<UUID, Message> messageEntry : model.getSystemData().getMessages().entrySet()) {
+                for (Map.Entry<UUID, Message> messageEntry : getSystemData().getMessages().entrySet()) {
                     if (messageEntry.getValue().getAuthorId().equals(userToDelete.getId()))
-                        model.getSystemData().getMessages().remove(messageEntry.getKey());
+                        getSystemData().getMessages().remove(messageEntry.getKey());
                 }
 
                 view.deletionSuccessful(userToDelete);
             }
     }
 
-    public void deleteGroup() {
+    void deleteGroup() {
         Group groupToDelete = view.selectGroup();
         if (groupToDelete != null)
             if (hasActiveProjects(groupToDelete)) view.errorActiveProjects();
@@ -182,7 +181,7 @@ public class AdminController {
             else {
                 if (view.confirmation()) {
                     // Delete Group from Group List
-                    model.getGroups().remove(groupToDelete.getId());
+                    getSystemData().getGroups().remove(groupToDelete.getId());
 
                     // Delete Group from the Users inside
                     for (UUID userId : groupToDelete.getUsersIds()) {
@@ -196,7 +195,7 @@ public class AdminController {
     }
 
     private boolean hasActiveProjects(Group groupToDelete) {
-        for (Map.Entry<UUID, Project> projectEntry : model.getSystemData().getProjects().entrySet()) {
+        for (Map.Entry<UUID, Project> projectEntry : getSystemData().getProjects().entrySet()) {
             if (projectEntry.getValue().getGroupId().equals(groupToDelete.getId()))
                 return true;
         }

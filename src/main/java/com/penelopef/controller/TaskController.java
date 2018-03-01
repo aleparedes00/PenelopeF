@@ -8,21 +8,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.penelopef.PenelopeF.getRepositories;
 import static com.penelopef.models.Priority.selectPriority;
 import static com.penelopef.tools.MenuTools.showMenu;
 import static com.penelopef.tools.ScannerTools.*;
 
-public class TaskController {
+class TaskController {
 
     private final TaskView taskView;
     private final Project project;
 
-    public TaskController(TaskView taskView, Project project) {
+    TaskController(TaskView taskView, Project project) {
         this.project = project;
         this.taskView = taskView;
     }
 
-    public void showTasks() {
+    void showTasks() {
         showMenu(ctx -> {
             List<Task> activeTasks = project.getTasks()
                     .stream()
@@ -38,7 +39,7 @@ public class TaskController {
         });
     }
 
-    public void taskManager(Task task) {
+    private void taskManager(Task task) {
         showMenu(ctx -> {
             switch (taskView.drawTask(task)) {
                 case DONE:
@@ -55,7 +56,7 @@ public class TaskController {
         });
     }
 
-    public void modifyTask(Task task) {
+    private void modifyTask(Task task) {
         showMenu(ctx -> {
             switch (taskView.modifyTask()) {
                 case TITLE:
@@ -73,8 +74,9 @@ public class TaskController {
         });
     }
 
-    public void createTask() {
+    private void createTask() {
         Task newTask = taskView.drawNewTask();
         project.addTask(newTask);
+        getRepositories().saveData();
     }
 }

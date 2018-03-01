@@ -1,18 +1,17 @@
 package com.penelopef.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.penelopef.models.SystemData;
 import com.penelopef.models.User;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class UserRepository extends Repository<User> {
+class UserRepository extends Repository<User> {
 
     /* Constructor */
-    public UserRepository(String path, SystemData systemData) {
-        super(path, systemData, User.class);
+    UserRepository(String path) {
+        super(path, User.class);
     }
 
     /* Loading */

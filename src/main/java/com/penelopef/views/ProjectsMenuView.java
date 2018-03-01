@@ -11,17 +11,8 @@ import static com.penelopef.tools.DataTools.getGroupFromName;
 import static com.penelopef.tools.DateTools.now;
 import static com.penelopef.tools.ScannerTools.scanInt;
 import static com.penelopef.tools.ScannerTools.scanString;
-import static com.penelopef.views.PrintTools.printStringAndReadInteger;
 
 public class ProjectsMenuView {
-    //Equal to printAvailableCommands
-    public ProjectHomeSelection showAndSelectHome() {
-        System.out.println("Welcome to PenelopeF\nAvailable Commands");
-        System.out.println("1.-" + ProjectHomeSelection.CREATE_PROJECT);
-        System.out.println("2.-" + ProjectHomeSelection.LIST_PROJECTS);
-        System.out.println("3.-" + ProjectHomeSelection.LOGOUT);
-        return ProjectHomeSelection.valueOf(printStringAndReadInteger("Please select a number option between 1 and 3", 1, 3));
-    }
 
     public Project createProject() {
         // Enter name
