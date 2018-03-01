@@ -6,16 +6,14 @@ import models.Group;
 import views.GroupsMenuView;
 
 import static tools.MenuTools.showMenu;
+import static views.PenelopeF.systemData;
 
 public class GroupsMenuController {
     private GroupsMenuView groupsMenuView;
-    private final SystemData systemData;
 
     /* Constructor */
-    public GroupsMenuController(SystemData systemData) {
+    public GroupsMenuController() {
         this.groupsMenuView = new GroupsMenuView(systemData);
-
-        this.systemData = systemData;
     }
 
     public void showGroups() {

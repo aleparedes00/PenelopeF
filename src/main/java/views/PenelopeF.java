@@ -3,7 +3,6 @@ package views;
 import controller.*;
 import models.*;
 import repository.RepositoryManager;
-import test.TestData;
 
 import java.io.File;
 import java.util.Scanner;
@@ -33,7 +32,7 @@ public class PenelopeF { // executable main class
         systemData.initializeUserSystem();
 
         // Test: Create User and Project Data
-        createNewTestData(repositories);
+        //createNewTestData(repositories);
 
         // Login Screen
         LoginController loginController = new LoginController(new LoginView());
@@ -44,34 +43,18 @@ public class PenelopeF { // executable main class
         // Build Active User
         repositories.loadActiveUserProjects(activeUser);
 
-        if (!activeUser.isAdmin()) {
-            // Test: Groups Menu
-            //GroupsMenuController groupsMenuController = new GroupsMenuController(repositories.getSystemData());
-            //groupsMenuController.showGroups();
+        // Initialise observers
+        activeUser.getProjects().forEach(p ->
+                FSListenable.addListener(p, new File(defaultProjectsPath+p.getName()).toPath()));
 
-            // Test: Projects Menu
-            HomeMenuController homeMenuController = new HomeMenuController(activeUser, repositories);
-            activeUser.getProjects().forEach(p ->
-                    FSListenable.addListener(p, new File(defaultProjectsPath+p.getName()).toPath()));
-            homeMenuController.firstMenuControl();
+        // Call Home Menu
+        HomeMenuController homeMenuController = new HomeMenuController(repositories);
+        homeMenuController.showHomeMenu();
 
-            //Testing function for Observer
-           /* //UUID id = UUID.fromString("c2b9a013-8b4d-48cb-b979-5f9645e37031");
-            Project p = homeMenuController.findProject("Testing");
-            System.out.println("name is -> " + p.getName());
-*/
-
-            // Test: Profile Menu
-            // ProfileMenuController profileMenuController = new ProfileMenuController(repositories);
-            //profileMenuController.showProfileMenu();
-        } else {
-            // Test: Admin Menu
-            AdminMenuController adminMenuController = new AdminMenuController(repositories);
-            adminMenuController.showAdminMenu();
-        }
-
+        // Remove observers upon shutdown
         activeUser.getProjects().forEach(p ->
                 FSListenable.removeListener(p, new File(defaultProjectsPath+p.getName()).toPath()));
+
         // Save upon shutdown
         repositories.saveData();
     }

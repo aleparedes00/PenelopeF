@@ -4,7 +4,6 @@ import models.Project;
 import models.Task;
 import models.User;
 import test.TestData;
-import views.HomeMenuView;
 import views.TaskView;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 import static java.lang.Boolean.*;
 import static tools.MenuTools.showMenu;
 import static tools.ScannerTools.*;
-import static views.HomeMenuView.selectPriority;
+import static views.ProjectsMenuView.selectPriority;
 
 public class TaskController {
 

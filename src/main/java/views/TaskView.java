@@ -5,7 +5,6 @@ import models.Task;
 import views.menus.TaskElements;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static views.PenelopeF.*;
 import static views.PrintTools.*;
@@ -44,7 +43,7 @@ public class TaskView {
         String message = "Please insert ";
         String title = PrintTools.printStringAndReadChoice(message + TaskElements.TITLE);
         String content = PrintTools.printStringAndReadChoice(message + TaskElements.CONTENT);
-        Priority priority = HomeMenuView.selectPriority();
+        Priority priority = ProjectsMenuView.selectPriority();
         Task task = new Task(title, content, tools.DateTools.now(), priority, activeUser);
         System.out.println("\tA new task has been created");
         return task;

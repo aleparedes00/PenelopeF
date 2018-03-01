@@ -1,13 +1,8 @@
 package controller;
 
-import models.FSListenable;
-import models.FSListener;
 import models.Project;
 import models.User;
 import views.*;
-
-import java.io.File;
-import java.util.UUID;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -24,15 +19,13 @@ import static tools.MenuTools.showMenu;
 public class ProjectController {
 
     private final ProjectView projectView;
-    private User user;
     private Project project;
     //private FSListenable listenable;
 
     /*Constructor*/
-    public ProjectController(ProjectView projectView, User user, Project project) {
+    public ProjectController(ProjectView projectView, Project project) {
         this.projectView = projectView;
         this.project = project;
-        this.user = user;
         //this.listenable = new FSListenable(new File(project.getPathToProject()).toPath(), this);
     }
 
@@ -76,7 +69,7 @@ public class ProjectController {
                     ctx.leaveCurrentMenu = TRUE;
                     break;
                 case PRIORITY:
-                    project.setPriority(HomeMenuView.selectPriority());
+                    project.setPriority(ProjectsMenuView.selectPriority());
                 case GROUP:
                     System.out.println("Changing group");
                     ctx.leaveCurrentMenu = TRUE;
