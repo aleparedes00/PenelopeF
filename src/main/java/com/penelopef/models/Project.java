@@ -161,6 +161,7 @@ public class Project implements FSListener {
         File file = new File(defaultProjectsPath+name+"/"+pathToNewFile);
         if (!file.isFile() || file.isHidden()) return;
         documents.add(pathToNewFile);
+        dashboard.createNewSystemMessage("================\nNew file: " + pathToNewFile + "================\n");
     }
 
     @Override
@@ -168,6 +169,7 @@ public class Project implements FSListener {
         File file = new File(pathToDeleteFile);
         if (!file.isFile() && !file.isHidden()) return;
         documents.remove(pathToDeleteFile);
+        dashboard.createNewSystemMessage("================\nFile deleted: " + pathToDeleteFile + "================\n");
     }
 
     @Override

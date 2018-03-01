@@ -12,7 +12,8 @@ public class FSListenable {
     private static FSListenable instance = null;
     private Map<Path, FSWatcher> fsWatchersByPath = new HashMap<>();
 
-    private FSListenable() {}
+    private FSListenable() {
+    }
 
     private static class FSWatcher extends Thread {
         private List<FSListener> listerners = new CopyOnWriteArrayList<>();
@@ -59,7 +60,6 @@ public class FSListenable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("FUCK!");
         }
     }
 
@@ -118,34 +118,3 @@ public class FSListenable {
     }
 
 }
-
-    /*public void run() {
-        try {
-            WatchService watcher = FileSystems.getDefault().newWatchService();
-                    // path.getFileSystem().newWatchService();
-            path.register(watcher, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-
-            WatchKey watchKey = watcher.poll();
-            if (watcher != null) //TODO check this condition
-            {
-                List<WatchEvent<?>> events = watchKey.pollEvents();
-                for (WatchEvent event : events) {
-                    if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-                        listener.onCreate(event.context().toString());
-                    }
-                    if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
-                        listener.onDelete(event.toString());
-                    }
-                    if (event.kind() == StandardWatchEventKinds.ENTRY_MODIFY) {
-                        listener.onUpdate(event.context().toString());
-                    }
-                }
-            }
-            watchKey.reset();
-        } catch (Exception e) {
-            e.printStackTrace();
-            //System.out.println("Error: " + e.toString());
-        }
-
-    }
-*/

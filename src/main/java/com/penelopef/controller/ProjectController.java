@@ -8,6 +8,7 @@ import com.penelopef.views.*;
 import java.io.File;
 import java.util.UUID;
 
+import static com.penelopef.PenelopeF.activeUser;
 import static com.penelopef.PenelopeF.defaultProjectsPath;
 import static com.penelopef.PenelopeF.getRepositories;
 import static com.penelopef.models.Priority.selectPriority;
@@ -70,11 +71,13 @@ public class ProjectController {
                     changeName(newName);
                     getRepositories().saveData();
                     projectView.modificationSaved();
+                    project.getDashboard().createNewSystemMessage(activeUser.getName() + " has modified the name of the project.\nProject name: " + project.getName());
                     break;
                 case PRIORITY:
                     project.setPriority(selectPriority());
                     getRepositories().saveData();
                     projectView.modificationSaved();
+                    project.getDashboard().createNewSystemMessage("The priority has been changed for -> " + project.getPriority().toString());
                     break;
                 case GROUP:
                     Group newGroup = projectView.editGroup();
@@ -83,6 +86,7 @@ public class ProjectController {
                         getRepositories().saveData();
                         projectView.modificationSaved();
                     }
+                    project.getDashboard().createNewSystemMessage("The group of the project has been modified for -> " + project.getGroup().getName());
                     break;
                 case BACK:
                     ctx.leaveCurrentMenu = true;
@@ -134,6 +138,6 @@ public class ProjectController {
     private void controlDeactiveProject() {
         project.setActive(false);
         getRepositories().saveData();
-        PrintTools.printString("\nYour project has been successfully deactived\n");
+        PrintTools.printString("\nYour project has been successfully deactivated\n");
     }
 }
