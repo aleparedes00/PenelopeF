@@ -5,8 +5,8 @@ public enum TaskElements {
     MODIFY("Modify"),
     BACK("Back"),
     TITLE("Title"),
-    CONTENT("Content"),
-    DATE("Date Created"),
+    CONTENT("Description"),
+    DATE("Created on"),
     PRIORITY("Priority"),
     USER("Created by");
 

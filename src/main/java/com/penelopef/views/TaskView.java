@@ -7,45 +7,54 @@ import com.penelopef.views.menus.TaskElements;
 import java.util.List;
 
 import static com.penelopef.PenelopeF.*;
+import static com.penelopef.models.Priority.selectPriority;
+import static com.penelopef.tools.DateTools.now;
+import static com.penelopef.tools.ScannerTools.scanInt;
 import static com.penelopef.views.PrintTools.*;
+import static com.penelopef.views.menus.TaskElements.*;
 
 public class TaskView {
-    public Integer drawListTask(List<Task> tasks){
+    public Integer showAndSelectTask(List<Task> tasks){
         int i = 1;
         for (Task task : tasks) {
-            System.out.println(i++ + ".- " + task.getTitle());
+            System.out.println(i++ + ".- " + task.getTitle() + " [" + task.getPriority() + "]");
         }
-        System.out.println(i++ + ".- Create new");
+        System.out.println(i++ + ".- Create new task");
         System.out.println(i + ".- Back");
-        Integer userInput = printStringAndReadInteger("Please, select the talk you would like to see", 1, i);
-        return (userInput - 1);
+        return (scanInt(1, i) - 1);
     }
 
     public TaskElements drawTask(Task task) {
-        System.out.println(TaskElements.TITLE + ": " + task.getTitle() +
-                "\n" + TaskElements.CONTENT + ": " + task.getContent() +
-                "\n" + TaskElements.DATE + ": " + task.getDate() +
-                "\n" + TaskElements.PRIORITY + ": " + task.getPriority().toString() +
-                "\n" + TaskElements.USER + ": " + task.getAuthorName() +
-                "\n1.-" + TaskElements.DONE +
-                "\n2.-" + TaskElements.MODIFY +
-                "\n3.-" + TaskElements.BACK);
-        return TaskElements.valueOf(printStringAndReadInteger("Please, select a valid option", 1, 3));
+        // Task info
+        System.out.println(TITLE + ": " + task.getTitle() +
+                "\n" + CONTENT + ": " + task.getContent() +
+                "\n" + DATE + ": " + task.getDate() +
+                "\n" + PRIORITY + ": " + task.getPriority().toString() +
+                "\n" + USER + ": " + task.getAuthorName());
+
+        // Task menu
+        System.out.println("\n1.- " + DONE +
+                "\n2.- " + MODIFY +
+                "\n3.- " + BACK);
+        return TaskElements.valueOf(scanInt(1, 3));
     }
 
     public TaskElements modifyTask() {
         System.out.println("What would you like to change? ");
-        System.out.println("1.- " + TaskElements.TITLE + "\n2.- " + TaskElements.CONTENT + "\n3.- " + TaskElements.PRIORITY + "\n4.- " + TaskElements.BACK);
+        System.out.println("1.- " + TITLE + "\n2.- " + TaskElements.CONTENT + "\n3.- " + TaskElements.PRIORITY + "\n4.- " + TaskElements.BACK);
         return TaskElements.valueOfModify(printStringAndReadInteger("Please, select a valid option", 1, 4));
     }
 
     public Task drawNewTask() {
-        String message = "Please insert ";
-        String title = PrintTools.printStringAndReadChoice(message + TaskElements.TITLE);
-        String content = PrintTools.printStringAndReadChoice(message + TaskElements.CONTENT);
-        Priority priority = ProjectsMenuView.selectPriority();
-        Task task = new Task(title, content, com.penelopef.tools.DateTools.now(), priority, activeUser);
-        System.out.println("\tA new task has been created");
+        String title = PrintTools.printStringAndReadChoice(TITLE + ":");
+        String content = PrintTools.printStringAndReadChoice(CONTENT + ":");
+        Priority priority = selectPriority();
+        Task task = new Task(title, content, now(), priority, activeUser);
+        System.out.println("Created new task \"" + title + "\"");
         return task;
+    }
+
+    public void markTaskAsDone(Task task) {
+        System.out.println("Task \"" + task.getTitle() + "\" is marked as done");
     }
 }

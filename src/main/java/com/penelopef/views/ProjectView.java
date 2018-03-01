@@ -32,11 +32,11 @@ public class ProjectView {
 
 
     /*Print Project Information*/
-    public ProjectElements drawPrintProject() {
+    public ProjectElements drawProject() {
         ArrayList<ProjectElements> availableCommands = getAvailableCommands();
 
         for (int i = 0; i < availableCommands.size(); i++) {
-            System.out.println((i + 1) + ".-" + availableCommands.get(i));
+            System.out.println((i + 1) + ".- " + availableCommands.get(i));
         }
 
         return availableCommands.get(scanInt(1, availableCommands.size()) - 1);
@@ -54,9 +54,9 @@ public class ProjectView {
     /*Print Project Modify*/
     public ModifyProjectMenu modifyProjectMenu(Project project) {
         System.out.println("What would you like to modify?");
-        System.out.println("1.-" + ModifyProjectMenu.PROJECT_NAME + ":");
-        System.out.println("2.-" + ModifyProjectMenu.GROUP + ":");
-        System.out.println("3.-" + ModifyProjectMenu.BACK + ".");
+        System.out.println("1.- " + ModifyProjectMenu.PROJECT_NAME + ":");
+        System.out.println("2.- " + ModifyProjectMenu.GROUP + ":");
+        System.out.println("3.- " + ModifyProjectMenu.BACK + ".");
         //TODO add change priority
         System.out.println("What would you like to do?");
         return ModifyProjectMenu.valueOf(scanInt(1, 3));

@@ -6,6 +6,7 @@ import com.penelopef.views.menus.ProjectHomeSelection;
 import java.util.List;
 
 import static com.penelopef.PenelopeF.activeUser;
+import static com.penelopef.models.Priority.selectPriority;
 import static com.penelopef.tools.DataTools.getGroupFromName;
 import static com.penelopef.tools.DateTools.now;
 import static com.penelopef.tools.ScannerTools.scanInt;
@@ -51,14 +52,6 @@ public class ProjectsMenuView {
             return groupToBeAddedTo;
     }
 
-    public static Priority selectPriority() {
-        System.out.println("Select a priority:");
-        System.out.println("1.-" + Priority.HIGH);
-        System.out.println("2.-" + Priority.NORMAL);
-        System.out.println("3.-" + Priority.LOW);
-        return Priority.optionsPriority(scanInt(1, 3));
-    }
-
     public int showAndSelectProject(List<Project> projects) {
         System.out.println("===== PROJECTS =====");
 
@@ -71,10 +64,5 @@ public class ProjectsMenuView {
 
         int userInput = scanInt(1, i);
         return (userInput - 1);
-    }
-    public static void main(String[] args) {
-        ProjectsMenuView projectsMenuView = new ProjectsMenuView();
-        Priority priority = projectsMenuView.selectPriority();
-        System.out.println("This is the priority " + priority.toString());
     }
 }

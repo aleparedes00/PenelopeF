@@ -3,6 +3,7 @@ package com.penelopef.controller;
 import com.penelopef.models.Project;
 import com.penelopef.views.*;
 
+import static com.penelopef.models.Priority.selectPriority;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static com.penelopef.tools.MenuTools.showMenu;
@@ -30,14 +31,14 @@ public class ProjectController {
 
     public void showProject() {
         showMenu(ctx -> {
-            switch (this.projectView.drawPrintProject()) {
+            switch (this.projectView.drawProject()) {
                 case PROJECT_INFO:
                     projectView.drawProjectInformation(project);
                     break;
                 case TASK:
                     TaskView taskView = new TaskView();
                     TaskController taskController = new TaskController(taskView, project);
-                    taskController.showListTasks();
+                    taskController.showTasks();
                     break;
                 case DOCUMENT:
                     projectView.drawProjectDocuments(project);
@@ -68,7 +69,7 @@ public class ProjectController {
                     ctx.leaveCurrentMenu = TRUE;
                     break;
                 case PRIORITY:
-                    project.setPriority(ProjectsMenuView.selectPriority());
+                    project.setPriority(selectPriority());
                 case GROUP:
                     System.out.println("Changing group");
                     ctx.leaveCurrentMenu = TRUE;

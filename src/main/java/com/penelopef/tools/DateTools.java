@@ -12,8 +12,4 @@ public class DateTools {
         LocalDateTime nowDateTime = LocalDateTime.now();
         return nowDateTime.format(dateFormatter);
     }
-
-    public static void main(String[] args) {
-        System.out.println("Date: " + LocalDateTime.now().format(dateFormatter));
-    }
 }

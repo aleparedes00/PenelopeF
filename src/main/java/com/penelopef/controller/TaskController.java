@@ -2,18 +2,15 @@ package com.penelopef.controller;
 
 import com.penelopef.models.Project;
 import com.penelopef.models.Task;
-import com.penelopef.models.User;
-import com.penelopef.test.TestData;
 import com.penelopef.views.TaskView;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.lang.Boolean.*;
+import static com.penelopef.models.Priority.selectPriority;
 import static com.penelopef.tools.MenuTools.showMenu;
 import static com.penelopef.tools.ScannerTools.*;
-import static com.penelopef.views.ProjectsMenuView.selectPriority;
 
 public class TaskController {
 
@@ -25,32 +22,19 @@ public class TaskController {
         this.taskView = taskView;
     }
 
-    public void showListTasks() {
+    public void showTasks() {
         showMenu(ctx -> {
-            List<Task> undoneTasks = project.getTasks()
+            List<Task> activeTasks = project.getTasks()
                     .stream()
                     .filter(Task::isActive)
                     .collect(Collectors.toList());
-            Integer userInput = this.taskView.drawListTask(undoneTasks);
-            ArrayList<Task> tasks = project.getTasks();
-
-            if (userInput == undoneTasks.size()) {
-                newTask(project);
-            } else if (userInput >= undoneTasks.size()) {
-                ctx.leaveCurrentMenu = TRUE;
-            } else {
-                int i = 0;
-                for (Task task : tasks) {
-                    if (task.isActive()) {
-                        if (i == userInput) {
-                            // do something with task
-                            taskManager(task);
-                            break;
-                        }
-                        i++;
-                    }
-                }
-            }
+            activeTasks.sort(Comparator.comparing(Task::getPriority));
+            Integer selectedTaskIndex = taskView.showAndSelectTask(activeTasks);
+            if (selectedTaskIndex < activeTasks.size()) {
+                taskManager(activeTasks.get(selectedTaskIndex));
+            } else if (selectedTaskIndex == activeTasks.size())
+                createTask();
+            else ctx.leaveCurrentMenu = true;
         });
     }
 
@@ -58,13 +42,15 @@ public class TaskController {
         showMenu(ctx -> {
             switch (taskView.drawTask(task)) {
                 case DONE:
-                    task.setActive(FALSE);
+                    taskView.markTaskAsDone(task);
+                    task.setActive(false);
+                    ctx.leaveCurrentMenu = true;
                     break;
                 case MODIFY:
                     modifyTask(task);
                     break;
                 case BACK:
-                    ctx.leaveCurrentMenu = TRUE;
+                    ctx.leaveCurrentMenu = true;
             }
         });
     }
@@ -82,22 +68,13 @@ public class TaskController {
                     task.setPriority(selectPriority());
                     break;
                 case BACK:
-                    ctx.leaveCurrentMenu = TRUE;
+                    ctx.leaveCurrentMenu = true;
             }
         });
     }
 
-    public void newTask(Project project) {
+    public void createTask() {
         Task newTask = taskView.drawNewTask();
         project.addTask(newTask);
-    }
-
-    public static void main(String[] args) {
-        TestData testData = new TestData();
-        User activeUser = testData.project1_2();
-        TaskView taskView = new TaskView();
-        TaskController taskController = new TaskController(taskView, activeUser.getProjects().get(0));
-        taskController.showListTasks();
-
     }
 }
