@@ -1,10 +1,1 @@
-{
-  "name": "Test Project 8",
-  "tasks": [],
-  "pathToProject": "projects/Test Project 8",
-  "groupId": "91ac143a-df72-41b3-a5a8-f935f16c52d8",
-  "date": "25/02/2018 - 13:57:37",
-  "priority": "NORMAL",
-  "active": true,
-  "id": "46ef79d2-2500-41ef-8707-32dc072386ff"
-}
+{"name":"Test Project 8","tasks":[],"pathToProject":"projects/Test Project 8","groupId":"91ac143a-df72-41b3-a5a8-f935f16c52d8","date":"25/02/2018 - 13:57:37","priority":"NORMAL","active":true,"id":"46ef79d2-2500-41ef-8707-32dc072386ff"}
