@@ -1,11 +1,11 @@
-package tools;
+package com.penelopef.tools;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Math.random;
-import static tools.RegexTools.match;
+import static com.penelopef.tools.RegexTools.match;
 
 public class PasswordTools {
     /* Password alphabets */
