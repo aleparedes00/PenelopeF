@@ -23,7 +23,7 @@ public class ProjectView {
         //TODO: dont show Documents of File file = new File (project.pathTOFolder return null
         availableCommands.add(DOCUMENT);
         availableCommands.add(DASHBOARD);
-        availableCommands.add(MODIFY);
+        availableCommands.add(EDIT);
         availableCommands.add(DEACTIVATE);
         availableCommands.add(BACK);
 
@@ -53,7 +53,7 @@ public class ProjectView {
 
     /*Print Project Modify*/
     public ModifyProjectMenu modifyProjectMenu() {
-        System.out.println("What would you like to modify?");
+        System.out.println("What would you like to edit?");
         System.out.println("1.- " + ModifyProjectMenu.PROJECT_NAME + ":");
         System.out.println("2.- " + ModifyProjectMenu.GROUP + ":");
         System.out.println("3.- " + ModifyProjectMenu.BACK + ".");

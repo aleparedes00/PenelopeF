@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import static com.penelopef.PenelopeF.getRepositories;
 import static com.penelopef.models.Priority.selectPriority;
 import static com.penelopef.tools.MenuTools.showMenu;
-import static com.penelopef.tools.ScannerTools.*;
 
 class TaskController {
 
@@ -45,9 +44,10 @@ class TaskController {
                 case DONE:
                     taskView.markTaskAsDone(task);
                     task.setActive(false);
+                    getRepositories().saveData();
                     ctx.leaveCurrentMenu = true;
                     break;
-                case MODIFY:
+                case EDIT:
                     modifyTask(task);
                     break;
                 case BACK:
@@ -60,13 +60,19 @@ class TaskController {
         showMenu(ctx -> {
             switch (taskView.modifyTask()) {
                 case TITLE:
-                    task.setTitle(scanString());
+                    task.setTitle(taskView.editTitle());
+                    getRepositories().saveData();
+                    taskView.modificationSaved();
                     break;
                 case CONTENT:
-                    task.setContent(scanString());
+                    task.setContent(taskView.editContent());
+                    getRepositories().saveData();
+                    taskView.modificationSaved();
                     break;
                 case PRIORITY:
                     task.setPriority(selectPriority());
+                    getRepositories().saveData();
+                    taskView.modificationSaved();
                     break;
                 case BACK:
                     ctx.leaveCurrentMenu = true;

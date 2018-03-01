@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.UUID;
 
+import static com.penelopef.tools.DataTools.getUserFromId;
+
 /**
  * Created by alejandraparedes on 1/21/18.
  */
@@ -13,8 +15,6 @@ public class Message {
     private String content;
     private String date;
 
-    @JsonIgnore
-    private User author;
     private UUID authorId;
 //TODO No serializer found for class models.MessageThread and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: models.Project["tasks"]->java.util.ArrayList[0]->models.Task["replies"])
     @JsonIgnore
@@ -31,8 +31,7 @@ public class Message {
         setContent(content);
         setTitle(title);
         this.date = date;
-        this.author = author;
-        this.authorId = author.getId();
+        this.authorId = (author != null) ? author.getId() : null;
         this.replies = new MessageThread(this);
         this.id = UUID.randomUUID();
     }
@@ -68,10 +67,6 @@ public class Message {
         return date;
     }
 
-    User getAuthor() {
-        return author;
-    }
-
     public UUID getAuthorId() {
         return authorId;
     }
@@ -86,7 +81,7 @@ public class Message {
 
     @JsonIgnore
     public String getAuthorName() {
-        return (author != null) ? author.getUsername() : "System";
+        return (authorId != null) ? getUserFromId(authorId).getUsername() : "System";
     }
 
     /* Setters */

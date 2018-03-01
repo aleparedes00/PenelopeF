@@ -10,11 +10,13 @@ import static com.penelopef.PenelopeF.*;
 import static com.penelopef.models.Priority.selectPriority;
 import static com.penelopef.tools.DateTools.now;
 import static com.penelopef.tools.ScannerTools.scanInt;
-import static com.penelopef.views.PrintTools.*;
+import static com.penelopef.tools.ScannerTools.scanString;
 import static com.penelopef.views.menus.TaskElements.*;
 
 public class TaskView {
     public Integer showAndSelectTask(List<Task> tasks){
+        System.out.println("===== TASKS =====");
+
         int i = 1;
         for (Task task : tasks) {
             System.out.println(i++ + ".- " + task.getTitle() + " [" + task.getPriority() + "]");
@@ -34,7 +36,7 @@ public class TaskView {
 
         // Task menu
         System.out.println("\n1.- " + DONE +
-                "\n2.- " + MODIFY +
+                "\n2.- " + EDIT +
                 "\n3.- " + BACK);
         return TaskElements.valueOf(scanInt(1, 3));
     }
@@ -42,7 +44,7 @@ public class TaskView {
     public TaskElements modifyTask() {
         System.out.println("What would you like to change? ");
         System.out.println("1.- " + TITLE + "\n2.- " + TaskElements.CONTENT + "\n3.- " + TaskElements.PRIORITY + "\n4.- " + TaskElements.BACK);
-        return TaskElements.valueOfModify(printStringAndReadInteger("Please, select a valid option", 1, 4));
+        return TaskElements.valueOfModify(scanInt(1, 4));
     }
 
     public Task drawNewTask() {
@@ -56,5 +58,19 @@ public class TaskView {
 
     public void markTaskAsDone(Task task) {
         System.out.println("Task \"" + task.getTitle() + "\" is marked as done");
+    }
+
+    public String editTitle() {
+        System.out.print("New title? ");
+        return scanString();
+    }
+
+    public String editContent() {
+        System.out.print("New description? ");
+        return scanString();
+    }
+
+    public void modificationSaved() {
+        System.out.println("Modification saved.");
     }
 }

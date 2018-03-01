@@ -1,9 +1,9 @@
-package com.penelopef.views.menus;
+package com.penelopef.test;
 
 /**
  * Created by alejandraparedes on 1/27/18.
  */
-public enum ProjectHomeSelection {
+public enum ProjectHomeSelection { // TODO: delete?
     CREATE_PROJECT("Create Project"),
     LOGOUT("Logout"),
     LIST_PROJECTS("List Projects");

@@ -24,7 +24,7 @@ public class ContactController {
             model.setEmail(newEmail);
             view.changeSuccessful("email");
         }
-        else view.formatError("email");
+        else view.formatError();
     }
 
     private boolean emailHasRightFormat(String newEmail) {
@@ -38,7 +38,7 @@ public class ContactController {
             model.setPhone(newPhone);
             view.changeSuccessful("phone");
         }
-        else view.formatError("phone");
+        else view.formatError();
     }
 
     private boolean phoneHasRightFormat(String newPhone) {

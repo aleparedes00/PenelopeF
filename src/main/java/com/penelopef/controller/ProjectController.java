@@ -38,7 +38,7 @@ public class ProjectController {
                 case DASHBOARD:
                     System.out.println("[Dashboard] : Calling freaking Dashboard");
                     break;
-                case MODIFY:
+                case EDIT:
                     controlModifyProject(project);
                     //TODO saveData
                     break;

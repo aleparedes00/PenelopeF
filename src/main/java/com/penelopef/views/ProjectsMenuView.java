@@ -1,7 +1,6 @@
 package com.penelopef.views;
 
 import com.penelopef.models.*;
-import com.penelopef.views.menus.ProjectHomeSelection;
 
 import java.util.List;
 

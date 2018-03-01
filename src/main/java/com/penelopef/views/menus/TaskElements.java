@@ -2,7 +2,7 @@ package com.penelopef.views.menus;
 
 public enum TaskElements {
     DONE("Mark as done"),
-    MODIFY("Modify"),
+    EDIT("Edit task"),
     BACK("Back"),
     TITLE("Title"),
     CONTENT("Description"),
@@ -34,7 +34,7 @@ public enum TaskElements {
             case 1:
                 return DONE;
             case 2:
-                return MODIFY;
+                return EDIT;
             case 3:
                 return BACK;
             case 4:
