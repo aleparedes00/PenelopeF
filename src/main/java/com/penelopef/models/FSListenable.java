@@ -12,7 +12,8 @@ public class FSListenable {
     private static FSListenable instance = null;
     private Map<Path, FSWatcher> fsWatchersByPath = new HashMap<>();
 
-    private FSListenable() {}
+    private FSListenable() {
+    }
 
     private static class FSWatcher extends Thread {
         private List<FSListener> listerners = new CopyOnWriteArrayList<>();
@@ -59,7 +60,6 @@ public class FSListenable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("FUCK!");
         }
     }
 

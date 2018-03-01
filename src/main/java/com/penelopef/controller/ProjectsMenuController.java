@@ -45,8 +45,7 @@ class ProjectsMenuController {
             }
             getRepositories().createNewProject(project);
             getRepositories().saveData();
-            project.getDashboard().createNewSystemMessage("================\nProject creation\nName: " + project.getName() + "\nBy: " + activeUser.getName() + "\n================");
+            project.getDashboard().createNewSystemMessage("================\n New Project \nProject name: " + project.getName() + "\nCreated by: " + activeUser.getName() + "\nPriority: " + project.getPriority().toString() + "\n================");
         }
-        //TODO call function to write the historic "new feed" file
     }
 }

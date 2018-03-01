@@ -45,6 +45,7 @@ class TaskController {
                     taskView.markTaskAsDone(task);
                     task.setActive(false);
                     getRepositories().saveData();
+                    project.getDashboard().createNewSystemMessage("The task " + task.getTitle() + "has been marked as done. Good job!");
                     ctx.leaveCurrentMenu = true;
                     break;
                 case EDIT:
@@ -63,16 +64,19 @@ class TaskController {
                     task.setTitle(taskView.editTitle());
                     getRepositories().saveData();
                     taskView.modificationSaved();
+                    project.getDashboard().createNewSystemMessage("Task name has been modified.\nNew name: " + task.getTitle());
                     break;
                 case CONTENT:
                     task.setContent(taskView.editContent());
                     getRepositories().saveData();
                     taskView.modificationSaved();
+                    project.getDashboard().createNewSystemMessage("Content has been modified for task: " + task.getTitle() + ".\nNew content: " + task.getContent());
                     break;
                 case PRIORITY:
                     task.setPriority(selectPriority());
                     getRepositories().saveData();
                     taskView.modificationSaved();
+                    project.getDashboard().createNewSystemMessage("New priority -> " + task.getPriority().toString() + " to task " + task.getTitle());
                     break;
                 case BACK:
                     ctx.leaveCurrentMenu = true;
@@ -84,5 +88,6 @@ class TaskController {
         Task newTask = taskView.drawNewTask();
         project.addTask(newTask);
         getRepositories().saveData();
+        project.getDashboard().createNewSystemMessage("New task has been added.\n Task name: " + newTask.getTitle() + "\nPriority: " + newTask.getPriority().toString());
     }
 }

@@ -25,7 +25,6 @@ public class ProjectView {
 
         availableCommands.add(PROJECT_INFO);
         availableCommands.add(TASK);
-        //TODO: dont show Documents of File file = new File (project.pathTOFolder return null
         availableCommands.add(DOCUMENT);
         availableCommands.add(DASHBOARD);
         availableCommands.add(EDIT);
@@ -81,11 +80,14 @@ public class ProjectView {
     }
 
     private void drawFilesInDirectory(File directory, int recursionLevel) {
-        for (File file : directory.listFiles(file -> !file.isHidden())) {
-            printTreeBranch(recursionLevel);
-            System.out.println(file.getName());
-            if (file.isDirectory())
-                drawFilesInDirectory(file, recursionLevel + 1);
+        File[] files = directory.listFiles(file -> !file.isHidden());
+        if (files != null) {
+            for (File file : files) {
+                printTreeBranch(recursionLevel);
+                System.out.println(file.getName());
+                if (file.isDirectory())
+                    drawFilesInDirectory(file, recursionLevel + 1);
+            }
         }
 
     }
